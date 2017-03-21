@@ -4,7 +4,6 @@
 #include "string"
 #include "stdio.h"
 #include "stdlib.h"
-#include "include/git2.h"
 #include "vector"
 #include "bash.h"
 using namespace std;
