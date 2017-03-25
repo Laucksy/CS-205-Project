@@ -18,7 +18,7 @@ public:
     vector<string> fullCode;
     vector<string> comments;
     vector<string> linesOfCode;
-    void insert(string text, int position);
+    void insert(int position);
 
     //THIS METHOD IS INCOMPLETE.
     int categorize(string word);

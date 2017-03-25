@@ -40,12 +40,12 @@ vector<string> Code::parse(string fileName)
 }
 
 
-void Code::insert(string text, int position)
+void Code::insert(int position)
 {
     //iterating through code to insert text at a given position inside the vector
      vector<string>::iterator it = fullCode.begin();
 
-     fullCode.insert (it+position,text);
+     fullCode.insert (it+position," ");
      /*also if we only want to insert blank text as to make room for an overlay comment
       * rather than text, we could take in only position and add in a blank line.
       */
@@ -66,21 +66,37 @@ int Code::categorize(string word)
     /*categorize returns an int corresponding with the category the word falls in,
      * which can be used in coloring each word via cascade of if statements.
      */
-    if(word=="float" || word=="string" || word=="int" || word=="char" || word=="long" || word=="short" || word=="double" || word=="boolean" || word=="byte") //etc.
+    if(word=="float" || word=="string" || word=="int" || word=="char" || word=="long" || word=="short" || word=="double" || word=="boolean" || word=="byte" || word=="void")
     {
         return 1;
     }
-    else if(word=="static" || word=="final" || word=="void") //etc.
+    else if(word=="static" || word=="final")
     {
         return 2;
     }
-    else if(word=="for" || word=="if" || word=="while") //etc.
+    else if(word=="for" || word=="if" || word=="while" || word=="else" || word=="continue" || word=="break" || word == "return")
     {
         return 3;
     }
-    else if(word=="new")
+    else if(word=="import")
     {
         return 4;
+    }
+    else if(word=="class")
+    {
+        return 5;
+    }
+    else if(word=="this")
+    {
+        return 6;
+    }
+    else if(word=="public" || word=="protected" || word=="private")
+    {
+        return 7;
+    }
+    else if(word=="new")
+    {
+        return 8;
     }
     //everything else is just normal code, should be black (or some standard color).
     return 0;
