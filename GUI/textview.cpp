@@ -32,6 +32,7 @@ void textView::updateCode(int index)
     {
 
         Code *c1= new Code();
+
         lines=c1->parse("Student.java");
 
 

@@ -40,7 +40,8 @@ RESOURCES += \
     logo.qrc
 
 DISTFILES += \
-    Logo.png
+    Logo.png \
+    Student.java
 
 SOURCES +=  ../project/code.cpp\
 
