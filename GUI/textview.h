@@ -1,5 +1,10 @@
 #ifndef TEXTVIEW_H
 #define TEXTVIEW_H
+#include "../project/code.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
 
 #include <QWidget>
 

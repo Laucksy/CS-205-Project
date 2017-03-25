@@ -27,8 +27,11 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     textview.cpp \
 
+
+
 HEADERS  += mainwindow.h \
-    textview.h
+    textview.h \
+
 
 FORMS    += mainwindow.ui \
     textview.ui
@@ -38,3 +41,8 @@ RESOURCES += \
 
 DISTFILES += \
     Logo.png
+
+SOURCES +=  ../project/code.cpp\
+
+HEADERS +=    ../project/code.h\
+

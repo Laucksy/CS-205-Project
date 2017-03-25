@@ -1,5 +1,8 @@
 #include "textview.h"
 #include "ui_textview.h"
+#include <iostream>
+
+
 
 textView::textView(QWidget *parent) :
     QWidget(parent),
@@ -15,6 +18,8 @@ textView::~textView()
 
 void textView::updateCode(int index)
 {
+    vector<string> lines;
+
     QString code1="hi";
     QString code2="there";
     switch(index){
@@ -24,8 +29,15 @@ void textView::updateCode(int index)
 
         break;
     case 1 :
-         ui->textBrowser->setTextColor("cyan");
-        ui->textBrowser->setText(code2);
+    {
+
+        Code *c1= new Code();
+        lines=c1->parse("Student.java");
+
+
+    }
+       //  ui->textBrowser->setTextColor("cyan");
+       // ui->textBrowser->setText(code2);
         break;
 
     }
