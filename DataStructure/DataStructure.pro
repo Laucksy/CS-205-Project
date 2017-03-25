@@ -9,7 +9,9 @@ SOURCES += main.cpp \
     assignment.cpp \
     rubrics.cpp \
     rubric.cpp \
-    category.cpp
+    category.cpp \
+    ident.cpp \
+    feedback.cpp
 
 HEADERS += \
     student.h \
@@ -17,4 +19,10 @@ HEADERS += \
     assignment.h \
     rubrics.h \
     rubric.h \
-    category.h
+    category.h \
+    ident.h \
+    feedback.h
+
+HEADERS += ../project/code.h
+
+SOURCES += ../project/code.cpp
