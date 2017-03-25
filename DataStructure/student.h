@@ -3,19 +3,29 @@
 
 #include <string>
 #include <vector>
-#include "assignments.h"
+#include "ident.h"
+#include "assignment.h"
 
 using namespace std;
 
 class Assignment;
-class Assignments;
 
-class Student
+class Student : public Ident
 {
 public:
     Student();
+    Student(string f, string l);
+    ~Student();
 
-    Assignments* list;
+    void calc_score();
+    double get_score();
+
+    vector<Assignment*> list;
+    string firstName;
+    string lastName;
+
+private:
+    double score;
 };
 
 #endif // STUDENT_H
