@@ -12,10 +12,19 @@ Git::~Git() {
 
 }
 
-void Git::init() {
-    Bash::exec("git clone " + repo);
-    Bash::exec("cd backup ; pwd");
+bool Git::init() {
+    string result = Bash::exec("git clone " + repo);
+    if(result.find("done") == string::npos && result.find("fatal") != string::npos) {
+        initialized = false;
+        return false;
+    }
+    result = Bash::exec("cd backup ; pwd");
+    if(result.find("No such file or directory") != string::npos) {
+        initialized = false;
+        return false;
+    }
     initialized = true;
+    return true;
 }
 
 string Git::get_repo() {
@@ -35,7 +44,7 @@ void Git::add_file(string path) {
 }
 
 string Git::get_file(int index) {
-    if(index < files.size())
+    if((unsigned int)index < files.size())
         return files.at(index);
     else
         return "";
@@ -48,7 +57,7 @@ string Git::status() {
     return result;
 }
 
-string Git::push() {
+bool Git::push() {
     if(!initialized)
         init();
     for(unsigned i = 0; i < files.size(); i++) {
@@ -57,24 +66,31 @@ string Git::push() {
     }
     string result = Bash::exec("cd backup ; git add .");
     result += Bash::exec("cd backup ; git commit -m 'Committing'");
-    //cout << "AAAAA" << result << "AAAAA";
     result += Bash::exec("cd backup ; git push");
-    return result;
+    if(result.find("nothing to commit") != string::npos || result.find("fatal") != string::npos || result.find("error") != string::npos) {
+        return false;
+    }
+    return true;
 }
 
-string Git::pull() {
+bool Git::pull() {
     if(!initialized)
         init();
     string result = Bash::exec("cd backup ; git pull");
-    return result;
+    if(result.find("fatal") != string::npos || result.find("error") != string::npos) {
+        return false;
+    }
+    return true;
 }
 
-string Git::reset() {
+bool Git::reset() {
     if(!initialized) {
-        init();
-        return "Did not reset because the repository was not initialized.";
+        return init(); //"Did not reset because the repository was not initialized."
     } else {
-        string result = Bash::exec("cd backup ; git reset --hard");
-        return result;
+        string result = Bash::exec("cd backup ; git reset --hard origin/master");
+        if(result.find("done") == string::npos && result.find("fatal") != string::npos) {
+            return false;
+        }
+        return true;
     }
 }
