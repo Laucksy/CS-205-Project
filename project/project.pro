@@ -9,5 +9,11 @@ SOURCES += main.cpp \
 HEADERS += \
     code.h
 
+SOURCES += ../DataStructure/feedback.cpp
+HEADERS += ../DataStructure/feedback.h
+
+SOURCES += ../DataStructure/ident.cpp
+HEADERS += ../DataStructure/ident.h
+
 DISTFILES += \
     ../../../Desktop/Wheel.java

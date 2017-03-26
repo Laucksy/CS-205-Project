@@ -1,4 +1,5 @@
 #include "code.h"
+
 using namespace std;
 
 Code::Code()
@@ -88,11 +89,16 @@ void Code::insert(int position)
 }
 
 //remove blank space (slot for feedback) from given position
-void Code::deleteFeedback(int position)
+void Code::delete_space_for_feedback(int position)
 {
         vector<string>::iterator itDelete = fullCode.begin();
         advance(itDelete, position);
         fullCode.erase(itDelete);
+}
+
+void Code::add_feedback(Feedback newComment)
+{
+        profFeedback.push_back(newComment);
 }
 
 
