@@ -39,16 +39,54 @@ vector<string> Code::parse(string fileName)
     return fullCode;
 }
 
+/*tokenize is a delimiter method, which parses a single string
+ * ( a line of code from vector of strings)
+ * this splits up the line into tokens to be passed through categorize method
+ */
+vector<string> Code::tokenize(string line)
+{
+    vector<string> tokens;
+    vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*' };
 
-void Code::insert(string text, int position)
+    stringstream ss(line);
+
+    string i;
+
+    while (ss >> i)
+    {
+        tokens.push_back(i);
+
+        for(unsigned long x = 0; x < delimiterChars.size(); x++)
+        {
+            if (ss.peek() == delimiterChars[x])
+                ss.ignore();
+        }
+    }
+
+    for (unsigned long j =0; j< tokens.size(); j++)
+        cout << tokens.at(j)<< endl;
+
+    return tokens;
+}
+
+
+void Code::insert(int position)
 {
     //iterating through code to insert text at a given position inside the vector
-     vector<string>::iterator it = fullCode.begin();
+    vector<string>::iterator it = fullCode.begin();
 
-     fullCode.insert (it+position,text);
-     /*also if we only want to insert blank text as to make room for an overlay comment
+    fullCode.insert (it+position," ");
+    /*also if we only want to insert blank text as to make room for an overlay comment
       * rather than text, we could take in only position and add in a blank line.
       */
+}
+
+//remove blank space (slot for feedback) from given position
+void Code::deleteFeedback(int position)
+{
+        vector<string>::iterator itDelete = fullCode.begin();
+        advance(itDelete, position);
+        fullCode.erase(itDelete);
 }
 
 
@@ -66,21 +104,37 @@ int Code::categorize(string word)
     /*categorize returns an int corresponding with the category the word falls in,
      * which can be used in coloring each word via cascade of if statements.
      */
-    if(word=="float" || word=="string" || word=="int" || word=="char" || word=="long" || word=="short" || word=="double" || word=="boolean" || word=="byte") //etc.
+    if(word=="float" || word=="string" || word=="int" || word=="char" || word=="long" || word=="short" || word=="double" || word=="boolean" || word=="byte" || word=="void")
     {
         return 1;
     }
-    else if(word=="static" || word=="final" || word=="void") //etc.
+    else if(word=="static" || word=="final")
     {
         return 2;
     }
-    else if(word=="for" || word=="if" || word=="while") //etc.
+    else if(word=="for" || word=="if" || word=="while" || word=="else" || word=="continue" || word=="break" || word == "return")
     {
         return 3;
     }
-    else if(word=="new")
+    else if(word=="import")
     {
         return 4;
+    }
+    else if(word=="class")
+    {
+        return 5;
+    }
+    else if(word=="this")
+    {
+        return 6;
+    }
+    else if(word=="public" || word=="protected" || word=="private")
+    {
+        return 7;
+    }
+    else if(word=="new")
+    {
+        return 8;
     }
     //everything else is just normal code, should be black (or some standard color).
     return 0;
