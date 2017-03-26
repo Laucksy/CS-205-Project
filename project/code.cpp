@@ -16,9 +16,13 @@ vector<string> Code::parse(string fileName)
     char commentTest[2];
 
     //going through each line of the selected file
-    ifstream file(fileName);
-    if(file.is_open())
+    ifstream file;
+    file.open(fileName, ifstream::in);
+    //cout << fileName << endl;
+
+    while(file.good())
     {
+        cout << "here" << endl;
         while(getline(file,line))
         {
             fullCode.push_back(line);
@@ -34,8 +38,10 @@ vector<string> Code::parse(string fileName)
         }
         file.close();
     }
-    else cout << "Unable to open file" << endl;
-
+    //prints out all items of fullCode
+    //only there to show to demonstrate functionality
+    for (auto i = fullCode.begin(); i != fullCode.end(); ++i)
+        cout << *i << ' ' << endl;
     return fullCode;
 }
 
@@ -138,4 +144,9 @@ int Code::categorize(string word)
     }
     //everything else is just normal code, should be black (or some standard color).
     return 0;
+}
+
+vector<string> Code::get_full_code()
+{
+    return fullCode;
 }

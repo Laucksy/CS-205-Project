@@ -23,8 +23,9 @@ public:
     vector<string> linesOfCode;
     void insert(int position);
     void deleteFeedback(int pos);
-
     int categorize(string word);
+    vector<string> get_full_code();
+
 
 
     ~Code();

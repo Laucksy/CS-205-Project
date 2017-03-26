@@ -8,3 +8,6 @@ SOURCES += main.cpp \
 
 HEADERS += \
     code.h
+
+DISTFILES += \
+    ../../../Desktop/Wheel.java
