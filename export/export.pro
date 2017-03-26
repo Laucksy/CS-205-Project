@@ -4,10 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    code.cpp
+    exporthtml.cpp
 
 HEADERS += \
-    code.h
-
-DISTFILES += \
-    ../../../Desktop/Wheel.java
+    exporthtml.h
