@@ -4,4 +4,5 @@ SUBDIRS += \
     project \
     git \
     DataStructure \
-    GUI
+    GUI \
+    export
