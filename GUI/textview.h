@@ -21,12 +21,18 @@ public:
     ~textView();
     void updateCode(int);
 
+    std::string student;
+
 
 
 private slots:
 
 
-    void on_tabWidget_tabBarClicked(int index);
+
+
+    void on_comboBox_activated(const QString &arg1);
+
+    void on_comboBox_2_activated(const QString &arg1);
 
 private:
     Ui::textView *ui;

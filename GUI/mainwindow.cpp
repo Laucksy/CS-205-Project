@@ -16,6 +16,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked()
 {
   textView *tv= new textView();
+
   tv->show();
   this->hide();
 }
