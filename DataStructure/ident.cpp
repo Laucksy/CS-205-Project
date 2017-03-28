@@ -14,12 +14,12 @@ int Ident::category_row_cnt = 0;
 int Ident::code_row_cnt = 0;
 int Ident::feedback_row_cnt = 0;
 
-string Ident::student_table;
-string Ident::assignment_table;
-string Ident::rubric_table;
-string Ident::category_table;
-string Ident::code_table;
-string Ident::feedback_table;
+string Ident::student_table = "student_table";
+string Ident::assignment_table = "assignment_table";
+string Ident::rubric_table = "rubric_table";
+string Ident::category_table = "category_table";
+string Ident::code_table = "code_table";
+string Ident::feedback_table = "feedback_table";
 
 Ident::Ident()
 {

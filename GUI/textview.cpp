@@ -33,18 +33,21 @@ void textView::updateCode(int index)
     case 1 :
     {
 
-        Code x;
+        DBTool* tool = new DBTool("TestDB");
+        Code* x = new Code(tool,"/home/erik/Desktop/Student.java",0);
+
+        cout << "Got here 1" << endl;
 
         //vector<string> v;
-        vector<string> v = x.parse("/Users/drewcarleton/Project205/axolotl/GUI/Student.java");
+        vector<string> v = x->parse();
         cerr<<v.size();
         ui->textBrowser->setText("");
         for(int i=0; i<v.size(); i++){
-            vector<string> t = x.tokenize(v[i]);
+            vector<string> t = x->tokenize(v[i]);
             for(int a=0; a<t.size();a++){
 
                 QString qstr = QString::fromStdString(t[a]);
-                int type = x.categorize(t[a]);
+                int type = x->categorize(t[a]);
                 switch(type)
                 {
                 case 1:
@@ -106,6 +109,7 @@ void textView::updateCode(int index)
                 // ui->textBrowser::moveCursor(  ui->textBrowser::End);
                 ui->textBrowser->insertPlainText(qstr+" ");
                 //  ui->textBrowser->append(qstr);
+                cout << "Testing" << endl;
             }
             ui->textBrowser->append("");
         }

@@ -19,7 +19,7 @@ class Code : public Ident, public DBTable
 public:
     Code();
     Code(DBTool* db, string n, int aid);
-    vector<string> parse(string fileName);
+    vector<string> parse();
     vector<string> tokenize(string line);
     vector<string> fullCode;
     vector<string> comments;

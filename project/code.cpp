@@ -37,7 +37,7 @@ Code::~Code() {
     }
 }
 
-vector<string> Code::parse(string fileName)
+vector<string> Code::parse()
 {
 
     string line;
@@ -46,7 +46,7 @@ vector<string> Code::parse(string fileName)
     //going through each line of the selected file
     ifstream file;
     file.open(fileName, ifstream::in);
-    //cout << fileName << endl;
+    cout << fileName << endl;
 
     while(file.good())
     {
@@ -70,7 +70,7 @@ vector<string> Code::parse(string fileName)
     //only there to show to demonstrate functionality
 //    for (auto i = fullCode.begin(); i != fullCode.end(); ++i)
 //        cout << *i << ' ' << endl;
-//    return fullCode;
+    return fullCode;
 }
 
 /*tokenize is a delimiter method, which parses a single string
