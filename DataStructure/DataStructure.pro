@@ -3,6 +3,8 @@ CONFIG += console c++11
 CONFIG -= app_bundle
 CONFIG -= qt
 
+LIBS += -l sqlite3
+
 SOURCES += main.cpp \
     student.cpp \
     assignments.cpp \
@@ -26,3 +28,9 @@ HEADERS += \
 HEADERS += ../project/code.h
 
 SOURCES += ../project/code.cpp
+
+HEADERS += dbtool.h \
+    dbtable.h
+
+SOURCES += dbtool.cpp \
+    dbtable.cpp
