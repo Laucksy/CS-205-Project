@@ -5,6 +5,7 @@
 
 using namespace std;
 
+// identification fixture
 class Ident
 {
 public:
@@ -12,6 +13,7 @@ public:
     Ident(char k);
     ~Ident();
 
+    // next available id
     static int id_student;
     static int id_assignment;
     static int id_rubric;
@@ -19,6 +21,7 @@ public:
     static int id_code;
     static int id_feedback;
 
+    // row count
     static int student_row_cnt;
     static int assignment_row_cnt;
     static int rubric_row_cnt;
@@ -26,6 +29,7 @@ public:
     static int code_row_cnt;
     static int feedback_row_cnt;
 
+    // table name
     static string student_table;
     static string assignment_table;
     static string rubric_table;

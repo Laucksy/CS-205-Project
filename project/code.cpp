@@ -2,17 +2,43 @@
 
 using namespace std;
 
-Code::Code()
+Code::Code() : Ident::Ident('o')
 {
 
 }
 
-Code::~Code() {
+Code::Code(DBTool* db, string n, int aid) : Ident::Ident('o'), DBTable::DBTable(db, code_table)
+{
+    // Load SQL specific to child class.
+    store_add_row_sql();
+    store_create_sql();
 
+    // must build table sepparately so new
+    // sql can be properly registered
+    build_table();
+    category_row_cnt = size();
+
+    isNew = true; // assumes object is unique and not in table
+
+    //initialize vars
+    fileName = n;
+    assignId = aid;
+}
+
+Code::~Code() {
+    // if valid object, adds or updates it in table
+    if (isNew && id >= 0) {
+        add_row(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+    } else if (!isNew && id >= 0){
+        update_id(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+    } else {
+
+    }
 }
 
 vector<string> Code::parse(string fileName)
 {
+
     string line;
     char commentTest[2];
 
@@ -156,3 +182,350 @@ vector<string> Code::get_full_code()
 {
     return fullCode;
 }
+
+// db parse
+// convert list to single string
+string Code::convert_full()
+{
+    string ret;
+
+    return ret;
+}
+
+string Code::convert_comments()
+{
+    string ret;
+
+    return ret;
+}
+
+string Code::convert_lines()
+{
+    string ret;
+
+    return ret;
+}
+
+// convert db string to list
+void Code::parse_full(string s)
+{
+    stringstream ss(s);
+
+    string i;
+
+}
+
+void Code::parse_comments(string s)
+{
+    stringstream ss(s);
+
+    string i;
+
+}
+
+void Code::parse_lines(string s)
+{
+    stringstream ss(s);
+
+    string i;
+
+}
+
+// database methods
+int Code::get_row_cnt()
+{
+    return row_cnt;
+}
+
+void Code::store_add_row_sql() {
+
+    sql_template =  "SELECT name ";
+    sql_template += "FROM   sqlite_master ";
+    sql_template += "WHERE";
+    sql_template += "    type = \"table\"";
+    sql_template += ";";
+
+}
+
+
+void Code::store_create_sql() {
+
+    //std::cerr << "calling store_create_sql from DBTableEx\n";
+
+    sql_create =  "CREATE TABLE ";
+    sql_create += table_name;
+    sql_create += " ( ";
+    sql_create += "  id INT PRIMARY KEY NOT NULL, ";
+    sql_create += "  name TEXT,";
+    sql_create += "  full TEXT,";
+    sql_create += "  comments TEXT,";
+    sql_create += "  line TEXT,";
+    sql_create += "  assignId INT";
+    sql_create += " );";
+
+}
+
+
+bool Code::add_row(int id, string name, string full,
+                   string comments, string line, int assignId) {
+    int   retCode = 0;
+    char *zErrMsg = 0;
+
+    char  tempval[128];
+
+    sql_add_row  = "INSERT INTO ";
+    sql_add_row += table_name;
+    sql_add_row += " ( id, name, full, comments, line, assignId ) ";
+    sql_add_row += "VALUES (";
+
+    sprintf (tempval, "%d", id);
+    sql_add_row += tempval;
+    sql_add_row += ", ";
+
+    sql_add_row += "\"";
+    sql_add_row += std::string(name);
+    sql_add_row += "\", ";
+
+    sql_add_row += "\"";
+    sql_add_row += std::string(full);
+    sql_add_row += "\", ";
+
+    sql_add_row += "\"";
+    sql_add_row += std::string(comments);
+    sql_add_row += "\", ";
+
+    sql_add_row += "\"";
+    sql_add_row += std::string(line);
+    sql_add_row += "\", ";
+
+    sprintf (tempval, "%d", assignId);
+    sql_add_row += tempval;
+
+    sql_add_row += " );";
+
+    //std::cout << sql_add_row << std::endl;
+
+    retCode = sqlite3_exec(curr_db->db_ref(),
+                           sql_add_row.c_str(),
+                           cb_add_row_code,
+                           this,
+                           &zErrMsg          );
+
+    if( retCode != SQLITE_OK ){
+
+        std::cerr << table_name
+                  << " template ::"
+                  << std::endl
+                  << "SQL error: "
+                  << zErrMsg;
+
+        sqlite3_free(zErrMsg);
+    }
+
+    return retCode;
+}
+
+// selects entry by unique id
+bool Code::select_id(int i) {
+
+    int   retCode = 0;
+    char *zErrMsg = 0;
+
+    sql_select_id  = "SELECT * FROM ";
+    sql_select_id += table_name;
+    sql_select_id += " WHERE ";
+    sql_select_id += "     id = ";
+    sql_select_id += to_string(i);
+    sql_select_id += ";";
+
+    retCode = sqlite3_exec(curr_db->db_ref(),
+                           sql_select_id.c_str(),
+                           cb_select_id_code,
+                           this,
+                           &zErrMsg          );
+
+    if( retCode != SQLITE_OK ){
+
+        std::cerr << table_name
+                  << " template ::"
+                  << std::endl
+                  << "SQL error: "
+                  << zErrMsg;
+
+        sqlite3_free(zErrMsg);
+    }
+
+    return retCode;
+}
+
+// updates entry by unique id
+bool Code::update_id(int id, string name, string full,
+                     string comments, string line, int assignId) {
+    int   retCode = 0;
+    char *zErrMsg = 0;
+
+    char  tempval[128];
+
+    sql_update_id  = "UPDATE ";
+    sql_update_id += table_name;
+    sql_update_id += " SET ";
+
+    sql_update_id += "name = ";
+    sql_update_id += "\"";
+    sql_update_id += std::string(name);
+    sql_update_id += "\", ";
+
+    sql_update_id += "full = ";
+    sql_update_id += "\"";
+    sql_update_id += std::string(full);
+    sql_update_id += "\", ";
+
+    sql_update_id += "comments = ";
+    sql_update_id += "\"";
+    sql_update_id += std::string(comments);
+    sql_update_id += "\", ";
+
+    sql_update_id += "line = ";
+    sql_update_id += "\"";
+    sql_update_id += std::string(line);
+    sql_update_id += "\", ";
+
+    sql_update_id += "assignId = ";
+    sprintf (tempval, "%d", assignId);
+    sql_update_id += tempval;
+
+    sql_update_id += " WHERE ";
+    sql_update_id += "id = ";
+    sprintf (tempval, "%d", id);
+    sql_update_id += tempval;
+
+    sql_update_id += " );";
+
+    //std::cout << sql_add_row << std::endl;
+
+    retCode = sqlite3_exec(curr_db->db_ref(),
+                           sql_update_id.c_str(),
+                           cb_update_id_code,
+                           this,
+                           &zErrMsg          );
+
+    if( retCode != SQLITE_OK ){
+
+        std::cerr << table_name
+                  << " template ::"
+                  << std::endl
+                  << "SQL error: "
+                  << zErrMsg;
+
+        sqlite3_free(zErrMsg);
+    }
+
+    return retCode;
+}
+
+// callbacks
+int cb_add_row_code(void  *data,
+                      int    argc,
+                      char **argv,
+                      char **azColName)
+{
+
+
+
+    std::cerr << "cb_add_row being called\n";
+
+    if(argc < 1) {
+        std::cerr << "No data presented to callback "
+                  << "argc = " << argc
+                  << std::endl;
+    }
+
+    int i;
+
+    Code *obj = (Code *) data;
+
+    std::cout << "------------------------------\n";
+    std::cout << obj->get_name()
+              << std::endl;
+
+    for(i = 0; i < argc; i++){
+
+        std::cout << azColName[i]
+                     << " = "
+                     <<  (argv[i] ? argv[i] : "NULL")
+                      << std::endl;
+    }
+
+    return 0;
+}
+
+int cb_select_id_code(void  *data,
+                        int    argc,
+                        char **argv,
+                        char **azColName)
+{
+
+
+
+    std::cerr << "cb_select_all being called\n";
+
+    if(argc < 1) {
+        std::cerr << "No data presented to callback "
+                  << "argc = " << argc
+                  << std::endl;
+    }
+
+    int i;
+
+    Code *obj = (Code *) data;
+    obj->isNew = false; // object was generated from table
+
+    std::cout << "------------------------------\n";
+    std::cout << obj->get_name()
+              << std::endl;
+
+    // assign object members from table data
+    obj->fileName = argv[1];
+    obj->parse_full(argv[2]);
+    obj->parse_comments(argv[3]);
+    obj->parse_lines(argv[4]);
+    obj->assignId = (int)*argv[5];
+
+    return 0;
+}
+
+int cb_update_id_code(void  *data,
+                        int    argc,
+                        char **argv,
+                        char **azColName)
+{
+
+
+
+    std::cerr << "cb_add_row being called\n";
+
+    if(argc < 1) {
+        std::cerr << "No data presented to callback "
+                  << "argc = " << argc
+                  << std::endl;
+    }
+
+    int i;
+
+    Code *obj = (Code *) data;
+
+    std::cout << "------------------------------\n";
+    std::cout << obj->get_name()
+              << std::endl;
+
+    for(i = 0; i < argc; i++){
+        std::cout << azColName[i]
+                     << " = "
+                     <<  (argv[i] ? argv[i] : "NULL")
+                      << std::endl;
+    }
+
+    return 0;
+}
+
+

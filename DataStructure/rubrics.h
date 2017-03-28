@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// holds all rubrics made by instructor
 class Rubrics
 {
 public:

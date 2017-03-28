@@ -8,6 +8,7 @@
 
 using namespace std;
 
+// list class to hold assignment submissions
 class Assignment;
 
 class Assignments
