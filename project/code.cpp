@@ -41,9 +41,9 @@ vector<string> Code::parse(string fileName)
     }
     //prints out all items of fullCode
     //only there to show to demonstrate functionality
-    for (auto i = fullCode.begin(); i != fullCode.end(); ++i)
-        cout << *i << ' ' << endl;
-    return fullCode;
+//    for (auto i = fullCode.begin(); i != fullCode.end(); ++i)
+//        cout << *i << ' ' << endl;
+//    return fullCode;
 }
 
 /*tokenize is a delimiter method, which parses a single string
@@ -53,7 +53,7 @@ vector<string> Code::parse(string fileName)
 vector<string> Code::tokenize(string line)
 {
     vector<string> tokens;
-    vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*' };
+    vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@' };
 
     stringstream ss(line);
 
@@ -65,8 +65,8 @@ vector<string> Code::tokenize(string line)
 
         for(unsigned long x = 0; x < delimiterChars.size(); x++)
         {
-            if (ss.peek() == delimiterChars[x])
-                ss.ignore();
+            if (ss.peek() == delimiterChars.at(x))
+               ss.ignore();
         }
     }
 
