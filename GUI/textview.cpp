@@ -41,7 +41,12 @@ void textView::updateCode(int index)
         ui->textBrowser->setText("");
         for(int i=0; i<v.size(); i++){
             vector<string> t = x->tokenize(v[i]);
+            vector<string> delims = x->delimiters(v.at(i));
             for(int a=0; a<t.size();a++){
+                string rawHTML = (a < delims.size()) ? delims.at(a) : " ";
+                QString qstr1 = QString::fromStdString(rawHTML);
+                ui->textBrowser->setTextColor("black");
+                ui->textBrowser->insertPlainText(qstr1);
 
                 QString qstr = QString::fromStdString(t[a]);
                 int type = x->categorize(t[a]);
@@ -82,7 +87,7 @@ void textView::updateCode(int index)
 
                 // ui->textBrowser->moveCursor(QTextCursor::End);
                 // ui->textBrowser::moveCursor(  ui->textBrowser::End);
-                ui->textBrowser->insertPlainText(qstr+" ");
+                ui->textBrowser->insertPlainText(qstr);
                 //  ui->textBrowser->append(qstr);
                 cout << "Testing" << endl;
             }

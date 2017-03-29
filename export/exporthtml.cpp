@@ -10,7 +10,7 @@ ExportHTML::~ExportHTML() {
 
 string ExportHTML::export_assignment(Assignment* a) {
     string rawHTML = "";
-    rawHTML += "<html><head></head><body>";
+    rawHTML += "<html><head><style>p {margin: 2px;} span {font-size:75%;}</style></head><body>";
 
     if(a != nullptr) {
         ofstream file;
@@ -21,12 +21,12 @@ string ExportHTML::export_assignment(Assignment* a) {
         vector<string> v = firstFile->parse();
         for(int i = 0; i < v.size(); i++){
             vector<string> tokens = firstFile->tokenize(v.at(i));
+            vector<string> delims = firstFile->delimiters(v.at(i));
             rawHTML += "<p>";
             for(unsigned j = 0; j < tokens.size(); j++) {
-                //if(firstFile->categorize(tokens.at(j)) == 0)
-                    //rawHTML += "<span color='black'>" + tokens.at(j) + "</span>";
-                //else
-                    //rawHTML += "<span color='red'>" + tokens.at(j) + "</span>";
+                rawHTML += "<span>";
+                rawHTML += (j < delims.size()) ? delims.at(j) : " ";
+                rawHTML += "</span>";
                 int type = firstFile->categorize(tokens.at(j));
                 switch(type)
                 {
@@ -61,7 +61,8 @@ string ExportHTML::export_assignment(Assignment* a) {
                     rawHTML += "<span cstyle='color:black;'>" + tokens.at(j) + "</span>";
                     break;
                 }
-                rawHTML += " ";
+                //rawHTML += " ";
+                //rawHTML += (j < delims.size()) ? delims.at(j) : " ";
             }
             rawHTML += "</p>";
         }

@@ -21,6 +21,7 @@ public:
     Code(DBTool* db, string n, int aid);
     vector<string> parse();
     vector<string> tokenize(string line);
+    vector<string> delimiters(string line);
     vector<string> fullCode;
     vector<string> comments;
     vector<string> linesOfCode;
