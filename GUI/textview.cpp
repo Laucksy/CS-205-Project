@@ -18,8 +18,11 @@ textView::~textView()
 
 void textView::updateCode(int index)
 {
+    int tabCounter=0;
     vector<string> lines;
     bool comment=false;
+    bool lineComment=false;
+    bool bracket=false;
 
     // ui->textBrowser->setSizePolicy();
     QString code1="hi";
@@ -31,7 +34,7 @@ void textView::updateCode(int index)
         break;
     case 1 :
         DBTool* tool = new DBTool("TestDB");
-        Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/Student.java",0);
+        Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java",0);
 
         cout << "Got here 1" << endl;
 
@@ -52,6 +55,15 @@ void textView::updateCode(int index)
                 int type = x->categorize(t[a]);
               //  int dtype = x->categorize()
                // int delimType= x->categorize(delims[a]);
+                if(a==0&&type==11)
+                {
+                    lineComment=true;
+                }
+                else if(a==0&&type!=11)
+                {
+                    lineComment=false;
+                }
+
                if(type==9){
                 comment=true;
                }
@@ -94,6 +106,13 @@ void textView::updateCode(int index)
                     case 11:
                         ui->textBrowser->setTextColor("green");
                         break;
+                    case 12:
+                        tabCounter++;
+                        bracket=true;
+                        break;
+                    case 13:
+                        tabCounter--;
+                        break;
                     case 0:
                         ui->textBrowser->setTextColor("black");
                         break;
@@ -102,9 +121,34 @@ void textView::updateCode(int index)
                         break;
                     }
 
-                    if(comment)
+                    if(comment||lineComment)
                     {
                         ui->textBrowser->setTextColor("green");
+
+                    }
+
+                    if(a==0){
+                        //for(int tabs=0;tabs<tabCounter;tabCounter++){
+                        if(bracket){
+                            for(int tabs=0;tabs<tabCounter-1;tabs++)
+                            {
+                                    ui->textBrowser->insertPlainText("    ");
+
+                            }
+                            bracket=false;
+
+                        }
+                        else
+                        {
+
+                           for(int tabs=0;tabs<tabCounter;tabs++)
+                           {
+                                   ui->textBrowser->insertPlainText("    ");
+
+                           }
+                        }
+
+                       // }
                     }
 
 //                else{

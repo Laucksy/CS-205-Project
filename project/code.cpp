@@ -212,9 +212,17 @@ int Code::categorize(string word)
     {
         return 10;
     }
-    else if (word=="@")
+    else if (word=="//")
     {
         return 11;
+    }
+    else if (word=="{")
+    {
+        return 12;
+    }
+    else if (word=="}")
+    {
+        return 13;
     }
     //everything else is just normal code, should be black (or some standard color).
     return 0;
