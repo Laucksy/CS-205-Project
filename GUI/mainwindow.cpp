@@ -21,3 +21,21 @@ void MainWindow::on_pushButton_clicked()
   this->hide();
 }
 
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    NewUser *nv= new NewUser();
+
+    nv->show();
+    this->hide();
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    ForgotPassword *fv= new ForgotPassword();
+
+    fv->show();
+    this->hide();
+}
+
+

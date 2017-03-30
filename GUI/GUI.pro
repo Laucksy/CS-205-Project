@@ -27,20 +27,26 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     textview.cpp \
     dataview.cpp \
-    rubrics.cpp
+    rubrics.cpp \
+    newuser.cpp \
+    forgotpassword.cpp
 
 
 
 HEADERS  += mainwindow.h \
     textview.h \
     dataview.h \
-    rubrics.h
+    rubrics.h \
+    newuser.h \
+    forgotpassword.h
 
 
 FORMS    += mainwindow.ui \
     textview.ui \
     dataview.ui \
-    rubrics.ui
+    rubrics.ui \
+    newuser.ui \
+    forgotpassword.ui
 
 RESOURCES += \
     logo.qrc

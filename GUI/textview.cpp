@@ -62,7 +62,7 @@ void textView::updateCode(int index)
                     switch(type)
                     {
                     case 1:
-                        ui->textBrowser->setTextColor("red");
+                        ui->textBrowser->setTextColor("Deepskyblue");
                         break;
                     case 2:
                         ui->textBrowser->setTextColor("Mediumvioletred");

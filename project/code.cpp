@@ -172,7 +172,7 @@ int Code::categorize(string word)
     /*categorize returns an int corresponding with the category the word falls in,
      * which can be used in coloring each word via cascade of if statements.
      */
-    if(word=="float" || word=="string" || word=="int" || word=="char" || word=="long" || word=="short" || word=="double" || word=="boolean" || word=="byte" || word=="void")
+    if(word=="float" || word=="string" || word=="int" || word=="char" || word=="long" || word=="short" || word=="double" || word=="boolean" || word=="byte" || word=="void"||word=="String")
     {
         return 1;
     }
