@@ -37,7 +37,7 @@ Code::~Code() {
     }
 }
 
-vector<string> Code::parse(string fileName)
+vector<string> Code::parse()
 {
 
     string line;
@@ -46,7 +46,7 @@ vector<string> Code::parse(string fileName)
     //going through each line of the selected file
     ifstream file;
     file.open(fileName, ifstream::in);
-    //cout << fileName << endl;
+    cout << fileName << endl;
 
     while(file.good())
     {
@@ -70,7 +70,7 @@ vector<string> Code::parse(string fileName)
     //only there to show to demonstrate functionality
 //    for (auto i = fullCode.begin(); i != fullCode.end(); ++i)
 //        cout << *i << ' ' << endl;
-//    return fullCode;
+    return fullCode;
 }
 
 /*tokenize is a delimiter method, which parses a single string
@@ -103,6 +103,34 @@ vector<string> Code::tokenize(string line)
     return tokens;
 }
 
+vector<string> Code::delimiters(string line)
+{
+    vector<string> delims;
+    vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@' };
+    vector<string> delimiterStrings = {" ", ",", ".", ":", "\t", "(", ")", "/", ";", "[", "]", "{", "}", "*", "@"};
+
+    stringstream ss(line);
+
+    string i;
+
+    while (ss >> i)
+    {
+        //tokens.push_back(i);
+
+        for(unsigned long x = 0; x < delimiterChars.size(); x++)
+        {
+            if (ss.peek() == delimiterChars.at(x)) {
+               ss.ignore();
+               delims.push_back(delimiterStrings.at(x));
+            }
+        }
+    }
+
+    //for (unsigned long j =0; j< tokens.size(); j++)
+        //cout << tokens.at(j)<< endl;
+
+    return delims;
+}
 
 void Code::insert(int position)
 {
@@ -174,6 +202,18 @@ int Code::categorize(string word)
     else if(word=="new")
     {
         return 8;
+    }
+    else if (word=="/**")
+    {
+        return 9;
+    }
+    else if (word=="*/")
+    {
+        return 10;
+    }
+    else if (word=="@")
+    {
+        return 11;
     }
     //everything else is just normal code, should be black (or some standard color).
     return 0;

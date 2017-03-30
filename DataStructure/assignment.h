@@ -32,6 +32,8 @@ public:
     void change_grade(double g, string c);
     double get_grade();
 
+    void add_code(Code* c);
+
     // db parse methods
     string convert_category();
     string convert_component();

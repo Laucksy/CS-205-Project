@@ -26,15 +26,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     textview.cpp \
+    dataview.cpp \
+    rubrics.cpp
 
 
 
 HEADERS  += mainwindow.h \
     textview.h \
+    dataview.h \
+    rubrics.h
 
 
 FORMS    += mainwindow.ui \
-    textview.ui
+    textview.ui \
+    dataview.ui \
+    rubrics.ui
 
 RESOURCES += \
     logo.qrc

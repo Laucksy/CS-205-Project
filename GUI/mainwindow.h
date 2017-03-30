@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "textview.h"
+#include "dataview.h"
 
 namespace Ui {
 class MainWindow;

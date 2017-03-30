@@ -85,6 +85,10 @@ double Assignment::get_grade()
     return grade;
 }
 
+void Assignment::add_code(Code *c) {
+    files.push_back(c);
+}
+
 // db parse
 // convert list to single string
 string Assignment::convert_category()

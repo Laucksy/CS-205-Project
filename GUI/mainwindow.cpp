@@ -15,9 +15,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-  textView *tv= new textView();
+  DataView *dv= new DataView();
 
-  tv->show();
+  dv->show();
   this->hide();
 }
 
