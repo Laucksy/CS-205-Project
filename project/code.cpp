@@ -105,6 +105,34 @@ vector<string> Code::tokenize(string line)
     return tokens;
 }
 
+vector<string> Code::delimiters(string line)
+{
+    vector<string> delims;
+    vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@' };
+    vector<string> delimiterStrings = {" ", ",", ".", ":", "\t", "(", ")", "/", ";", "[", "]", "{", "}", "*", "@"};
+
+    stringstream ss(line);
+
+    string i;
+
+    while (ss >> i)
+    {
+        //tokens.push_back(i);
+
+        for(unsigned long x = 0; x < delimiterChars.size(); x++)
+        {
+            if (ss.peek() == delimiterChars.at(x)) {
+               ss.ignore();
+               delims.push_back(delimiterStrings.at(x));
+            }
+        }
+    }
+
+    //for (unsigned long j =0; j< tokens.size(); j++)
+        //cout << tokens.at(j)<< endl;
+
+    return delims;
+}
 
 void Code::insert(int position)
 {

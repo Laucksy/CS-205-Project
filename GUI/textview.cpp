@@ -28,11 +28,8 @@ void textView::updateCode(int index)
     case 0 :
         ui->textBrowser->setTextColor("red");
         ui->textBrowser->setText(code1);
-
         break;
     case 1 :
-    {
-
         DBTool* tool = new DBTool("TestDB");
         Code* x = new Code(tool,"/home/erik/Desktop/Student.java",0);
 
@@ -44,91 +41,60 @@ void textView::updateCode(int index)
         ui->textBrowser->setText("");
         for(int i=0; i<v.size(); i++){
             vector<string> t = x->tokenize(v[i]);
+            vector<string> delims = x->delimiters(v.at(i));
             for(int a=0; a<t.size();a++){
+                string rawHTML = (a < delims.size()) ? delims.at(a) : " ";
+                QString qstr1 = QString::fromStdString(rawHTML);
+                ui->textBrowser->setTextColor("black");
+                ui->textBrowser->insertPlainText(qstr1);
 
                 QString qstr = QString::fromStdString(t[a]);
                 int type = x->categorize(t[a]);
                 switch(type)
                 {
                 case 1:
-                {
                     ui->textBrowser->setTextColor("red");
-                }
                     break;
                 case 2:
-                {
                     ui->textBrowser->setTextColor("cyan");
-                }
                     break;
                 case 3:
-                {
                     ui->textBrowser->setTextColor("aqua");
-                }
                     break;
                 case 4:
-                {
                     ui->textBrowser->setTextColor("green");
-                }
                     break;
                 case 5:
-                {
                     ui->textBrowser->setTextColor("yellow");
-                }
                     break;
                 case 6:
-                {
                     ui->textBrowser->setTextColor("orange");
-                }
                     break;
                 case 7:
-                {
                     ui->textBrowser->setTextColor("blue");
-                }
                     break;
                 case 8:
-                {
                     ui->textBrowser->setTextColor("pink");
-                }
                     break;
                 case 0:
-                {
                     ui->textBrowser->setTextColor("black");
-                }
                     break;
-
-                default:{
-
-
+                default:
                     ui->textBrowser->setTextColor("black");
-                }
                     break;
                 }
 
 
                 // ui->textBrowser->moveCursor(QTextCursor::End);
                 // ui->textBrowser::moveCursor(  ui->textBrowser::End);
-                ui->textBrowser->insertPlainText(qstr+" ");
+                ui->textBrowser->insertPlainText(qstr);
                 //  ui->textBrowser->append(qstr);
                 cout << "Testing" << endl;
             }
             ui->textBrowser->append("");
         }
     }
-
-
-
-
-    }
-
-
 }
-
-
-
-
-
-
-
 
 void textView::on_comboBox_activated(const QString &arg1)
 {
