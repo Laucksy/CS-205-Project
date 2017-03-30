@@ -25,6 +25,16 @@ Feedback::Feedback(DBTool* db, string te, string ta, int cid, int p): Ident::Ide
     int position = p;
 }
 
+void Feedback::change_text(string txt)
+{
+    text = txt;
+}
+
+void Feedback::update_tag(string t)
+{
+    tag = t;
+}
+
 Feedback::~Feedback()
 {
     // if valid object, adds or updates it in table

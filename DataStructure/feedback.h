@@ -39,14 +39,18 @@ public:
 
     string text;
     string tag;
+    void change_text(string txt);
+    void update_tag(string t);
+
+    //this is database stuff
     int codeId;
     int position;
     bool isNew;
 
 protected:
     // sql command templates
-    std::string sql_select_id;
-    std::string sql_update_id;
+    string sql_select_id;
+    string sql_update_id;
 };
 
 // This is a callback function that is sent to the library and used

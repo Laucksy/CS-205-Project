@@ -1,4 +1,5 @@
-
+//#include <boost/algorithm/string.hpp>
+//using namespace boost;
 #include "code.h"
 
 using namespace std;
@@ -92,8 +93,9 @@ vector<string> Code::tokenize(string line)
 
         for(unsigned long x = 0; x < delimiterChars.size(); x++)
         {
-            if (ss.peek() == delimiterChars.at(x))
-               ss.ignore();
+            //boost::split(strs, sample, boost::is_any_of("/"));
+            //if (ss.peek() == delimiterChars.at(x))
+               //ss.ignore();
         }
     }
 
@@ -157,7 +159,6 @@ void Code::add_feedback(Feedback newComment)
 }
 
 
-//THIS METHOD IS INCOMPLETE.
 int Code::categorize(string word)
 {
     /*here, maybe should traverse through each word in each string of the vector,
