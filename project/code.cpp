@@ -172,7 +172,7 @@ int Code::categorize(string word)
     /*categorize returns an int corresponding with the category the word falls in,
      * which can be used in coloring each word via cascade of if statements.
      */
-    if(word=="float" || word=="string" || word=="int" || word=="char" || word=="long" || word=="short" || word=="double" || word=="boolean" || word=="byte" || word=="void")
+    if(word=="float" || word=="string" || word=="int" || word=="char" || word=="long" || word=="short" || word=="double" || word=="boolean" || word=="byte" || word=="void"||word=="String")
     {
         return 1;
     }
@@ -212,9 +212,17 @@ int Code::categorize(string word)
     {
         return 10;
     }
-    else if (word=="@")
+    else if (word=="//")
     {
         return 11;
+    }
+    else if (word=="{")
+    {
+        return 12;
+    }
+    else if (word=="}")
+    {
+        return 13;
     }
     //everything else is just normal code, should be black (or some standard color).
     return 0;
