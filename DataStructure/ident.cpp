@@ -2,6 +2,7 @@
 
 int Ident::id_student = 0;
 int Ident::id_assignment = 0;
+int Ident::id_assignments = 0;
 int Ident::id_rubric = 0;
 int Ident::id_category = 0;
 int Ident::id_code = 0;
@@ -9,6 +10,7 @@ int Ident::id_feedback = 0;
 
 int Ident::student_row_cnt = 0;
 int Ident::assignment_row_cnt = 0;
+int Ident::assignments_row_cnt = 0;
 int Ident::rubric_row_cnt = 0;
 int Ident::category_row_cnt = 0;
 int Ident::code_row_cnt = 0;
@@ -16,6 +18,7 @@ int Ident::feedback_row_cnt = 0;
 
 string Ident::student_table = "student_table";
 string Ident::assignment_table = "assignment_table";
+string Ident::assignments_table = "assignments_table";
 string Ident::rubric_table = "rubric_table";
 string Ident::category_table = "category_table";
 string Ident::code_table = "code_table";
@@ -40,6 +43,12 @@ Ident::Ident(char k)
         // object is assignment, increment assignment id
         id = id_assignment;
         id_assignment++;
+        break;
+
+    case 'l':
+        // object is assignments, increment assignments id
+        id = id_assignments;
+        id_assignments++;
         break;
 
     case 'r':

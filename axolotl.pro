@@ -5,4 +5,5 @@ SUBDIRS += \
     git \
     DataStructure \
     GUI \
-    export
+    export \
+    Integration
