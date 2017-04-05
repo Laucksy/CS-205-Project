@@ -42,18 +42,22 @@ vector<string> Code::parse()
 {
 
     string line;
+    string space =" ";
     char commentTest[2];
 
     //going through each line of the selected file
     ifstream file;
     file.open(fileName, ifstream::in);
     cout << fileName << endl;
-
+    int cnt=0;
     while(file.good())
     {
         cout << "here" << endl;
         while(getline(file,line))
         {
+          // std::string s = std::to_string(cnt);
+           // line=s+space+line;
+            cnt++;
             fullCode.push_back(line);
             line.copy(commentTest,2,0);
             //if first two lines of code are //, then it is a comment
@@ -99,8 +103,8 @@ vector<string> Code::tokenize(string line)
         }
     }
 
-    for (unsigned long j =0; j< tokens.size(); j++)
-        cout << tokens.at(j)<< endl;
+   // for (unsigned long j =0; j< tokens.size(); j++)
+     //   cout << tokens.at(j)<< endl;
 
     return tokens;
 }
