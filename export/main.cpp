@@ -19,6 +19,9 @@ int main(int argc, char *argv[])
     Code* x = new Code(tool,"/home/erik/Desktop/Student.java",0);
     assignment->add_code(x);
     cout << "First " << x << endl;
+    Code* y = new Code(tool,"/home/erik/Desktop/JavaIntro.java",0);
+    assignment->add_code(y);
+    cout << "First " << y << endl;
 
     cout << ExportHTML::export_assignment(assignment) << endl;
     return 0;

@@ -94,8 +94,8 @@ vector<string> Code::tokenize(string line)
         for(unsigned long x = 0; x < delimiterChars.size(); x++)
         {
             //boost::split(strs, sample, boost::is_any_of("/"));
-            //if (ss.peek() == delimiterChars.at(x))
-               //ss.ignore();
+            if (ss.peek() == delimiterChars.at(x))
+                ss.ignore();
         }
     }
 
