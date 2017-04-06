@@ -48,12 +48,12 @@ string ExportHTML::export_assignment(Assignment* a) {
                 vector<string> tokens = firstFile->tokenize(v.at(i));
                 vector<string> delims = firstFile->delimiters(v.at(i));
                 for(unsigned j = 0; j < delims.size(); j++) {
-                    cout << "DELIMS" << delims.at(j);
+                    cout << "DELIMS" << delims.at(j) << endl;
                 }
-                cout << endl;
+                //cout << endl;
                 string cumulativeLine = "";
-                if(i > 0 && v.at(i-1) == "    public Student()")
-                    cout << "AAAA" << delims.size() << "AAAA" << endl;
+                //if(i > 0 && v.at(i-1) == "    public Student()")
+                    //cout << "AAAA" << delims.size() << "AAAA" << endl;
                 rawHTML += "<p>";
                 //for(unsigned j = 0; j < delims.size() && j < tokens.size(); j++)
                 //cout << tokens.at(j) + ".........." + delims.at(j) << endl;
@@ -73,8 +73,8 @@ string ExportHTML::export_assignment(Assignment* a) {
                     else if(type == 10)
                         comment=false;
 
-                    if(comment || lineComment)
-                        type = 10;
+                    //if(comment || lineComment)
+                        //type = 9;
 
                     if(j == 0) {
                         if(bracket) {
@@ -139,31 +139,49 @@ string ExportHTML::export_assignment(Assignment* a) {
                         break;
                     }
 
+                    if(tabCounter > 0) {
+                        for(int tc = 0; tc < tabCounter; tc++) {
+                            rawHTML += "<span>&emsp;</span>";
+                        }
+                        cumulativeLine += tokens.at(0);
+                        tokens.erase(tokens.begin());
+                        continue;
+                    }
+
+                    if(tokens.at(0) == " " /*|| tokens.at(0) == ""*/) {
+                        rawHTML += "<span>&nbsp;</span>";
+                        cumulativeLine += tokens.at(0);
+                        tokens.erase(tokens.begin());
+                        continue;
+                    }
+
                     //cout << (cumulativeLine + tokens.at(0)) << "AAAA" << v.at(i).find(cumulativeLine + tokens.at(0)) << "AAAA" << v.at(i).length() << endl;
                     cout << cumulativeLine << "BBBBBB" << v.at(i) << endl;
 
-                    if(delims.size() > 0)
-                        cout << delims.front();
-                    cout << "CCCCCC";
-                    if(tokens.size() > 0)
-                        cout << tokens.front();
-                    cout << endl;
-                    if(delims.size() > 0)
-                        cout << v.at(i).length() << "AAAA" << v.at(i).find(cumulativeLine + delims.at(0)) < v.at(i).length() << "BBBB:" << v.at(i).find(cumulativeLine + delims.at(0)) << endl;
-                    if(delims.size() > 0 && v.at(i).find(cumulativeLine + delims.at(0)) != string::npos && v.at(i).find(cumulativeLine + delims.at(0)) < v.at(i).length()) {
-                        cout << "delims" << endl;
+                    //if(delims.size() > 0)
+                        //cout << delims.front();
+                    //cout << "CCCCCC";
+                    //if(tokens.size() > 0)
+                        //cout << tokens.front();
+                    //cout << endl;
+                    //if(delims.size() > 0)
+                        //cout << v.at(i).length() << "AAAA" << v.at(i).find(cumulativeLine + delims.at(0)) < v.at(i).length() << "BBBB:" << v.at(i).find(cumulativeLine + delims.at(0)) << endl;
+                    bool delimFound = v.at(i).find(cumulativeLine + delims.at(0)) == 0;
+                    bool tokenFound = v.at(i).find(cumulativeLine + tokens.at(0)) == 0;
+                    if(delims.size() > 0 && delimFound && !tokenFound) {
+                        //cout << "delims" << endl;
                         rawHTML += delims.at(0);
                         cumulativeLine += delims.at(0);
-                        cout << "ZZZZZZZZZZZ" << delims.at(0) << "ZZZZZZZZZZZZ" << endl;
+                        //cout << "ZZZZZZZZZZZ" << delims.at(0) << "ZZZZZZZZZZZZ" << endl;
                         delims.erase(delims.begin());
                     }
-                    else if(tokens.size() > 0 && v.at(i).find(cumulativeLine + tokens.at(0)) != string::npos && v.at(i).find(cumulativeLine + tokens.at(0)) < v.at(i).length()) {
-                        cout << "token" << endl;
+                    else if(tokens.size() > 0 && tokenFound) {
+                        //cout << "token" << endl;
                         rawHTML += tokens.at(0);
                         cumulativeLine += tokens.at(0);
                         tokens.erase(tokens.begin());
                     } else if(tokens.size() > 0 && delims.size() == 0) {
-                        cout << "token" << endl;
+                        //cout << "token" << endl;
                         rawHTML += tokens.at(0);
                         cumulativeLine += tokens.at(0);
                         tokens.erase(tokens.begin());
