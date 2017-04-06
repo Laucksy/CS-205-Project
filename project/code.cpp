@@ -38,6 +38,11 @@ Code::~Code() {
     }
 }
 
+void Code::set_file(string name)
+{
+fileName = name;
+}
+
 vector<string> Code::parse()
 {
 
@@ -84,27 +89,20 @@ vector<string> Code::parse()
  */
 vector<string> Code::tokenize(string line)
 {
+    stringstream ss(line);
     vector<string> tokens;
+    string t;
     vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@' };
 
-    stringstream ss(line);
-
-    string i;
-
-    while (ss >> i)
+    for(unsigned int x = 0; x < delimiterChars.size(); x++)
     {
-        tokens.push_back(i);
-
-        for(unsigned long x = 0; x < delimiterChars.size(); x++)
-        {
-            //boost::split(strs, sample, boost::is_any_of("/"));
-            if (ss.peek() == delimiterChars.at(x))
-                ss.ignore();
-        }
+    while (getline(ss,t,delimiterChars.at(x)))
+    {        
+            tokens.push_back(t);
     }
-
-   // for (unsigned long j =0; j< tokens.size(); j++)
-     //   cout << tokens.at(j)<< endl;
+    }
+    for (unsigned long j =0; j< tokens.size(); j++)
+        cout << tokens.at(j)<< endl;
 
     return tokens;
 }
