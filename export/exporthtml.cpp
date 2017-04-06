@@ -47,11 +47,21 @@ string ExportHTML::export_assignment(Assignment* a) {
             for(unsigned i = 0; i < v.size(); i++){
                 vector<string> tokens = firstFile->tokenize(v.at(i));
                 vector<string> delims = firstFile->delimiters(v.at(i));
+                for(unsigned j = 0; j < delims.size(); j++) {
+                    cout << "DELIMS" << delims.at(j);
+                }
+                cout << endl;
+                string cumulativeLine = "";
+                if(i > 0 && v.at(i-1) == "    public Student()")
+                    cout << "AAAA" << delims.size() << "AAAA" << endl;
                 rawHTML += "<p>";
-                for(unsigned j = 0; j < tokens.size(); j++) {
-                    rawHTML += "<span>";
-                    rawHTML += (j < delims.size()) ? delims.at(j) : " ";
-                    rawHTML += "</span>";
+                //for(unsigned j = 0; j < delims.size() && j < tokens.size(); j++)
+                //cout << tokens.at(j) + ".........." + delims.at(j) << endl;
+
+                int j = 0;
+                while(tokens.size() > 0/* && delims.size() > 0*/) {
+                    //for(unsigned j = 0; j < tokens.size(); j++) {
+                    //cout << "Token size: " << tokens.size() << endl;
                     int type = firstFile->categorize(tokens.at(j));
 
                     if(j == 0 && type == 11)
@@ -63,39 +73,56 @@ string ExportHTML::export_assignment(Assignment* a) {
                     else if(type == 10)
                         comment=false;
 
+                    if(comment || lineComment)
+                        type = 10;
+
+                    if(j == 0) {
+                        if(bracket) {
+                            for(int tabs = 0; tabs < tabCounter-1; tabs++) {
+                                rawHTML += "<span>&emsp;</span>";
+                            }
+                            bracket=false;
+                        }
+                        else {
+                            for(int tabs = 0; tabs < tabCounter; tabs++) {
+                                rawHTML += "<span>&emsp;</span>";
+                            }
+                        }
+                    }
+
                     switch(type) {
                     case 1:
-                        rawHTML += "<span style='color:Deepskyblue;'>" + tokens.at(j) + "</span>";
+                        rawHTML += "<span style='color:Deepskyblue;'>";
                         break;
                     case 2:
-                        rawHTML += "<span style='color:Mediumvioletred;'>" + tokens.at(j) + "</span>";
+                        rawHTML += "<span style='color:Mediumvioletred;'>";
                         break;
                     case 3:
-                        rawHTML += "<span style='color:Mediumvioletred;'>" + tokens.at(j) + "</span>";
+                        rawHTML += "<span style='color:Mediumvioletred;'>";
                         break;
                     case 4:
-                        rawHTML += "<span style='color:red;'>" + tokens.at(j) + "</span>";
+                        rawHTML += "<span style='color:red;'>";
                         break;
                     case 5:
-                        rawHTML += "<span style='color:red;'>" + tokens.at(j) + "</span>";
+                        rawHTML += "<span style='color:red;'>";
                         break;
                     case 6:
-                        rawHTML += "<span style='color:Dodgerblue;'>" + tokens.at(j) + "</span>";
+                        rawHTML += "<span style='color:Dodgerblue;'>";
                         break;
                     case 7:
-                        rawHTML += "<span style='color:Mediumvioletred;'>" + tokens.at(j) + "</span>";
+                        rawHTML += "<span style='color:Mediumvioletred;'>";
                         break;
                     case 8:
-                        rawHTML += "<span style='color:Mediumvioletred;'>" + tokens.at(j) + "</span>";
+                        rawHTML += "<span style='color:Mediumvioletred;'>";
                         break;
                     case 9:
-                        rawHTML += "<span style='color:green;'>" + tokens.at(j) + "</span>";
+                        rawHTML += "<span style='color:green;'>";
                         break;
                     case 10:
-                        rawHTML += "<span style='color:green;'>" + tokens.at(j) + "</span>";
+                        rawHTML += "<span style='color:green;'>";
                         break;
                     case 11:
-                        rawHTML += "<span style='color:green;'>" + tokens.at(j) + "</span>";
+                        rawHTML += "<span style='color:green;'>";
                         break;
                     case 12:
                         tabCounter++;
@@ -105,28 +132,50 @@ string ExportHTML::export_assignment(Assignment* a) {
                         tabCounter--;
                         break;
                     case 0:
-                        rawHTML += "<span style='color:black;'>" + tokens.at(j) + "</span>";
+                        rawHTML += "<span style='color:black;'>";
                         break;
                     default:
-                        rawHTML += "<span cstyle='color:black;'>" + tokens.at(j) + "</span>";
+                        rawHTML += "<span cstyle='color:black;'>";
                         break;
                     }
-                    if(comment || lineComment) {
-                        //ui->textBrowser->setTextColor("green");
+
+                    //cout << (cumulativeLine + tokens.at(0)) << "AAAA" << v.at(i).find(cumulativeLine + tokens.at(0)) << "AAAA" << v.at(i).length() << endl;
+                    cout << cumulativeLine << "BBBBBB" << v.at(i) << endl;
+
+                    if(delims.size() > 0)
+                        cout << delims.front();
+                    cout << "CCCCCC";
+                    if(tokens.size() > 0)
+                        cout << tokens.front();
+                    cout << endl;
+                    if(delims.size() > 0)
+                        cout << v.at(i).length() << "AAAA" << v.at(i).find(cumulativeLine + delims.at(0)) < v.at(i).length() << "BBBB:" << v.at(i).find(cumulativeLine + delims.at(0)) << endl;
+                    if(delims.size() > 0 && v.at(i).find(cumulativeLine + delims.at(0)) != string::npos && v.at(i).find(cumulativeLine + delims.at(0)) < v.at(i).length()) {
+                        cout << "delims" << endl;
+                        rawHTML += delims.at(0);
+                        cumulativeLine += delims.at(0);
+                        cout << "ZZZZZZZZZZZ" << delims.at(0) << "ZZZZZZZZZZZZ" << endl;
+                        delims.erase(delims.begin());
                     }
-                    if(j == 0) {
-                        if(bracket) {
-                            for(int tabs = 0; tabs < tabCounter-1; tabs++) {
-                                rawHTML += "<span>    </span>";
-                            }
-                            bracket=false;
-                        }
-                        else {
-                            for(int tabs = 0; tabs < tabCounter; tabs++) {
-                                rawHTML += "<span>    </span>";
-                            }
-                        }
+                    else if(tokens.size() > 0 && v.at(i).find(cumulativeLine + tokens.at(0)) != string::npos && v.at(i).find(cumulativeLine + tokens.at(0)) < v.at(i).length()) {
+                        cout << "token" << endl;
+                        rawHTML += tokens.at(0);
+                        cumulativeLine += tokens.at(0);
+                        tokens.erase(tokens.begin());
+                    } else if(tokens.size() > 0 && delims.size() == 0) {
+                        cout << "token" << endl;
+                        rawHTML += tokens.at(0);
+                        cumulativeLine += tokens.at(0);
+                        tokens.erase(tokens.begin());
                     }
+                    rawHTML += "</span>";
+                }
+                while(delims.size() > 0) {
+                    if(comment)
+                        rawHTML += "<span style='color:green;'>" + delims.front() + "</span>";
+                    else
+                        rawHTML += "<span style='color:black;'>" + delims.front() + "</span>";
+                    delims.erase(delims.begin());
                 }
                 rawHTML += "</p>";
             }
