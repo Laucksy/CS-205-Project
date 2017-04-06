@@ -1,13 +1,13 @@
-#include "assignments.h"
+#include "students.h"
 
 // basic constructor
-Assignments::Assignments() : Ident::Ident('l')
+Students::Students() : Ident::Ident('g')
 {
 
 }
 
 // constructor
-Assignments::Assignments(DBTool* db, string n) : Ident::Ident('l'), DBTable::DBTable(db, assignments_table)
+Students::Students(DBTool* db, string n) : Ident::Ident('g'), DBTable::DBTable(db, students_table)
 {
     // Load SQL specific to child class.
     store_add_row_sql();
@@ -16,7 +16,7 @@ Assignments::Assignments(DBTool* db, string n) : Ident::Ident('l'), DBTable::DBT
     // must build table sepparately so new
     // sql can be properly registered
     build_table();
-    assignments_row_cnt = size();
+    students_row_cnt = size();
 
     isNew = true; // assumes object is unique and not in table
 
@@ -25,41 +25,32 @@ Assignments::Assignments(DBTool* db, string n) : Ident::Ident('l'), DBTable::DBT
 }
 
 // destructor
-Assignments::~Assignments()
+Students::~Students()
 {
     //if valid object, adds or updates it in table
     if (isNew && id >= 0) {
-        add_row(id, name, rubId);
+        add_row(id, name);
     } else if (!isNew && id >= 0){
-        update_id(id, name, rubId);
+        update_id(id, name);
     } else {
 
     }
 
-    // deletes all assignments
+    // deletes all students
     if (list.size() >= 1) {
-        for (Assignment* k : list) {
+        for (Student* k : list) {
             delete k;
         }
     }
 }
 
-void Assignments::set_rubric(Rubric *r)
-{
-    rubric = r;
-    rubId = r->id;
-    for (Assignment* k : list) {
-        k->rubric = rubric;
-    }
-}
-
 // database methods
-int Assignments::get_row_cnt()
+int Students::get_row_cnt()
 {
     return row_cnt;
 }
 
-void Assignments::store_add_row_sql() {
+void Students::store_add_row_sql() {
 
     sql_template =  "SELECT name ";
     sql_template += "FROM   sqlite_master ";
@@ -70,7 +61,7 @@ void Assignments::store_add_row_sql() {
 }
 
 
-void Assignments::store_create_sql() {
+void Students::store_create_sql() {
 
     //std::cerr << "calling store_create_sql from DBTableEx\n";
 
@@ -78,14 +69,13 @@ void Assignments::store_create_sql() {
     sql_create += table_name;
     sql_create += " ( ";
     sql_create += "  id INT PRIMARY KEY NOT NULL, ";
-    sql_create += "  name TEXT,";
-    sql_create += "  rubId INT";
+    sql_create += "  name TEXT";
     sql_create += " );";
 
 }
 
 
-bool Assignments::add_row(int id, string name, int rubId) {
+bool Students::add_row(int id, string name) {
     int   retCode = 0;
     char *zErrMsg = 0;
 
@@ -93,7 +83,7 @@ bool Assignments::add_row(int id, string name, int rubId) {
 
     sql_add_row  = "INSERT INTO ";
     sql_add_row += table_name;
-    sql_add_row += " ( id, name, rubId ) ";
+    sql_add_row += " ( id, name ) ";
     sql_add_row += "VALUES (";
 
     sprintf (tempval, "%d", id);
@@ -102,10 +92,7 @@ bool Assignments::add_row(int id, string name, int rubId) {
 
     sql_add_row += "\"";
     sql_add_row += std::string(name);
-    sql_add_row += "\", ";
-
-    sprintf (tempval, "%d", rubId);
-    sql_add_row += tempval;
+    sql_add_row += "\" ";
 
     sql_add_row += " );";
 
@@ -113,7 +100,7 @@ bool Assignments::add_row(int id, string name, int rubId) {
 
     retCode = sqlite3_exec(curr_db->db_ref(),
                            sql_add_row.c_str(),
-                           cb_add_row_assignments,
+                           cb_add_row_students,
                            this,
                            &zErrMsg          );
 
@@ -132,7 +119,7 @@ bool Assignments::add_row(int id, string name, int rubId) {
 }
 
 // selects entry by unique id
-bool Assignments::select_id(int i) {
+bool Students::select_id(int i) {
 
     int   retCode = 0;
     char *zErrMsg = 0;
@@ -146,7 +133,7 @@ bool Assignments::select_id(int i) {
 
     retCode = sqlite3_exec(curr_db->db_ref(),
                            sql_select_id.c_str(),
-                           cb_select_id_assignments,
+                           cb_select_id_students,
                            this,
                            &zErrMsg          );
 
@@ -165,7 +152,7 @@ bool Assignments::select_id(int i) {
 }
 
 // updates entry by unique id
-bool Assignments::update_id(int id, string name, int rubId) {
+bool Students::update_id(int id, string name) {
     int   retCode = 0;
     char *zErrMsg = 0;
 
@@ -178,11 +165,7 @@ bool Assignments::update_id(int id, string name, int rubId) {
     sql_update_id += "name = ";
     sql_update_id += "\"";
     sql_update_id += std::string(name);
-    sql_update_id += "\", ";
-
-    sql_update_id += "rubId = ";
-    sprintf (tempval, "%d", rubId);
-    sql_update_id += tempval;
+    sql_update_id += "\" ";
 
     sql_update_id += " WHERE ";
     sql_update_id += "id = ";
@@ -195,7 +178,7 @@ bool Assignments::update_id(int id, string name, int rubId) {
 
     retCode = sqlite3_exec(curr_db->db_ref(),
                            sql_update_id.c_str(),
-                           cb_update_id_assignments,
+                           cb_update_id_students,
                            this,
                            &zErrMsg          );
 
@@ -216,7 +199,7 @@ bool Assignments::update_id(int id, string name, int rubId) {
 }
 
 // callbacks
-int cb_add_row_assignments(void  *data,
+int cb_add_row_students(void  *data,
                       int    argc,
                       char **argv,
                       char **azColName)
@@ -234,7 +217,7 @@ int cb_add_row_assignments(void  *data,
 
     int i;
 
-    Assignments *obj = (Assignments *) data;
+    Students *obj = (Students *) data;
 
     std::cout << "------------------------------\n";
     std::cout << obj->get_name()
@@ -251,7 +234,7 @@ int cb_add_row_assignments(void  *data,
     return 0;
 }
 
-int cb_select_id_assignments(void  *data,
+int cb_select_id_students(void  *data,
                         int    argc,
                         char **argv,
                         char **azColName)
@@ -269,7 +252,7 @@ int cb_select_id_assignments(void  *data,
 
     int i;
 
-    Assignments *obj = (Assignments *) data;
+    Students *obj = (Students *) data;
     obj->isNew = false; // object was generated from table
 
     std::cout << "------------------------------\n";
@@ -278,12 +261,11 @@ int cb_select_id_assignments(void  *data,
 
     // assign object members from table data
     obj->name =argv[1];
-    obj->rubId = atoi(argv[2]);
 
     return 0;
 }
 
-int cb_update_id_assignments(void  *data,
+int cb_update_id_students(void  *data,
                         int    argc,
                         char **argv,
                         char **azColName)
@@ -301,7 +283,7 @@ int cb_update_id_assignments(void  *data,
 
     int i;
 
-    Assignments *obj = (Assignments *) data;
+    Students *obj = (Students *) data;
 
     std::cout << "------------------------------\n";
     std::cout << obj->get_name()

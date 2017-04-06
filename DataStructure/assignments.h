@@ -26,6 +26,8 @@ public:
     Assignments(DBTool* db, string n);
     ~Assignments();
 
+    void set_rubric(Rubric* r);
+
     // database methods
     // returns the row count of the categories table
     int get_row_cnt();
@@ -38,14 +40,16 @@ public:
     virtual void store_add_row_sql();
 
     // executes specific sql
-    bool add_row(int id, string name);
+    bool add_row(int id, string name, int rubId);
 
     bool select_id(int i);
 
-    bool update_id(int id, string name);
+    bool update_id(int id, string name, int rubId);
 
     vector<Assignment*> list;
     string name;
+    Rubric* rubric;
+    int rubId;
     bool isNew;
 
 protected:

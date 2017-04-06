@@ -13,7 +13,8 @@ SOURCES += main.cpp \
     rubric.cpp \
     category.cpp \
     ident.cpp \
-    feedback.cpp
+    feedback.cpp \
+    students.cpp
 
 HEADERS += \
     student.h \
@@ -23,7 +24,8 @@ HEADERS += \
     rubric.h \
     category.h \
     ident.h \
-    feedback.h
+    feedback.h \
+    students.h
 
 HEADERS += ../project/code.h
 

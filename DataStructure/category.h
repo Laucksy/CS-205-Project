@@ -27,7 +27,7 @@ class Category : public Ident, public DBTable
 public:
     //Constructors and Deconstructor
     Category();
-    Category(DBTool* db, Rubric* r, double p);
+    Category(DBTool* db, Rubric* r, double p, bool m);
     ~Category();
 
     // data methods

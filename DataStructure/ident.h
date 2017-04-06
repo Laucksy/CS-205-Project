@@ -15,6 +15,7 @@ public:
 
     // next available id
     static int id_student;
+    static int id_students;
     static int id_assignment;
     static int id_assignments;
     static int id_rubric;
@@ -24,6 +25,7 @@ public:
 
     // row count
     static int student_row_cnt;
+    static int students_row_cnt;
     static int assignment_row_cnt;
     static int assignments_row_cnt;
     static int rubric_row_cnt;
@@ -33,6 +35,7 @@ public:
 
     // table name
     static string student_table;
+    static string students_table;
     static string assignment_table;
     static string assignments_table;
     static string rubric_table;

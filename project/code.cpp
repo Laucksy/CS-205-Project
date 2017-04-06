@@ -18,7 +18,7 @@ Code::Code(DBTool* db, string n, int aid) : Ident::Ident('o'), DBTable::DBTable(
     // must build table sepparately so new
     // sql can be properly registered
     build_table();
-    category_row_cnt = size();
+    code_row_cnt = size();
 
     isNew = true; // assumes object is unique and not in table
 
@@ -153,7 +153,7 @@ void Code::delete_space_for_feedback(int position)
         fullCode.erase(itDelete);
 }
 
-void Code::add_feedback(Feedback newComment)
+void Code::add_feedback(Feedback* newComment)
 {
         profFeedback.push_back(newComment);
 }
@@ -449,7 +449,7 @@ bool Code::update_id(int id, string name, string full,
     sprintf (tempval, "%d", id);
     sql_update_id += tempval;
 
-    sql_update_id += " );";
+    //sql_update_id += " );";
 
     //std::cout << sql_add_row << std::endl;
 
@@ -539,7 +539,7 @@ int cb_select_id_code(void  *data,
     obj->parse_full(argv[2]);
     obj->parse_comments(argv[3]);
     obj->parse_lines(argv[4]);
-    obj->assignId = (int)*argv[5];
+    obj->assignId = atoi(argv[5]);
 
     return 0;
 }

@@ -7,7 +7,7 @@ Category::Category() : Ident::Ident('c')
 }
 
 // full constructor
-Category::Category(DBTool* db, Rubric* r, double p) : Ident::Ident('c'), DBTable::DBTable(db, category_table)
+Category::Category(DBTool* db, Rubric* r, double p, bool m) : Ident::Ident('c'), DBTable::DBTable(db, category_table)
 {
     // Load SQL specific to child class.
     store_add_row_sql();
@@ -22,8 +22,9 @@ Category::Category(DBTool* db, Rubric* r, double p) : Ident::Ident('c'), DBTable
 
     // initialize vars
     pts = p;
-    isMatrix = false;
+    isMatrix = m;
     rubric = r;
+    rubricId = r->id;
 }
 
 // destructor
@@ -31,9 +32,9 @@ Category::~Category()
 {
     // if valid object, adds or updates it in table
     if (isNew && id >= 0) {
-        add_row(id, convert_quality(), convert_points(), pts, (int)isMatrix, rubric->id);
+        add_row(id, convert_quality(), convert_points(), pts, (int)isMatrix, rubricId);
     } else if (!isNew && id >= 0){
-        update_id(id, convert_quality(), convert_points(), pts, (int)isMatrix, rubric->id);
+        update_id(id, convert_quality(), convert_points(), pts, (int)isMatrix, rubricId);
     } else {
 
     }
@@ -63,22 +64,33 @@ vector<double> Category::get_points()
 string Category::find_qual(double p)
 {
     if (quality.size() == 0) {
-        return "NULL";
+        return "NULL2";
     }
 
-    int ind = 0;
-    double diff = points[0] - p;
-    double minDiff = fabs(diff);
+    string ret;
 
-    for (int i = 1; i < points.size(); i++) {
-        diff = points[i] - p;
-        if (fabs(diff) < minDiff) {
-            minDiff = fabs(diff);
-            ind= i;
+    for (int i = 0; i < points.size(); i++) {
+        if (p <= points[i]) {
+          ret = quality[i];
+          break;
         }
     }
 
-    return quality[ind];
+    return ret;
+
+//    int ind = 0;
+//    double diff = points[0] - p;
+//    double minDiff = fabs(diff);
+
+//    for (int i = 1; i < points.size(); i++) {
+//        diff = points[i] - p;
+//        if (fabs(diff) < minDiff) {
+//            minDiff = fabs(diff);
+//            ind= i;
+//        }
+//    }
+
+//    return quality[ind];
 }
 
 // adds a quality value pair
@@ -311,7 +323,7 @@ bool Category::update_id(int id, string quality, string points,
     sprintf (tempval, "%d", id);
     sql_update_id += tempval;
 
-    sql_update_id += " );";
+    //sql_update_id += " );";
 
     //std::cout << sql_add_row << std::endl;
 
@@ -327,7 +339,9 @@ bool Category::update_id(int id, string quality, string points,
                   << " template ::"
                   << std::endl
                   << "SQL error: "
-                  << zErrMsg;
+                  << zErrMsg
+                  << std::endl
+                  << sql_update_id;
 
         sqlite3_free(zErrMsg);
     }
@@ -400,8 +414,8 @@ int cb_select_id_category(void  *data,
     obj->parse_quality(argv[1]);
     obj->parse_points(argv[2]);
     obj->pts = atof(argv[3]);
-    obj->isMatrix = (bool)argv[4];
-    obj->rubricId = (int)*argv[5];
+    obj->isMatrix = (bool)atoi(argv[4]);
+    obj->rubricId = atoi(argv[5]);
 
     return 0;
 }
