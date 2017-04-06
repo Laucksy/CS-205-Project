@@ -25,12 +25,13 @@ public:
     vector<string> fullCode;
     vector<string> comments;
     vector<string> linesOfCode;
-    vector<Feedback> profFeedback;
+    vector<Feedback*> profFeedback;
     void insert(int position);
+    void set_file(string name);
 
     void deleteFeedback(int pos);
 
-    void add_feedback(Feedback fb);
+    void add_feedback(Feedback* fb);
     void delete_space_for_feedback(int pos);
 
     int categorize(string word);

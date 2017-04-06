@@ -77,7 +77,7 @@ vector<double> Rubric::get_pts()
 }
 
 // adds a new category
-bool Rubric::add_category(Category* c, string n)
+void Rubric::add_category(Category* c, string n)
 {
     cat.push_back(c);
     name.push_back(n);
@@ -284,7 +284,7 @@ bool Rubric::update_id(int id, string title, double grade, string name, int isDe
     sprintf (tempval, "%d", id);
     sql_update_id += tempval;
 
-    sql_update_id += " );";
+    //sql_update_id += " );";
 
     //std::cout << sql_add_row << std::endl;
 
@@ -300,7 +300,9 @@ bool Rubric::update_id(int id, string title, double grade, string name, int isDe
                   << " template ::"
                   << std::endl
                   << "SQL error: "
-                  << zErrMsg;
+                  << zErrMsg
+                  << std::endl
+                  << sql_update_id;
 
         sqlite3_free(zErrMsg);
     }
@@ -373,7 +375,7 @@ int cb_select_id_rubric(void  *data,
     obj->title = argv[1];
     obj->grade = atof(argv[2]);
     obj->parse_name(argv[3]);
-    obj->isDeduction = (bool)argv[4];
+    obj->isDeduction = (bool)atoi(argv[4]);
 
     return 0;
 }

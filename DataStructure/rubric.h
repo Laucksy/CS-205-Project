@@ -37,7 +37,7 @@ public:
     string find_qual(double p, string c);
 
     // adds a new category name pair
-    bool add_category(Category*, string n);
+    void add_category(Category*, string n);
 
     // db parse methods
     string convert_name();

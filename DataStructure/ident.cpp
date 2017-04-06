@@ -1,6 +1,7 @@
 #include "ident.h"
 
 int Ident::id_student = 0;
+int Ident::id_students = 0;
 int Ident::id_assignment = 0;
 int Ident::id_assignments = 0;
 int Ident::id_rubric = 0;
@@ -9,6 +10,7 @@ int Ident::id_code = 0;
 int Ident::id_feedback = 0;
 
 int Ident::student_row_cnt = 0;
+int Ident::students_row_cnt = 0;
 int Ident::assignment_row_cnt = 0;
 int Ident::assignments_row_cnt = 0;
 int Ident::rubric_row_cnt = 0;
@@ -17,6 +19,7 @@ int Ident::code_row_cnt = 0;
 int Ident::feedback_row_cnt = 0;
 
 string Ident::student_table = "student_table";
+string Ident::students_table = "students_table";
 string Ident::assignment_table = "assignment_table";
 string Ident::assignments_table = "assignments_table";
 string Ident::rubric_table = "rubric_table";
@@ -37,6 +40,12 @@ Ident::Ident(char k)
         // object is student, increment student id
         id = id_student;
         id_student++;
+        break;
+
+    case 'g':
+        // object is student, increment student id
+        id = id_students;
+        id_students++;
         break;
 
     case 'a':

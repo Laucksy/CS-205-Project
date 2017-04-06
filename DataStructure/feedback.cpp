@@ -203,7 +203,7 @@ bool Feedback::update_id(int id, string text, string tag, int codeId, int positi
     sprintf (tempval, "%d", id);
     sql_update_id += tempval;
 
-    sql_update_id += " );";
+    //sql_update_id += " );";
 
     //std::cout << sql_add_row << std::endl;
 
@@ -219,7 +219,9 @@ bool Feedback::update_id(int id, string text, string tag, int codeId, int positi
                   << " template ::"
                   << std::endl
                   << "SQL error: "
-                  << zErrMsg;
+                  << zErrMsg
+                  << std::endl
+                  << sql_update_id;
 
         sqlite3_free(zErrMsg);
     }
@@ -291,8 +293,8 @@ int cb_select_id_feedback(void  *data,
     // assign object members from table data
     obj->text = argv[1];
     obj->tag = argv[2];
-    obj->codeId = (int)*argv[3];
-    obj->position = (int)*argv[4];
+    obj->codeId = atoi(argv[3]);
+    obj->position = atoi(argv[4]);
 
     return 0;
 }

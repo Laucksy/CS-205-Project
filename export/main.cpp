@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
     assignment->add_code(y);
     cout << "First " << y << endl;
 
-    cout << ExportHTML::export_assignment(assignment) << endl;
+    //cout << ExportHTML::export_assignment(assignment) << endl;
+    ExportHTML::export_assignment(assignment);
     return 0;
 }

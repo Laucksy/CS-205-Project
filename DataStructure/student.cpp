@@ -23,6 +23,7 @@ Student::Student(DBTool* db, string f, string l) : Ident::Ident('s'), DBTable::D
     // initialize vars
     firstName = f;
     lastName = l;
+    score = 0;
 }
 
 //destructor
@@ -30,9 +31,9 @@ Student::~Student()
 {
     // if valid object, adds or updates it in table
     if (isNew && id >= 0) {
-        add_row(id, firstName, lastName, score);
+        add_row(id, firstName, lastName, classId, score);
     } else if (!isNew && id >= 0){
-        update_id(id, firstName, lastName, score);
+        update_id(id, firstName, lastName, classId, score);
     } else {
 
     }
@@ -80,13 +81,14 @@ void Student::store_create_sql() {
     sql_create += "  id INT PRIMARY KEY NOT NULL, ";
     sql_create += "  firstName TEXT,";
     sql_create += "  lastName TEXT,";
+    sql_create += "  classId INT,";
     sql_create += "  score REAL";
     sql_create += " );";
 
 }
 
 
-bool Student::add_row(int id, string firstName, string lastName, double score) {
+bool Student::add_row(int id, string firstName, string lastName, int classId, double score) {
     int   retCode = 0;
     char *zErrMsg = 0;
 
@@ -94,7 +96,7 @@ bool Student::add_row(int id, string firstName, string lastName, double score) {
 
     sql_add_row  = "INSERT INTO ";
     sql_add_row += table_name;
-    sql_add_row += " ( id, firstName, lastName, score ) ";
+    sql_add_row += " ( id, firstName, lastName, classId, score ) ";
     sql_add_row += "VALUES (";
 
     sprintf (tempval, "%d", id);
@@ -108,6 +110,10 @@ bool Student::add_row(int id, string firstName, string lastName, double score) {
     sql_add_row += "\"";
     sql_add_row += std::string(lastName);
     sql_add_row += "\", ";
+
+    sprintf (tempval, "%d", classId);
+    sql_add_row += tempval;
+    sql_add_row += ", ";
 
     sprintf (tempval, "%f", score);
     sql_add_row += tempval;
@@ -170,7 +176,7 @@ bool Student::select_id(int i) {
 }
 
 // updates entry by unique id
-bool Student::update_id(int id, string firstName, string lastName, double score) {
+bool Student::update_id(int id, string firstName, string lastName, int classId, double score) {
     int   retCode = 0;
     char *zErrMsg = 0;
 
@@ -190,6 +196,11 @@ bool Student::update_id(int id, string firstName, string lastName, double score)
     sql_update_id += std::string(lastName);
     sql_update_id += "\", ";
 
+    sql_update_id += "classId = ";
+    sprintf (tempval, "%d", classId);
+    sql_update_id += tempval;
+    sql_update_id += ", ";
+
     sql_update_id += "score = ";
     sprintf (tempval, "%f", score);
     sql_update_id += tempval;
@@ -199,7 +210,7 @@ bool Student::update_id(int id, string firstName, string lastName, double score)
     sprintf (tempval, "%d", id);
     sql_update_id += tempval;
 
-    sql_update_id += " );";
+    //sql_update_id += " );";
 
     //std::cout << sql_add_row << std::endl;
 
@@ -215,7 +226,9 @@ bool Student::update_id(int id, string firstName, string lastName, double score)
                   << " template ::"
                   << std::endl
                   << "SQL error: "
-                  << zErrMsg;
+                  << zErrMsg
+                  << std::endl
+                  << sql_update_id;
 
         sqlite3_free(zErrMsg);
     }
@@ -287,7 +300,8 @@ int cb_select_id_student(void  *data,
     // assign object members from table data
     obj->firstName = argv[1];
     obj->lastName = argv[2];
-    obj->score = atof(argv[3]);
+    obj->classId = atoi(argv[3]);
+    obj->score = atof(argv[4]);
 
     return 0;
 }
