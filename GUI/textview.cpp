@@ -19,8 +19,9 @@ textView::~textView()
 }
 
 void textView::makeComment(Code* myCode){
-    myCode->insert(commentLoc);
-    this->update();
+   // myCode->insert(commentLoc);
+    ui->textBrowser->clear();
+   // this->updateCode(myCode);
 }
 
 //Code* textView::updateCode(string file)
@@ -217,22 +218,24 @@ Code* textView::updateCode(Code* myCode)
        for(int i=0; i<v.size(); i++){//lines
            vector<string> t = x->tokenize(v[i]);
            vector<string> delims = x->delimiters(v.at(i));
-           for(int a=0; a<t.size();a++){
-               if(a==0){
-                   std::string s = std::to_string(i);
-                   if(i<10){
-                       s=s+"  | ";
-                   }
-                   else if(i<100){
-                       s=s+" | ";
-                   }
-                       else if(i<1000){
-                       s=s+"| ";
-                   }
-                    ui->textBrowser->setTextColor("Orange");
-                   QString temp= QString::fromStdString(s);
-                   ui->textBrowser->insertPlainText(temp);
+           if(1){
+               std::string s = std::to_string(i);
+               if(i<10){
+                   s=s+"  | ";
                }
+               else if(i<100){
+                   s=s+" | ";
+               }
+                   else if(i<1000){
+                   s=s+"| ";
+               }
+                ui->textBrowser->setTextColor("Orange");
+               QString temp= QString::fromStdString(s);
+               ui->textBrowser->insertPlainText(temp);
+           }
+
+           for(int a=0; a<t.size();a++){
+
 
 
                string rawHTML = (a < delims.size()) ? delims.at(a) : " ";
@@ -416,4 +419,5 @@ void textView::on_pushButton_clicked()
 void textView::on_lineEdit_2_textChanged(const QString &arg1)
 {
     commentLoc=arg1.toInt();
+    cerr<<"comment location "<<commentLoc;
 }
