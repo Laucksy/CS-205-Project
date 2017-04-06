@@ -40,46 +40,47 @@ Code::~Code() {
 
 void Code::set_file(string name)
 {
-fileName = name;
+    fileName = name;
 }
 
 vector<string> Code::parse()
 {
+    if(fullCode.size() == 0) {
+        string line;
+        string space =" ";
+        char commentTest[2];
 
-    string line;
-    string space =" ";
-    char commentTest[2];
-
-    //going through each line of the selected file
-    ifstream file;
-    file.open(fileName, ifstream::in);
-    cout << fileName << endl;
-    int cnt=0;
-    while(file.good())
-    {
-        cout << "here" << endl;
-        while(getline(file,line))
+        //going through each line of the selected file
+        ifstream file;
+        file.open(fileName, ifstream::in);
+        cout << fileName << endl;
+        int cnt=0;
+        while(file.good())
         {
-          // std::string s = std::to_string(cnt);
-           // line=s+space+line;
-            cnt++;
-            fullCode.push_back(line);
-            line.copy(commentTest,2,0);
-            //if first two lines of code are //, then it is a comment
-            if(commentTest[0] == '/' && commentTest[1] == '/')
+            cout << "here" << endl;
+            while(getline(file,line))
             {
-                comments.push_back(line);
+                // std::string s = std::to_string(cnt);
+                // line=s+space+line;
+                cnt++;
+                fullCode.push_back(line);
+                line.copy(commentTest,2,0);
+                //if first two lines of code are //, then it is a comment
+                if(commentTest[0] == '/' && commentTest[1] == '/')
+                {
+                    comments.push_back(line);
+                }
+                //otherwise, it is a line of code
+                else
+                    linesOfCode.push_back(line);
             }
-            //otherwise, it is a line of code
-            else
-                linesOfCode.push_back(line);
+            file.close();
         }
-        file.close();
     }
     //prints out all items of fullCode
     //only there to show to demonstrate functionality
-//    for (auto i = fullCode.begin(); i != fullCode.end(); ++i)
-//        cout << *i << ' ' << endl;
+    //    for (auto i = fullCode.begin(); i != fullCode.end(); ++i)
+    //        cout << *i << ' ' << endl;
     return fullCode;
 }
 
@@ -105,7 +106,7 @@ vector<string> Code::tokenize(string line)
     unsigned secondIndex = 0;
     for(unsigned i = 0; i < line.length(); i++) {
         for(unsigned x = 0; x < delimiterChars.size(); x++) {
-            if(line[i] == delimiterChars.at(x)) {
+            if(line.at(i) == delimiterChars.at(x)) {
                 secondIndex = i;
                 tokens.push_back(line.substr(firstIndex,secondIndex-firstIndex));
                 firstIndex = secondIndex + 1;
@@ -185,7 +186,7 @@ vector<string> Code::delimiters(string line)
     }
 
     //for (unsigned long j =0; j< tokens.size(); j++)
-        //cout << tokens.at(j)<< endl;
+    //cout << tokens.at(j)<< endl;
 
     return delims;
 }
@@ -204,14 +205,14 @@ void Code::insert(int position)
 //remove blank space (slot for feedback) from given position
 void Code::delete_space_for_feedback(int position)
 {
-        vector<string>::iterator itDelete = fullCode.begin();
-        advance(itDelete, position);
-        fullCode.erase(itDelete);
+    vector<string>::iterator itDelete = fullCode.begin();
+    advance(itDelete, position);
+    fullCode.erase(itDelete);
 }
 
 void Code::add_feedback(Feedback* newComment)
 {
-        profFeedback.push_back(newComment);
+    profFeedback.push_back(newComment);
 }
 
 
@@ -531,9 +532,9 @@ bool Code::update_id(int id, string name, string full,
 
 // callbacks
 int cb_add_row_code(void  *data,
-                      int    argc,
-                      char **argv,
-                      char **azColName)
+                    int    argc,
+                    char **argv,
+                    char **azColName)
 {
 
 
@@ -566,9 +567,9 @@ int cb_add_row_code(void  *data,
 }
 
 int cb_select_id_code(void  *data,
-                        int    argc,
-                        char **argv,
-                        char **azColName)
+                      int    argc,
+                      char **argv,
+                      char **azColName)
 {
 
 
@@ -601,9 +602,9 @@ int cb_select_id_code(void  *data,
 }
 
 int cb_update_id_code(void  *data,
-                        int    argc,
-                        char **argv,
-                        char **azColName)
+                      int    argc,
+                      char **argv,
+                      char **azColName)
 {
 
 
