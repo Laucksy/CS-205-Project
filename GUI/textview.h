@@ -21,8 +21,8 @@ public:
     explicit textView(QWidget *parent = 0);
     ~textView();
 
-    Code* updateCode(Code*);
-     void makeComment(Code*);
+    void updateCode();
+     void makeComment();
 
      Code* myCode=nullptr;
      int commentLoc=0;
