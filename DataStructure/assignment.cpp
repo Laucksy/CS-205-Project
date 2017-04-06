@@ -19,20 +19,26 @@ Assignment::Assignment(DBTool* db, Rubric* r, Student* s, int n) : Ident::Ident(
     assignment_row_cnt = size();
 
     isNew = true; // assumes object is unique and not in table
+    status = 0;
 
     // initialize vars
     stu = s;
+    studentId = s->id;
     rubric = r;
+    rubricId= r->id;
     assignNum = n;
+
+    gradeCategory = r->get_names();
 
     if (r->is_deduction()) {
         grade = r->get_grade();
+        gradeComponent = r->get_pts();
     } else {
-        grade = 0;
+        grade = 0.0;
+        for (string k : gradeCategory) {
+            gradeComponent.push_back(0.0);
+        }
     }
-
-    gradeCategory = r->get_names();
-    gradeComponent = r->get_pts();
 
     for (int i = 0; i < gradeCategory.size(); i ++) {
         gradeQuality.push_back(r->find_qual(gradeComponent[i], gradeCategory[i]));
@@ -45,10 +51,10 @@ Assignment::~Assignment()
     // if valid object, adds or updates it in table
     if (isNew && id >= 0) {
         add_row(id, grade, convert_category(), convert_component(),
-                convert_quality(), status, rubric->id, stu->id, assignNum);
+                convert_quality(), status, rubricId, studentId, assignNum);
     } else if (!isNew && id >= 0){
         update_id(id, grade, convert_category(), convert_component(),
-                  convert_quality(), status, rubric->id, stu->id, assignNum);
+                  convert_quality(), status, rubricId, studentId, assignNum);
     } else {
 
     }
@@ -69,9 +75,18 @@ void Assignment::change_grade(double g, string c)
         }
     }
 
-    if (ind != -1) {
-        gradeComponent[ind] = g;
+    if (ind != -1 && !rubric->is_deduction()) {
+        if (rubric->cat[ind]->pts >= gradeComponent[ind] + g){
+        gradeComponent[ind] += g;
         gradeQuality[ind] = rubric->find_qual(g, gradeCategory[ind]);
+        }
+    }
+
+    if (ind != -1 && rubric->is_deduction()) {
+        if (gradeComponent[ind] - g >= 0){
+        gradeComponent[ind] -= g;
+        gradeQuality[ind] = rubric->find_qual(gradeComponent[ind], gradeCategory[ind]);
+        }
     }
 
     for (double k : gradeComponent) {
@@ -188,12 +203,12 @@ void Assignment::store_create_sql() {
     sql_create += table_name;
     sql_create += " ( ";
     sql_create += "  id INT PRIMARY KEY NOT NULL, ";
-    sql_create += "  gradet REAL,";
+    sql_create += "  grade REAL,";
     sql_create += "  category TEXT,";
     sql_create += "  component TEXT,";
     sql_create += "  quality TEXT,";
     sql_create += "  status INT,";
-    sql_create += "  rubId INT";
+    sql_create += "  rubId INT,";
     sql_create += "  stuId INT,";
     sql_create += "  assignNum INT";
     sql_create += " );";
@@ -345,6 +360,7 @@ bool Assignment::update_id(int id, double grade, string category, string compone
     sql_update_id += "rubId = ";
     sprintf (tempval, "%d", rubId);
     sql_update_id += tempval;
+    sql_update_id += ", ";
 
     sql_update_id += "stuId = ";
     sprintf (tempval, "%d", stuId);
@@ -354,14 +370,13 @@ bool Assignment::update_id(int id, double grade, string category, string compone
     sql_update_id += "assignNum = ";
     sprintf (tempval, "%d", assignNum);
     sql_update_id += tempval;
-    sql_update_id += ", ";
 
     sql_update_id += " WHERE ";
     sql_update_id += "id = ";
     sprintf (tempval, "%d", id);
     sql_update_id += tempval;
 
-    sql_update_id += " );";
+    //sql_update_id += " );";
 
     //std::cout << sql_add_row << std::endl;
 
@@ -377,7 +392,9 @@ bool Assignment::update_id(int id, double grade, string category, string compone
                   << " template ::"
                   << std::endl
                   << "SQL error: "
-                  << zErrMsg;
+                  << zErrMsg
+                  << std::endl
+                  << sql_update_id;
 
         sqlite3_free(zErrMsg);
     }
@@ -451,10 +468,10 @@ int cb_select_id_assignment(void  *data,
     obj->parse_category(argv[2]);
     obj->parse_component(argv[3]);
     obj->parse_quality(argv[4]);
-    obj->status = (int)*argv[5];
-    obj->rubricId = (int)*argv[6];
-    obj->studentId = (int)*argv[7];
-    obj->assignNum = (int)*argv[8];
+    obj->status = atoi(argv[5]);
+    obj->rubricId = atoi(argv[6]);
+    obj->studentId = atoi(argv[7]);
+    obj->assignNum = atoi(argv[8]);
 
     return 0;
 }

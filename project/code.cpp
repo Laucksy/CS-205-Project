@@ -18,7 +18,7 @@ Code::Code(DBTool* db, string n, int aid) : Ident::Ident('o'), DBTable::DBTable(
     // must build table sepparately so new
     // sql can be properly registered
     build_table();
-    category_row_cnt = size();
+    code_row_cnt = size();
 
     isNew = true; // assumes object is unique and not in table
 
@@ -38,22 +38,31 @@ Code::~Code() {
     }
 }
 
+void Code::set_file(string name)
+{
+fileName = name;
+}
+
 vector<string> Code::parse()
 {
 
     string line;
+    string space =" ";
     char commentTest[2];
 
     //going through each line of the selected file
     ifstream file;
     file.open(fileName, ifstream::in);
     cout << fileName << endl;
-
+    int cnt=0;
     while(file.good())
     {
         cout << "here" << endl;
         while(getline(file,line))
         {
+          // std::string s = std::to_string(cnt);
+           // line=s+space+line;
+            cnt++;
             fullCode.push_back(line);
             line.copy(commentTest,2,0);
             //if first two lines of code are //, then it is a comment
@@ -80,25 +89,18 @@ vector<string> Code::parse()
  */
 vector<string> Code::tokenize(string line)
 {
+    stringstream ss(line);
     vector<string> tokens;
+    string t;
     vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@' };
 
-    stringstream ss(line);
-
-    string i;
-
-    while (ss >> i)
+    for(unsigned int x = 0; x < delimiterChars.size(); x++)
     {
-        tokens.push_back(i);
-
-        for(unsigned long x = 0; x < delimiterChars.size(); x++)
-        {
-            //boost::split(strs, sample, boost::is_any_of("/"));
-            if (ss.peek() == delimiterChars.at(x))
-                ss.ignore();
-        }
+    while (getline(ss,t,delimiterChars.at(x)))
+    {        
+            tokens.push_back(t);
     }
-
+    }
     for (unsigned long j =0; j< tokens.size(); j++)
         cout << tokens.at(j)<< endl;
 
@@ -153,7 +155,7 @@ void Code::delete_space_for_feedback(int position)
         fullCode.erase(itDelete);
 }
 
-void Code::add_feedback(Feedback newComment)
+void Code::add_feedback(Feedback* newComment)
 {
         profFeedback.push_back(newComment);
 }
@@ -449,7 +451,7 @@ bool Code::update_id(int id, string name, string full,
     sprintf (tempval, "%d", id);
     sql_update_id += tempval;
 
-    sql_update_id += " );";
+    //sql_update_id += " );";
 
     //std::cout << sql_add_row << std::endl;
 
@@ -539,7 +541,7 @@ int cb_select_id_code(void  *data,
     obj->parse_full(argv[2]);
     obj->parse_comments(argv[3]);
     obj->parse_lines(argv[4]);
-    obj->assignId = (int)*argv[5];
+    obj->assignId = atoi(argv[5]);
 
     return 0;
 }
