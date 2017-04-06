@@ -38,22 +38,31 @@ Code::~Code() {
     }
 }
 
+void Code::set_file(string name)
+{
+fileName = name;
+}
+
 vector<string> Code::parse()
 {
 
     string line;
+    string space =" ";
     char commentTest[2];
 
     //going through each line of the selected file
     ifstream file;
     file.open(fileName, ifstream::in);
     cout << fileName << endl;
-
+    int cnt=0;
     while(file.good())
     {
         cout << "here" << endl;
         while(getline(file,line))
         {
+          // std::string s = std::to_string(cnt);
+           // line=s+space+line;
+            cnt++;
             fullCode.push_back(line);
             line.copy(commentTest,2,0);
             //if first two lines of code are //, then it is a comment
@@ -80,25 +89,18 @@ vector<string> Code::parse()
  */
 vector<string> Code::tokenize(string line)
 {
+    stringstream ss(line);
     vector<string> tokens;
+    string t;
     vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@' };
 
-    stringstream ss(line);
-
-    string i;
-
-    while (ss >> i)
+    for(unsigned int x = 0; x < delimiterChars.size(); x++)
     {
-        tokens.push_back(i);
-
-        for(unsigned long x = 0; x < delimiterChars.size(); x++)
-        {
-            //boost::split(strs, sample, boost::is_any_of("/"));
-            //if (ss.peek() == delimiterChars.at(x))
-               //ss.ignore();
-        }
+    while (getline(ss,t,delimiterChars.at(x)))
+    {        
+            tokens.push_back(t);
     }
-
+    }
     for (unsigned long j =0; j< tokens.size(); j++)
         cout << tokens.at(j)<< endl;
 

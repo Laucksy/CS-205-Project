@@ -27,6 +27,7 @@ public:
     vector<string> linesOfCode;
     vector<Feedback*> profFeedback;
     void insert(int position);
+    void set_file(string name);
 
     void deleteFeedback(int pos);
 

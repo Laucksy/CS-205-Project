@@ -22,8 +22,8 @@ int main(int argc, char *argv[])
 
   //  Code x;
 
-    DBTool* tool = new DBTool("TestDB");
-    Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/Student.java",0);
+    //DBTool* tool = new DBTool("TestDB");
+    //Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/Student.java",0);
 
     //vector<string> v;
    //vector<string> v = x.parse("/Users/drewcarleton/Project205/axolotl/GUI/Student.java");

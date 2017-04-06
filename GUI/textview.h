@@ -7,6 +7,7 @@
 #include <vector>
 
 #include <QWidget>
+using namespace std;
 
 namespace Ui {
 class textView;
@@ -19,7 +20,12 @@ class textView : public QWidget
 public:
     explicit textView(QWidget *parent = 0);
     ~textView();
-    void updateCode(int);
+
+    Code* updateCode(Code*);
+     void makeComment(Code*);
+
+     Code* myCode=nullptr;
+     int commentLoc=0;
 
     std::string student;
 
@@ -35,6 +41,10 @@ private slots:
     void on_comboBox_2_activated(const QString &arg1);
 
 
+
+    void on_pushButton_clicked();
+
+    void on_lineEdit_2_textChanged(const QString &arg1);
 
 private:
     Ui::textView *ui;
