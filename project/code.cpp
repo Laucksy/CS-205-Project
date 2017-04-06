@@ -94,18 +94,64 @@ vector<string> Code::tokenize(string line)
     string t;
     vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@' };
 
-    for(unsigned int x = 0; x < delimiterChars.size(); x++)
+    /*for(unsigned int x = 0; x < delimiterChars.size(); x++)
     {
-    while (getline(ss,t,delimiterChars.at(x)))
-    {        
-            tokens.push_back(t);
+        while (getline(ss,t,delimiterChars.at(x)))
+        {
+                tokens.push_back(t);
+        }
+    }*/
+    unsigned firstIndex = 0;
+    unsigned secondIndex = 0;
+    for(unsigned i = 0; i < line.length(); i++) {
+        for(unsigned x = 0; x < delimiterChars.size(); x++) {
+            if(line[i] == delimiterChars.at(x)) {
+                secondIndex = i;
+                tokens.push_back(line.substr(firstIndex,secondIndex-firstIndex));
+                firstIndex = secondIndex + 1;
+            }
+        }
     }
-    }
+
     for (unsigned long j =0; j< tokens.size(); j++)
-        cout << tokens.at(j)<< endl;
+        cout << "TOKENS:" << tokens.at(j)<< endl;
 
     return tokens;
 }
+
+/*vector<string> Code::tokenize(string line)
+{
+    string i;
+    while (ss >> i)
+    {
+        bool found = false;
+        for(unsigned long x = 0; x < delimiterChars.size(); x++) {
+            //cout << "TOKEN" << i << "," << string(1, delimiterChars.at(x)) << endl;
+            if (i == string(1, delimiterChars.at(x))) {
+                found = true;
+                //cout << "Found" << endl;
+            }
+        }
+        for(unsigned long x = 0; x < delimiterChars.size(); x++) {
+            if (i[i.length()-1] == delimiterChars.at(x)) {
+                i = i.substr(0,i.length()-1);
+            }
+            if (i[0] == delimiterChars.at(x)) {
+                i = i.substr(1,i.length());
+            }
+        }
+        if(!found)
+            tokens.push_back(i);
+
+        for(unsigned long x = 0; x < delimiterChars.size(); x++)
+        {
+            //boost::split(strs, sample, boost::is_any_of("/"));
+            if (i == string("" + delimiterChars.at(x))) {}
+            else if (ss.peek() == delimiterChars.at(x))
+                ss.ignore();
+        }
+    }
+}*/
 
 vector<string> Code::delimiters(string line)
 {
@@ -117,7 +163,7 @@ vector<string> Code::delimiters(string line)
 
     string i;
 
-    while (ss >> i)
+    /*while (ss >> i)
     {
         //tokens.push_back(i);
 
@@ -126,6 +172,14 @@ vector<string> Code::delimiters(string line)
             if (ss.peek() == delimiterChars.at(x)) {
                ss.ignore();
                delims.push_back(delimiterStrings.at(x));
+            }
+        }
+    }*/
+
+    for(unsigned i = 0; i < line.length(); i++) {
+        for(unsigned x = 0; x < delimiterChars.size(); x++) {
+            if(line[i] == delimiterChars.at(x)) {
+                delims.push_back(line.substr(i,1));
             }
         }
     }
