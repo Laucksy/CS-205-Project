@@ -19,7 +19,8 @@ textView::~textView()
 }
 
 void textView::makeComment(){
-    myCode->insert(commentLoc);
+    string temp = feedback.toStdString();
+    myCode->insert(commentLoc,temp);
      this->updateCode();
    // ui->textBrowser->clear();
    //this->updateCode();
@@ -228,7 +229,7 @@ void textView::updateCode(void)
         {
 
             DBTool* tool = new DBTool("TestDB");
-            myCode = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java",0);
+            myCode = new Code(tool,"/Users/drewcarleton/lab 7/t.java",0);
 
             this->updateCode();
 
@@ -248,7 +249,7 @@ void textView::updateCode(void)
 
 void textView::on_pushButton_clicked()
 {
-    //Code* temp =this->updateCode("/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java");
+    //Code* temp =this->updateCode("/Users/drewcarleton/Project205/axolotl/GUI/t.java");
     this->makeComment();
 
 
@@ -257,5 +258,10 @@ void textView::on_pushButton_clicked()
 void textView::on_lineEdit_2_textChanged(const QString &arg1)
 {
     commentLoc=arg1.toInt();
-    cerr<<"comment location "<<commentLoc;
+    cerr<<"feedback location "<<commentLoc;
+}
+
+void textView::on_lineEdit_textEdited(const QString &arg1)
+{
+    feedback=arg1;
 }

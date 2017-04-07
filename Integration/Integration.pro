@@ -42,3 +42,7 @@ SOURCES += ../DataStructure/dbtool.cpp \
     ../DataStructure/dbtable.cpp
 
 LIBS += -l sqlite3
+
+DISTFILES += \
+    ../../../lab 7/t.java \
+    ../../../lab 7/t.java
