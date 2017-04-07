@@ -18,18 +18,21 @@ textView::~textView()
     delete ui;
 }
 
+
 void textView::makeComment(){
     string temp = feedback.toStdString();
     myCode->insert(commentLoc,temp);
      this->updateCode();
    // ui->textBrowser->clear();
    //this->updateCode();
+
 }
 
 
 
 void textView::updateCode(void)
 {
+
 
      ui->textBrowser->clear();
    int tabCounter=0;
@@ -44,6 +47,9 @@ void textView::updateCode(void)
   // DBTool* tool = new DBTool("TestDB");
    //Code* x = new Code(tool,file,0);
    // Code* x=myCode;
+
+
+
 
 
 
@@ -219,29 +225,229 @@ void textView::updateCode(void)
         if(arg1=="Drew")
         {
             student="Drew";
+
+        string cumulativeLine = "";
+        lineComment = false;
+        int j = 0;
+        while(tokens.size() > 0) {
+            //string rawHTML = (a < delims.size()) ? delims.at(a) : " ";
+            //QString qstr1 = QString::fromStdString(rawHTML);
+            //ui->textBrowser->setTextColor("Cornsilk ");
+            //ui->textBrowser->insertPlainText(qstr1);
+
+            //QString qstr = QString::fromStdString(tokens.at(0));
+            int type = x->categorize(tokens.at(0));
+
+            if(j == 0 && type == 11)
+                lineComment=true;
+            else if(j == 0 && type != 11)
+                lineComment=false;
+            if(type == 9)
+                comment=true;
+            else if(type == 10)
+                comment=false;
+
+            if(delims.at(0) == "/" && delims.at(1) == "*" && delims.at(2) == "*"
+                    && v.at(i)[cumulativeLine.length()] == '/' && v.at(i)[cumulativeLine.length()+1] == '*'
+                    && v.at(i)[cumulativeLine.length()+2] == '*') {
+                comment = true;
+                type = 9;
+            }
+            if(delims.at(0) == "*" && delims.at(1) == "/") {
+                if(v.at(i)[cumulativeLine.length()] == '*' && v.at(i)[cumulativeLine.length()+1] == '/') {
+                    comment = false;
+                    type = 10;
+                }
+            }
+
+            if(comment)
+                type = 9;
+
+
+            //  int dtype = x->categorize()
+            // int delimType= x->categorize(delims[a]);
+            /*if(a==0&&type==11)
+            {
+                lineComment=true;
+            }
+            else if(a==0&&type!=11)
+            {
+                lineComment=false;
+            }
+
+            if(type==9){
+                comment=true;
+            }
+            if(type==10)
+            {
+                comment=false;
+            }*/
+            switch(type)
+            {
+            case 1:
+                ui->textBrowser->setTextColor("Deepskyblue");
+                break;
+            case 2:
+                ui->textBrowser->setTextColor("Plum");
+                break;
+            case 3:
+                ui->textBrowser->setTextColor("Plum");
+                break;
+            case 4:
+                ui->textBrowser->setTextColor("Salmon");
+                break;
+            case 5:
+                ui->textBrowser->setTextColor("Salmon");
+                break;
+            case 6:
+                ui->textBrowser->setTextColor("Dodgerblue");
+                break;
+            case 7:
+                ui->textBrowser->setTextColor("Plum");
+                break;
+            case 8:
+                ui->textBrowser->setTextColor("Plum");
+                break;
+            case 9:
+                ui->textBrowser->setTextColor("Lightgreen");
+                break;
+            case 10:
+                ui->textBrowser->setTextColor("Lightgreen");
+                break;
+            case 11:
+                ui->textBrowser->setTextColor("Lightgreen");
+                break;
+            case 12:
+                tabCounter++;
+                bracket=true;
+                break;
+            case 13:
+                tabCounter--;
+                break;
+            case 0:
+                ui->textBrowser->setTextColor("Cornsilk ");
+                break;
+            default:
+                ui->textBrowser->setTextColor("Cornsilk ");
+                break;
+            }
+
+
+            if(comment||lineComment)
+            {
+                ui->textBrowser->setTextColor("Lightgreen");
+
+            }
+
+
+            if(j == 0){
+                //for(int tabs=0;tabs<tabCounter;tabCounter++){
+                if(bracket){
+                    for(int tabs=0;tabs<tabCounter-1;tabs++)
+                    {
+                        ui->textBrowser->insertPlainText("    ");
+
+                    }
+                    bracket=false;
+
+
+                }
+                else
+                {
+
+                    for(int tabs=0;tabs<tabCounter;tabs++)
+                    {
+                        ui->textBrowser->insertPlainText("    ");
+
+                    }
+                }
+            }
+
+            QString qstr;
+            bool delimFound = v.at(i).find(cumulativeLine + delims.at(0)) == 0;
+            bool tokenFound = v.at(i).find(cumulativeLine + tokens.at(0)) == 0;
+            if(delims.size() > 0 && delimFound && !tokenFound) {
+                qstr = QString::fromStdString(delims.at(0));
+                cumulativeLine += delims.at(0);
+                delims.erase(delims.begin());
+            }
+            else if(tokens.size() > 0 && tokenFound) {
+                qstr = QString::fromStdString(tokens.at(0));
+                cumulativeLine += tokens.at(0);
+                tokens.erase(tokens.begin());
+            } else if(tokens.size() > 0 && delims.size() == 0) {
+                qstr = QString::fromStdString(tokens.at(0));
+                cumulativeLine += tokens.at(0);
+                tokens.erase(tokens.begin());
+            }
+
+            ui->textBrowser->insertPlainText(qstr);
+>>>>>>> fa08300e8cc70dacf6c49f61e409433313ba1f9b
         }
 
+        while(delims.size() > 0) {
+            if(delims.size() >= 3 && delims.at(0) == "/" && delims.at(1) == "*" && delims.at(2) == "*"
+                    && v.at(i)[cumulativeLine.length()] == '/' && v.at(i)[cumulativeLine.length()+1] == '*'
+                    && v.at(i)[cumulativeLine.length()+2] == '*') {
+                comment = true;
+            }
+
+            QString qstr;
+            if(comment) {
+                ui->textBrowser->setTextColor("Lightgreen");
+                qstr = QString::fromStdString(delims.front());
+            } else {
+                ui->textBrowser->setTextColor("Cornsilk ");
+                qstr = QString::fromStdString(delims.front());
+            }
+            ui->textBrowser->insertPlainText(qstr);
+
+            if(delims.size() >= 1 && delims.at(0) == "/") {
+                if(cumulativeLine.length() > 0 && v.at(i)[cumulativeLine.length()-1] == '*' && v.at(i)[cumulativeLine.length()] == '/') {
+                    comment = false;
+                }
+            }
+            cumulativeLine += delims.at(0);
+            delims.erase(delims.begin());
+        }
+        ui->textBrowser->append("");
     }
 
-    void textView::on_comboBox_2_activated(const QString &arg1)
+    return x;
+
+}
+
+void textView::on_comboBox_activated(const QString &arg1)
+{
+    if(arg1=="Drew")
     {
-        if(student=="Drew"&&arg1=="Student")
-        {
-
-            DBTool* tool = new DBTool("TestDB");
-            myCode = new Code(tool,"/Users/drewcarleton/lab 7/t.java",0);
-
-            this->updateCode();
-
-
-          //  ui->textBrowser->cursor().pos()
-
-            //int para= ui->textBrowser->paragraphAt(QCursor::pos());     // te is the textEdit object
-           //  QString line=ui->textBrowser->text(para);
-            // cerr<<line;
-        }
-
+        student="Drew";
     }
+
+}
+
+
+void textView::on_comboBox_2_activated(const QString &arg1)
+{
+    if(student=="Drew"&&arg1=="Student")
+    {
+
+        DBTool* tool = new DBTool("TestDB");
+        //Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java",0);
+        myCode = new Code(tool,"/Users/drewcarleton/lab 7/t.java",0);
+
+
+       // myCode=this->updateCode(x);
+
+
+        //  ui->textBrowser->cursor().pos()
+
+        //int para= ui->textBrowser->paragraphAt(QCursor::pos());     // te is the textEdit object
+        //  QString line=ui->textBrowser->text(para);
+        // cerr<<line;
+    }
+
+}
 
 
 
