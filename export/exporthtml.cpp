@@ -177,7 +177,7 @@ string ExportHTML::export_assignment(Assignment* a) {
                     }
 
                     //cout << (cumulativeLine + tokens.at(0)) << "AAAA" << v.at(i).find(cumulativeLine + tokens.at(0)) << "AAAA" << v.at(i).length() << endl;
-                    //cout << cumulativeLine << "BBBBBB" << v.at(i) << endl;
+                    cout << cumulativeLine << "BBBBBB" << v.at(i) << endl;
 
                     //if(delims.size() > 0)
                         //cout << delims.front();
@@ -191,7 +191,10 @@ string ExportHTML::export_assignment(Assignment* a) {
                     bool tokenFound = v.at(i).find(cumulativeLine + tokens.at(0)) == 0;
                     if(delims.size() > 0 && delimFound && !tokenFound) {
                         cout << "delims" << endl;
-                        rawHTML += delims.at(0);
+                        if(delims.at(0) != " ")
+                            rawHTML += delims.at(0);
+                        else
+                            rawHTML += "&nbsp;";
                         cumulativeLine += delims.at(0);
                         cout << "ZZZZZZZZZZZ" << delims.at(0) << "ZZZZZZZZZZZZ" << endl;
                         delims.erase(delims.begin());
@@ -220,11 +223,11 @@ string ExportHTML::export_assignment(Assignment* a) {
                     else
                         rawHTML += "<span style='color:black;'>" + delims.front() + "</span>";
                     if(delims.size() >= 1 && delims.at(0) == "/") {
-                        cout << "TESTING COMMENT" << endl;
+                        //cout << "TESTING COMMENT" << endl;
                         cout << v.at(i) << ",,,," << cumulativeLine << ",,,,," << endl;
                         if(cumulativeLine.length() > 0 && v.at(i)[cumulativeLine.length()-1] == '*' && v.at(i)[cumulativeLine.length()] == '/') {
                             comment = false;
-                            cout << "AAAAAAAAAcoment" << endl;
+                            //cout << "AAAAAAAAAcoment" << endl;
                         }
                     }
                     cumulativeLine += delims.at(0);
