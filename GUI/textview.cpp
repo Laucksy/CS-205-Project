@@ -19,7 +19,7 @@ textView::~textView()
 }
 
 void textView::makeComment(Code* myCode){
-    myCode->insert(commentLoc);
+    myCode->insert(commentLoc,newFeedback);
     //ui->textBrowser->clear();
     this->updateCode(myCode);
 }
@@ -433,8 +433,8 @@ void textView::on_comboBox_2_activated(const QString &arg1)
     {
 
         DBTool* tool = new DBTool("TestDB");
-        //Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java",0);
-        Code* x = new Code(tool,"/home/erik/Desktop/Student.java",0);
+        Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java",0);
+        //Code* x = new Code(tool,"/home/erik/Desktop/Student.java",0);
 
         myCode=this->updateCode(x);
 
@@ -463,4 +463,9 @@ void textView::on_lineEdit_2_textChanged(const QString &arg1)
 {
     commentLoc=arg1.toInt();
     cerr<<"comment location "<<commentLoc;
+}
+
+void textView::on_lineEdit_textEdited(const QString &arg1)
+{
+   newFeedback= arg1.toStdString();
 }
