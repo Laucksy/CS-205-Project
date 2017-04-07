@@ -19,9 +19,9 @@ textView::~textView()
 }
 
 void textView::makeComment(Code* myCode){
-    // myCode->insert(commentLoc);
-    ui->textBrowser->clear();
-    // this->updateCode(myCode);
+    myCode->insert(commentLoc);
+    //ui->textBrowser->clear();
+    this->updateCode(myCode);
 }
 
 //Code* textView::updateCode(string file)
