@@ -29,13 +29,13 @@ Code::Code(DBTool* db, string n, int aid) : Ident::Ident('o'), DBTable::DBTable(
 
 Code::~Code() {
     // if valid object, adds or updates it in table
-//    if (isNew && id >= 0) {
-//        add_row(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
-//    } else if (!isNew && id >= 0){
-//        update_id(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
-//    } else {
+    //    if (isNew && id >= 0) {
+    //        add_row(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+    //    } else if (!isNew && id >= 0){
+    //        update_id(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+    //    } else {
 
-//    }
+    //    }
 }
 
 void Code::set_file(string name)
@@ -275,7 +275,7 @@ string Code::convert_full(vector<string> input)
 {
     string ret;
     for(vector<string>::iterator it = input.begin(); it != input.end(); ++it) {
-        ret = ret+ *it + " ";
+        ret = ret+ *it + "#";
     }
     //cout << ret << endl;
     return ret;
@@ -286,7 +286,7 @@ string Code::convert_comments(vector<string> input)
 
     string ret;
     for(vector<string>::iterator it = input.begin(); it != input.end(); ++it) {
-        ret = ret+ *it + " ";
+        ret = ret+ *it + "#";
     }
     //cout << ret << endl;
     return ret;
@@ -296,7 +296,7 @@ string Code::convert_lines(vector<string> input)
 {
     string ret;
     for(vector<string>::iterator it = input.begin(); it != input.end(); ++it) {
-        ret = ret+ *it + " ";
+        ret = ret+ *it + "#";
     }
     //cout << ret << endl;
     return ret;
@@ -307,24 +307,50 @@ string Code::convert_lines(vector<string> input)
 vector<string> Code::parse_full(string s)
 {
     stringstream ss(s);
+    string piece;
+    vector<string> vect;
+    while (getline(ss, piece, '#')) {
+        vect.push_back(piece);
+    }
+    return vect;
 
-    string i;
-
+    //        for(unsigned long i = 0; i < vect.size(); i++)
+    //       {
+    //        cout << vect.at(i) << endl;
+    //        }
 }
 
 vector<string> Code::parse_comments(string s)
 {
     stringstream ss(s);
+    string piece;
+    vector<string> vect;
+    while (getline(ss, piece, '#')) {
+        vect.push_back(piece);
+    }
+    return vect;
 
-    string i;
+    //        for(unsigned long i = 0; i < vect.size(); i++)
+    //       {
+    //        cout << vect.at(i) << endl;
+    //        }
 
 }
 
 vector<string> Code::parse_lines(string s)
 {
     stringstream ss(s);
+    string piece;
+    vector<string> vect;
+    while (getline(ss, piece, '#')) {
+        vect.push_back(piece);
+    }
+    return vect;
 
-    string i;
+    //        for(unsigned long i = 0; i < vect.size(); i++)
+    //       {
+    //        cout << vect.at(i) << endl;
+    //        }
 
 }
 

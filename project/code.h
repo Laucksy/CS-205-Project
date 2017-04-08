@@ -37,9 +37,6 @@ public:
     int categorize(string word);
     vector<string> get_full_code();
 
-
-
-
     ~Code();
 
     // Database additions
@@ -84,20 +81,20 @@ protected:
 // This is a callback function that is sent to the library and used
 // to parse the sql request being sent to the database.
 int cb_add_row_code(void  *data,
+                    int    argc,
+                    char **argv,
+                    char **azColName);
+// This is a callback function that is sent to the library and used
+// to parse the sql request being sent to the database.
+int cb_select_id_code(void  *data,
                       int    argc,
                       char **argv,
                       char **azColName);
 // This is a callback function that is sent to the library and used
 // to parse the sql request being sent to the database.
-int cb_select_id_code(void  *data,
-                        int    argc,
-                        char **argv,
-                        char **azColName);
-// This is a callback function that is sent to the library and used
-// to parse the sql request being sent to the database.
 int cb_update_id_code(void  *data,
-                        int    argc,
-                        char **argv,
-                        char **azColName);
+                      int    argc,
+                      char **argv,
+                      char **azColName);
 
 #endif // CODE_H
