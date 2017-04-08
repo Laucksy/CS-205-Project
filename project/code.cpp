@@ -28,14 +28,14 @@ Code::Code(DBTool* db, string n, int aid) : Ident::Ident('o'), DBTable::DBTable(
 }
 
 Code::~Code() {
-    // if valid object, adds or updates it in table
-    if (isNew && id >= 0) {
-        add_row(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
-    } else if (!isNew && id >= 0){
-        update_id(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
-    } else {
+     //if valid object, adds or updates it in table
+        if (isNew && id >= 0) {
+            add_row(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+        } else if (!isNew && id >= 0){
+            update_id(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+        } else {
 
-    }
+        }
 }
 
 void Code::set_file(string name)
@@ -95,13 +95,6 @@ vector<string> Code::tokenize(string line)
     string t;
     vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@','#' };
 
-    /*for(unsigned int x = 0; x < delimiterChars.size(); x++)
-    {
-        while (getline(ss,t,delimiterChars.at(x)))
-        {
-                tokens.push_back(t);
-        }
-    }*/
     unsigned firstIndex = 0;
     unsigned secondIndex = 0;
     for(unsigned i = 0; i < line.length(); i++) {
@@ -164,19 +157,6 @@ vector<string> Code::delimiters(string line)
 
     string i;
 
-    /*while (ss >> i)
-    {
-        //tokens.push_back(i);
-
-        for(unsigned long x = 0; x < delimiterChars.size(); x++)
-        {
-            if (ss.peek() == delimiterChars.at(x)) {
-               ss.ignore();
-               delims.push_back(delimiterStrings.at(x));
-            }
-        }
-    }*/
-
     for(unsigned i = 0; i < line.length(); i++) {
         for(unsigned x = 0; x < delimiterChars.size(); x++) {
             if(line[i] == delimiterChars.at(x)) {
@@ -184,9 +164,6 @@ vector<string> Code::delimiters(string line)
             }
         }
     }
-
-    //for (unsigned long j =0; j< tokens.size(); j++)
-    //cout << tokens.at(j)<< endl;
 
     return delims;
 }
@@ -296,49 +273,88 @@ vector<string> Code::get_full_code()
 
 // db parse
 // convert list to single string
+
+//convert methods turn vector of strings into single string with delimiter character in between entries
 string Code::convert_full()
 {
     string ret;
-
+    for(vector<string>::iterator it = fullCode.begin(); it != fullCode.end(); ++it) {
+        ret = ret+ *it + "#";
+    }
+    //cout << ret << endl;
     return ret;
 }
 
 string Code::convert_comments()
 {
-    string ret;
 
+    string ret;
+    for(vector<string>::iterator it = comments.begin(); it != comments.end(); ++it) {
+        ret = ret+ *it + "#";
+    }
+    //cout << ret << endl;
     return ret;
 }
 
 string Code::convert_lines()
 {
     string ret;
-
+    for(vector<string>::iterator it = linesOfCode.begin(); it != linesOfCode.end(); ++it) {
+        ret = ret+ *it + "#";
+    }
+    //cout << ret << endl;
     return ret;
 }
 
 // convert db string to list
-void Code::parse_full(string s)
+//parse methods turn the single string from convert methods back into the original vector of strings
+vector<string> Code::parse_full(string s)
 {
     stringstream ss(s);
+    string piece;
+    vector<string> vect;
+    while (getline(ss, piece, '#')) {
+        vect.push_back(piece);
+    }
+    return vect;
 
-    string i;
+    //        for(unsigned long i = 0; i < vect.size(); i++)
+    //       {
+    //        cout << vect.at(i) << endl;
+    //        }
+}
+
+vector<string> Code::parse_comments(string s)
+{
+    stringstream ss(s);
+    string piece;
+    vector<string> vect;
+    while (getline(ss, piece, '#')) {
+        vect.push_back(piece);
+    }
+    return vect;
+
+    //        for(unsigned long i = 0; i < vect.size(); i++)
+    //       {
+    //        cout << vect.at(i) << endl;
+    //        }
 
 }
 
-void Code::parse_comments(string s)
+vector<string> Code::parse_lines(string s)
 {
     stringstream ss(s);
+    string piece;
+    vector<string> vect;
+    while (getline(ss, piece, '#')) {
+        vect.push_back(piece);
+    }
+    return vect;
 
-    string i;
-
-}
-
-void Code::parse_lines(string s)
-{
-    stringstream ss(s);
-
-    string i;
+    //        for(unsigned long i = 0; i < vect.size(); i++)
+    //       {
+    //        cout << vect.at(i) << endl;
+    //        }
 
 }
 
