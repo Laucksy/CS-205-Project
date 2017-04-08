@@ -62,6 +62,14 @@ string ExportHTML::export_assignment(Assignment* a) {
                 //for(unsigned j = 0; j < delims.size() && j < tokens.size(); j++)
                 //cout << tokens.at(j) + ".........." + delims.at(j) << endl;
 
+                if(v.at(i)[0] == '#' && v.at(i)[1] == '#' && v.at(i)[v.at(i).length()-1] == '#') {
+                    rawHTML += "<span style='color:yellow;'>FEEDBACK: ";
+                    rawHTML += v.at(i).substr(2,v.at(i).length()-3);
+                    rawHTML += "\n";
+                    rawHTML += "</span>";
+                    continue;
+                }
+
                 lineComment = false;
                 int j = 0;
                 while(tokens.size() > 0/* && delims.size() > 0*/) {
@@ -191,10 +199,14 @@ string ExportHTML::export_assignment(Assignment* a) {
                     bool tokenFound = v.at(i).find(cumulativeLine + tokens.at(0)) == 0;
                     if(delims.size() > 0 && delimFound && !tokenFound) {
                         cout << "delims" << endl;
+                        if(!comment && !lineComment)
+                            rawHTML += "<span style='color:black;'>";
                         if(delims.at(0) != " ")
                             rawHTML += delims.at(0);
                         else
                             rawHTML += "&nbsp;";
+                        if(!comment && !lineComment)
+                            rawHTML += "</span>";
                         cumulativeLine += delims.at(0);
                         cout << "ZZZZZZZZZZZ" << delims.at(0) << "ZZZZZZZZZZZZ" << endl;
                         delims.erase(delims.begin());
