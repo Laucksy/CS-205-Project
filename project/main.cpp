@@ -1,5 +1,6 @@
 #include <iostream>
 #include "code.h"
+#include <QDir>
 
 using namespace std;
 
@@ -9,7 +10,9 @@ int main(int argc, char *argv[])
     //cout << "Compiles!" << endl;
 
     //cout << "Compiles!" << endl;
-    //DBTool* t = new DBTool("BaseDrop");
+    cout << "foo" << endl;
+    cout << QDir::currentPath().toStdString() << endl;
+    DBTool* t = new DBTool("BaseDrop");
     vector<string> testVect;
     testVect.push_back("first");
     testVect.push_back("second");

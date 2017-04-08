@@ -230,6 +230,17 @@ Code* textView::updateCode(Code* myCode)
             ui->textBrowser->insertPlainText(temp);
         }
 
+        if(v.at(i)[0] == '#' && v.at(i)[1] == '#' && v.at(i)[v.at(i).length()-1] == '#') {
+            ui->textBrowser->setTextColor("Yellow");
+            QString qstr = QString::fromStdString("FEEDBACK: ");
+            ui->textBrowser->insertPlainText(qstr);
+            qstr = QString::fromStdString(v.at(i).substr(2,v.at(i).length()-3));
+            ui->textBrowser->insertPlainText(qstr);
+            qstr = QString::fromStdString("\n");
+            ui->textBrowser->insertPlainText(qstr);
+            continue;
+        }
+
         string cumulativeLine = "";
         lineComment = false;
         int j = 0;
@@ -370,6 +381,8 @@ Code* textView::updateCode(Code* myCode)
             bool delimFound = v.at(i).find(cumulativeLine + delims.at(0)) == 0;
             bool tokenFound = v.at(i).find(cumulativeLine + tokens.at(0)) == 0;
             if(delims.size() > 0 && delimFound && !tokenFound) {
+                if(!comment && !lineComment)
+                    ui->textBrowser->setTextColor("Cornsilk ");
                 qstr = QString::fromStdString(delims.at(0));
                 cumulativeLine += delims.at(0);
                 delims.erase(delims.begin());
@@ -434,8 +447,14 @@ void textView::on_comboBox_2_activated(const QString &arg1)
     {
 
         DBTool* tool = new DBTool("TestDB");
+
         Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/Student.java",0);
         //Code* x = new Code(tool,"/home/erik/Desktop/Student.java",0);
+
+        //Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java",0);
+     //   Code* x = new Code(tool,"/home/erik/Desktop/Student.java",0);
+        //Code* x = new Code(tool,"/Student.java",0);
+
 
         myCode=this->updateCode(x);
 
