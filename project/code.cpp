@@ -28,14 +28,14 @@ Code::Code(DBTool* db, string n, int aid) : Ident::Ident('o'), DBTable::DBTable(
 }
 
 Code::~Code() {
-    // if valid object, adds or updates it in table
-    //    if (isNew && id >= 0) {
-    //        add_row(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
-    //    } else if (!isNew && id >= 0){
-    //        update_id(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
-    //    } else {
+     //if valid object, adds or updates it in table
+        if (isNew && id >= 0) {
+            add_row(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+        } else if (!isNew && id >= 0){
+            update_id(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+        } else {
 
-    //    }
+        }
 }
 
 void Code::set_file(string name)
@@ -271,31 +271,31 @@ vector<string> Code::get_full_code()
 // convert list to single string
 
 //convert methods turn vector of strings into single string with delimiter character in between entries
-string Code::convert_full(vector<string> input)
+string Code::convert_full()
 {
     string ret;
-    for(vector<string>::iterator it = input.begin(); it != input.end(); ++it) {
+    for(vector<string>::iterator it = fullCode.begin(); it != fullCode.end(); ++it) {
         ret = ret+ *it + "#";
     }
     //cout << ret << endl;
     return ret;
 }
 
-string Code::convert_comments(vector<string> input)
+string Code::convert_comments()
 {
 
     string ret;
-    for(vector<string>::iterator it = input.begin(); it != input.end(); ++it) {
+    for(vector<string>::iterator it = comments.begin(); it != comments.end(); ++it) {
         ret = ret+ *it + "#";
     }
     //cout << ret << endl;
     return ret;
 }
 
-string Code::convert_lines(vector<string> input)
+string Code::convert_lines()
 {
     string ret;
-    for(vector<string>::iterator it = input.begin(); it != input.end(); ++it) {
+    for(vector<string>::iterator it = linesOfCode.begin(); it != linesOfCode.end(); ++it) {
         ret = ret+ *it + "#";
     }
     //cout << ret << endl;

@@ -45,9 +45,9 @@ public:
     string fileName;
 
     // db parse methods
-    string convert_full(vector<string>);
-    string convert_comments(vector<string>);
-    string convert_lines(vector<string>);
+    string convert_full();
+    string convert_comments();
+    string convert_lines();
     vector<string> parse_full(string s);
     vector<string> parse_comments(string s);
     vector<string> parse_lines(string s);
