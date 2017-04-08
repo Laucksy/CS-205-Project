@@ -23,7 +23,7 @@ public:
 
     Code* updateCode(Code*);
      void makeComment(Code*);
-
+    string newFeedback;
      Code* myCode=nullptr;
      int commentLoc=0;
 
@@ -45,6 +45,10 @@ private slots:
     void on_pushButton_clicked();
 
     void on_lineEdit_2_textChanged(const QString &arg1);
+
+    void on_lineEdit_textEdited(const QString &arg1);
+
+    void on_pushButton_2_clicked();
 
 private:
     Ui::textView *ui;

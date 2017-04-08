@@ -1,5 +1,6 @@
 #include "dataview.h"
 #include "ui_dataview.h"
+#include "rubrictitle.h"
 
 DataView::DataView(QWidget *parent) :
     QWidget(parent),
@@ -23,7 +24,7 @@ void DataView::on_pushButton_clicked()
 
 void DataView::on_pushButton_2_clicked()
 {
-    Rubrics *rv= new Rubrics();
+    RubricTitle *rv= new RubricTitle();
 
     rv->show();
     this->hide();

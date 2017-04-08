@@ -93,7 +93,7 @@ vector<string> Code::tokenize(string line)
     stringstream ss(line);
     vector<string> tokens;
     string t;
-    vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@' };
+    vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@','#' };
 
     unsigned firstIndex = 0;
     unsigned secondIndex = 0;
@@ -150,8 +150,8 @@ vector<string> Code::tokenize(string line)
 vector<string> Code::delimiters(string line)
 {
     vector<string> delims;
-    vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@' };
-    vector<string> delimiterStrings = {" ", ",", ".", ":", "\t", "(", ")", "/", ";", "[", "]", "{", "}", "*", "@"};
+    vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@','#' };
+    vector<string> delimiterStrings = {" ", ",", ".", ":", "\t", "(", ")", "/", ";", "[", "]", "{", "}", "*", "@","#"};
 
     stringstream ss(line);
 
@@ -168,12 +168,14 @@ vector<string> Code::delimiters(string line)
     return delims;
 }
 
-void Code::insert(int position)
+void Code::insert(int position,string feed)
 {
     //iterating through code to insert text at a given position inside the vector
     vector<string>::iterator it = fullCode.begin();
-
-    fullCode.insert (it+position," ");
+string s1= "##";
+string s2= "#";
+string s3= s1+feed+s2;
+    fullCode.insert (it+position,s3);
     /*also if we only want to insert blank text as to make room for an overlay comment
       * rather than text, we could take in only position and add in a blank line.
       */
@@ -258,6 +260,8 @@ int Code::categorize(string word)
     {
         return 13;
     }
+
+
     //everything else is just normal code, should be black (or some standard color).
     return 0;
 }

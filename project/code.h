@@ -26,7 +26,7 @@ public:
     vector<string> comments;
     vector<string> linesOfCode;
     vector<Feedback*> profFeedback;
-    void insert(int position);
+    void insert(int position,string);
     void set_file(string name);
 
     void deleteFeedback(int pos);
