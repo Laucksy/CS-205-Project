@@ -29,13 +29,13 @@ Code::Code(DBTool* db, string n, int aid) : Ident::Ident('o'), DBTable::DBTable(
 
 Code::~Code() {
     // if valid object, adds or updates it in table
-    if (isNew && id >= 0) {
-        add_row(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
-    } else if (!isNew && id >= 0){
-        update_id(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
-    } else {
+//    if (isNew && id >= 0) {
+//        add_row(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+//    } else if (!isNew && id >= 0){
+//        update_id(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+//    } else {
 
-    }
+//    }
 }
 
 void Code::set_file(string name)
@@ -292,21 +292,21 @@ vector<string> Code::get_full_code()
 
 // db parse
 // convert list to single string
-string Code::convert_full()
+string Code::convert_full(vector<string> input)
 {
     string ret;
 
     return ret;
 }
 
-string Code::convert_comments()
+string Code::convert_comments(vector<string> input)
 {
     string ret;
 
     return ret;
 }
 
-string Code::convert_lines()
+string Code::convert_lines(vector<string> input)
 {
     string ret;
 
@@ -314,7 +314,7 @@ string Code::convert_lines()
 }
 
 // convert db string to list
-void Code::parse_full(string s)
+vector<string> Code::parse_full(string s)
 {
     stringstream ss(s);
 
@@ -322,7 +322,7 @@ void Code::parse_full(string s)
 
 }
 
-void Code::parse_comments(string s)
+vector<string> Code::parse_comments(string s)
 {
     stringstream ss(s);
 
@@ -330,7 +330,7 @@ void Code::parse_comments(string s)
 
 }
 
-void Code::parse_lines(string s)
+vector<string> Code::parse_lines(string s)
 {
     stringstream ss(s);
 

@@ -48,12 +48,12 @@ public:
     string fileName;
 
     // db parse methods
-    string convert_full();
-    string convert_comments();
-    string convert_lines();
-    void parse_full(string s);
-    void parse_comments(string s);
-    void parse_lines(string s);
+    string convert_full(vector<string>);
+    string convert_comments(vector<string>);
+    string convert_lines(vector<string>);
+    vector<string> parse_full(string s);
+    vector<string> parse_comments(string s);
+    vector<string> parse_lines(string s);
 
     // database methods
     // returns the row count of the categories table
