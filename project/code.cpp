@@ -95,13 +95,6 @@ vector<string> Code::tokenize(string line)
     string t;
     vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@' };
 
-    /*for(unsigned int x = 0; x < delimiterChars.size(); x++)
-    {
-        while (getline(ss,t,delimiterChars.at(x)))
-        {
-                tokens.push_back(t);
-        }
-    }*/
     unsigned firstIndex = 0;
     unsigned secondIndex = 0;
     for(unsigned i = 0; i < line.length(); i++) {
@@ -164,19 +157,6 @@ vector<string> Code::delimiters(string line)
 
     string i;
 
-    /*while (ss >> i)
-    {
-        //tokens.push_back(i);
-
-        for(unsigned long x = 0; x < delimiterChars.size(); x++)
-        {
-            if (ss.peek() == delimiterChars.at(x)) {
-               ss.ignore();
-               delims.push_back(delimiterStrings.at(x));
-            }
-        }
-    }*/
-
     for(unsigned i = 0; i < line.length(); i++) {
         for(unsigned x = 0; x < delimiterChars.size(); x++) {
             if(line[i] == delimiterChars.at(x)) {
@@ -184,9 +164,6 @@ vector<string> Code::delimiters(string line)
             }
         }
     }
-
-    //for (unsigned long j =0; j< tokens.size(); j++)
-    //cout << tokens.at(j)<< endl;
 
     return delims;
 }
@@ -292,28 +269,41 @@ vector<string> Code::get_full_code()
 
 // db parse
 // convert list to single string
+
+//convert methods turn vector of strings into single string with delimiter character in between entries
 string Code::convert_full(vector<string> input)
 {
     string ret;
-
+    for(vector<string>::iterator it = input.begin(); it != input.end(); ++it) {
+        ret = ret+ *it + " ";
+    }
+    //cout << ret << endl;
     return ret;
 }
 
 string Code::convert_comments(vector<string> input)
 {
-    string ret;
 
+    string ret;
+    for(vector<string>::iterator it = input.begin(); it != input.end(); ++it) {
+        ret = ret+ *it + " ";
+    }
+    //cout << ret << endl;
     return ret;
 }
 
 string Code::convert_lines(vector<string> input)
 {
     string ret;
-
+    for(vector<string>::iterator it = input.begin(); it != input.end(); ++it) {
+        ret = ret+ *it + " ";
+    }
+    //cout << ret << endl;
     return ret;
 }
 
 // convert db string to list
+//parse methods turn the single string from convert methods back into the original vector of strings
 vector<string> Code::parse_full(string s)
 {
     stringstream ss(s);
