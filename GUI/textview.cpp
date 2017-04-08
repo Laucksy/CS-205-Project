@@ -1,6 +1,7 @@
 #include "textview.h"
 #include "ui_textview.h"
 #include <iostream>
+#include "dataview.h"
 using namespace std;
 
 
@@ -468,4 +469,12 @@ void textView::on_lineEdit_2_textChanged(const QString &arg1)
 void textView::on_lineEdit_textEdited(const QString &arg1)
 {
    newFeedback= arg1.toStdString();
+}
+
+void textView::on_pushButton_2_clicked()
+{
+    DataView *rv= new DataView();
+
+    rv->show();
+    this->hide();
 }

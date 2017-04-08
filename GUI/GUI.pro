@@ -29,7 +29,9 @@ SOURCES += main.cpp\
     dataview.cpp \
     rubrics.cpp \
     newuser.cpp \
-    forgotpassword.cpp
+    forgotpassword.cpp \
+    rubrictitle.cpp \
+    addcategory.cpp
 
 
 
@@ -38,7 +40,9 @@ HEADERS  += mainwindow.h \
     dataview.h \
     rubrics.h \
     newuser.h \
-    forgotpassword.h
+    forgotpassword.h \
+    rubrictitle.h \
+    addcategory.h
 
 
 FORMS    += mainwindow.ui \
@@ -46,7 +50,9 @@ FORMS    += mainwindow.ui \
     dataview.ui \
     rubrics.ui \
     newuser.ui \
-    forgotpassword.ui
+    forgotpassword.ui \
+    rubrictitle.ui \
+    addcategory.ui
 
 RESOURCES += \
     logo.qrc

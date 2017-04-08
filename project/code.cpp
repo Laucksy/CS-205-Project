@@ -195,7 +195,7 @@ void Code::insert(int position,string feed)
 {
     //iterating through code to insert text at a given position inside the vector
     vector<string>::iterator it = fullCode.begin();
-string s1= "#";
+string s1= "##";
 string s2= "#";
 string s3= s1+feed+s2;
     fullCode.insert (it+position,s3);
