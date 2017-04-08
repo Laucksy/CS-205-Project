@@ -107,8 +107,8 @@ vector<string> Code::tokenize(string line)
         }
     }
 
-    for (unsigned long j =0; j< tokens.size(); j++)
-        cout << "TOKENS:" << tokens.at(j) << "," << endl;
+    //for (unsigned long j =0; j< tokens.size(); j++)
+        //cout << "TOKENS:" << tokens.at(j) << "," << endl;
 
     return tokens;
 }
