@@ -23,6 +23,8 @@ Rubric::Rubric(DBTool* db, bool d, string n) : Ident::Ident('r'), DBTable::DBTab
     // initialize vars
     isDeduction = d;
     title = n;
+    grade = 0;
+    calc_grade();
 }
 
 // destructor
@@ -81,6 +83,7 @@ void Rubric::add_category(Category* c, string n)
 {
     cat.push_back(c);
     name.push_back(n);
+    calc_grade();
 }
 
 // finds the appropriate category quality
