@@ -13,9 +13,15 @@ ForgotPassword::~ForgotPassword()
     delete ui;
 }
 
+void ForgotPassword::set_integ(Integration *i)
+{
+    integ = i;
+}
+
 void ForgotPassword::on_pushButton_clicked()
 {
     MainWindow *mv= new MainWindow();
+    mv->set_integ(integ);
 
     mv->show();
     this->hide();

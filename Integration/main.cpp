@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
     integ->add_new_category(testRubric, "test_cat_0", 5.0, testMarkers, testQuality, true);
 
-    integ->select_assignment_rubric(integ->rubrics->rubrics[0]);
+    integ->select_assignment_rubric(integ->rubrics[0]);
 
     Assignment* test0 = integ->add_new_submission(integ->activeAssignemnt->rubric, integ->students[0]->list[0]);
     integ->add_new_file(test0, "class1.java");

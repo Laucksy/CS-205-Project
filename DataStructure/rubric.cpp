@@ -372,6 +372,8 @@ int cb_select_id_rubric(void  *data,
               << std::endl;
 
     // assign object members from table data
+    obj->id = atoi(argv[0]);
+    obj->id_rubric = atoi(argv[0]) + 1;
     obj->title = argv[1];
     obj->grade = atof(argv[2]);
     obj->parse_name(argv[3]);

@@ -19,6 +19,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    //fills in the inegration slot
+    void set_integ(Integration* i);
+
 private slots:
     void on_pushButton_clicked();
 
@@ -28,6 +31,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    Integration* integ;
 
 };
 

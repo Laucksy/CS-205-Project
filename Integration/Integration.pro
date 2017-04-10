@@ -14,7 +14,7 @@ SOURCES += \
     ../DataStructure/students.cpp \
     ../DataStructure/assignments.cpp \
     ../DataStructure/assignment.cpp \
-    ../DataStructure/rubrics.cpp \
+    #../DataStructure/rubrics.cpp \
     ../DataStructure/rubric.cpp \
     ../DataStructure/category.cpp \
     ../DataStructure/ident.cpp \
@@ -25,7 +25,7 @@ HEADERS += \
     ../DataStructure/students.h \
     ../DataStructure/assignments.h \
     ../DataStructure/assignment.h \
-    ../DataStructure/rubrics.h \
+    #../DataStructure/rubrics.h \
     ../DataStructure/rubric.h \
     ../DataStructure/category.h \
     ../DataStructure/ident.h \

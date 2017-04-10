@@ -1,6 +1,7 @@
 #ifndef ADDCATEGORY_H
 #define ADDCATEGORY_H
 
+#include "../Integration/integration.h"
 #include <QWidget>
 
 namespace Ui {
@@ -14,6 +15,7 @@ class AddCategory : public QWidget
 public:
     explicit AddCategory(QWidget *parent = 0);
     ~AddCategory();
+    void set_integ(Integration* integ, Rubric* r);
 
 private slots:
     void on_pushButton_clicked();
@@ -22,6 +24,8 @@ private slots:
 
 private:
     Ui::AddCategory *ui;
+    Integration* integ;
+    Rubric* rubric;
 };
 
 #endif // ADDCATEGORY_H

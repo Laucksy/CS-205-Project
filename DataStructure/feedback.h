@@ -20,6 +20,8 @@ public:
     ~Feedback();
 
     // database methods
+    // stores program data in the database
+    void store_in_db();
     // returns the row count of the categories table
     int get_row_cnt();
     // An overloaded method to generate a new
