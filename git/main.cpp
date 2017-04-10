@@ -10,11 +10,12 @@ int main(int argc, char *argv[])
 
     cout << "Hello World!" << endl;
     Git::init();
-    Git::add_file("test.txt");
+    //Git::add_file("test.txt");
+    //Git::add_file("TestDB");
     //cout << Git::status() << endl;
     //system("clear");
-    cout << Git::pull() << endl;
+    //cout << Git::pull() << endl;
     cout << Git::push() << endl;
-    cout << Git::reset() << endl;
+    //cout << Git::reset() << endl;
     return 0;
 }
