@@ -260,6 +260,8 @@ int cb_select_id_students(void  *data,
               << std::endl;
 
     // assign object members from table data
+    obj->id = atoi(argv[0]);
+    obj->id_students = atoi(argv[0]) + 1;
     obj->name =argv[1];
 
     return 0;

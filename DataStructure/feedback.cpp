@@ -28,14 +28,22 @@ Feedback::Feedback(DBTool* db, string te, string ta, int cid, int p): Ident::Ide
 void Feedback::change_text(string txt)
 {
     text = txt;
+    store_in_db();
 }
 
 void Feedback::update_tag(string t)
 {
     tag = t;
+    store_in_db();
 }
 
 Feedback::~Feedback()
+{
+    store_in_db();
+}
+
+// database methods
+void Feedback::store_in_db()
 {
     // if valid object, adds or updates it in table
     if (isNew && id >= 0) {
@@ -47,7 +55,6 @@ Feedback::~Feedback()
     }
 }
 
-// database methods
 int Feedback::get_row_cnt()
 {
     return row_cnt;
@@ -291,6 +298,8 @@ int cb_select_id_feedback(void  *data,
               << std::endl;
 
     // assign object members from table data
+    obj->id = atoi(argv[0]);
+    obj->id_feedback = atoi(argv[0]) + 1;
     obj->text = argv[1];
     obj->tag = argv[2];
     obj->codeId = atoi(argv[3]);

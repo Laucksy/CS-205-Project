@@ -277,6 +277,8 @@ int cb_select_id_assignments(void  *data,
               << std::endl;
 
     // assign object members from table data
+    obj->id = atoi(argv[0]);
+    obj->id_assignments = atoi(argv[0]) + 1;
     obj->name =argv[1];
     obj->rubId = atoi(argv[2]);
 

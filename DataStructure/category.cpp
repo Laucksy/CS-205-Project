@@ -411,6 +411,8 @@ int cb_select_id_category(void  *data,
               << std::endl;
 
     // assign object members from table data
+    obj->id = atoi(argv[0]);
+    obj->id_category = atoi(argv[0]) + 1;
     obj->parse_quality(argv[1]);
     obj->parse_points(argv[2]);
     obj->pts = atof(argv[3]);

@@ -464,6 +464,8 @@ int cb_select_id_assignment(void  *data,
               << std::endl;
 
     // assign object members from table data
+    obj->id = atoi(argv[0]);
+    obj->id_assignment = atoi(argv[0]) + 1;
     obj->grade = atof(argv[1]);
     obj->parse_category(argv[2]);
     obj->parse_component(argv[3]);
