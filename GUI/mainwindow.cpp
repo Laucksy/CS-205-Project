@@ -13,18 +13,24 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::set_integ(Integration *i)
+{
+    integ = i;
+}
+
 void MainWindow::on_pushButton_clicked()
 {
   DataView *dv= new DataView();
+  dv->set_integ(integ);
 
   dv->show();
   this->hide();
 }
 
-
 void MainWindow::on_pushButton_2_clicked()
 {
     NewUser *nv= new NewUser();
+    nv->set_integ(integ);
 
     nv->show();
     this->hide();
@@ -33,6 +39,7 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_pushButton_3_clicked()
 {
     ForgotPassword *fv= new ForgotPassword();
+    fv->set_integ(integ);
 
     fv->show();
     this->hide();

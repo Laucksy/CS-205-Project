@@ -9,7 +9,6 @@
 #include "../DataStructure/category.h"
 #include "../DataStructure/feedback.h"
 #include "../DataStructure/rubric.h"
-#include "../DataStructure/rubrics.h"
 #include "../DataStructure/student.h"
 #include "../DataStructure/students.h"
 #include "../project/code.h"
@@ -41,8 +40,7 @@ public:
     void set_active_submission(Assignment* a); // sets the active submission
     void set_active_file(Code* f); // sets the active file
 
-
-    Rubrics* rubrics;
+    vector<Rubric*> rubrics;
     vector<Assignments*> assignments;
     vector<Students*> students;
 

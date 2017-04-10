@@ -3,13 +3,14 @@
 Integration::Integration()
 {
     db = new DBTool("database");
-    rubrics = new Rubrics("main");
     populate();
 }
 
 Integration::~Integration()
 {
-    delete rubrics;
+    for (Rubric* k : rubrics) {
+        delete k;
+    }
 
     for (Assignments* k : assignments) {
         delete k;
@@ -92,7 +93,7 @@ void Integration::populate()
     for (int i = 0; i < drc; i++) {
         Rubric* r = new Rubric(db, true, "");
         r->select_id(i);
-        rubrics->rubrics.push_back(r);
+        rubrics.push_back(r);
     }
 
     // category
@@ -100,7 +101,7 @@ void Integration::populate()
         Category* c = new Category(db, &dr, -1.0, false);
         c->select_id(i);
         int rid = c->rubricId;
-        for (Rubric* k : rubrics->rubrics) {
+        for (Rubric* k : rubrics) {
             if (k->id == rid) {
                 k->cat.push_back(c);
                 c->rubric = k;
@@ -114,7 +115,7 @@ void Integration::populate()
         l->select_id(i);
         assignments.push_back(l);
         int rid = l->rubId;
-        for (Rubric* k : rubrics->rubrics) {
+        for (Rubric* k : rubrics) {
             if (k->id == rid) {
                 l->rubric = k;
             }
@@ -130,7 +131,7 @@ void Integration::populate()
         int rid = a->rubricId;
         int lid = a->assignNum;
         int sid = a->studentId;
-        for (Rubric* k : rubrics->rubrics) {
+        for (Rubric* k : rubrics) {
             if (k->id == rid) {
                 a->rubric = k;
             }
@@ -222,7 +223,7 @@ void Integration::add_new_file(Assignment* assign, string name)
 Rubric* Integration::add_new_rubric(bool deduction, string name)
 {
     Rubric* r = new Rubric(db, deduction, name);
-    rubrics->rubrics.push_back(r);
+    rubrics.push_back(r);
     return r;
 }
 

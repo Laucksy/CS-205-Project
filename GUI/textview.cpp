@@ -19,6 +19,11 @@ textView::~textView()
     delete ui;
 }
 
+void textView::set_integ(Integration *i)
+{
+    integ = i;
+}
+
 void textView::makeComment(Code* myCode){
     myCode->insert(commentLoc,newFeedback);
     //ui->textBrowser->clear();
@@ -493,6 +498,7 @@ void textView::on_lineEdit_textEdited(const QString &arg1)
 void textView::on_pushButton_2_clicked()
 {
     DataView *rv= new DataView();
+    rv->set_integ(integ);
 
     rv->show();
     this->hide();
