@@ -21,6 +21,7 @@ Code::Code(DBTool* db, string n, int aid) : Ident::Ident('o'), DBTable::DBTable(
     code_row_cnt = size();
 
     isNew = true; // assumes object is unique and not in table
+    toDelete = false;
 
     //initialize vars
     fileName = n;
@@ -28,6 +29,11 @@ Code::Code(DBTool* db, string n, int aid) : Ident::Ident('o'), DBTable::DBTable(
 }
 
 Code::~Code() {
+    // deletes the objectfrom the db if slated for delete
+    if (toDelete) {
+        delete_id(id);
+        return;
+    }
      //if valid object, adds or updates it in table
         if (isNew && id >= 0) {
             add_row(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
@@ -41,6 +47,11 @@ Code::~Code() {
 void Code::set_file(string name)
 {
     fileName = name;
+}
+
+void Code::set_to_delete()
+{
+    toDelete = true;
 }
 
 vector<string> Code::parse()
@@ -550,6 +561,39 @@ bool Code::update_id(int id, string name, string full,
     return retCode;
 }
 
+// deletes entry by unique id
+bool Code::delete_id(int i) {
+
+    int   retCode = 0;
+    char *zErrMsg = 0;
+
+    sql_delete_id  = "DElETE FROM ";
+    sql_delete_id += table_name;
+    sql_delete_id += " WHERE ";
+    sql_delete_id += "     id = ";
+    sql_delete_id += to_string(i);
+    sql_delete_id += ";";
+
+    retCode = sqlite3_exec(curr_db->db_ref(),
+                           sql_delete_id.c_str(),
+                           cb_delete_id_code,
+                           this,
+                           &zErrMsg          );
+
+    if( retCode != SQLITE_OK ){
+
+        std::cerr << table_name
+                  << " template ::"
+                  << std::endl
+                  << "SQL error: "
+                  << zErrMsg;
+
+        sqlite3_free(zErrMsg);
+    }
+
+    return retCode;
+}
+
 // callbacks
 int cb_add_row_code(void  *data,
                     int    argc,
@@ -622,6 +666,40 @@ int cb_select_id_code(void  *data,
 }
 
 int cb_update_id_code(void  *data,
+                      int    argc,
+                      char **argv,
+                      char **azColName)
+{
+
+
+
+    std::cerr << "cb_add_row being called\n";
+
+    if(argc < 1) {
+        std::cerr << "No data presented to callback "
+                  << "argc = " << argc
+                  << std::endl;
+    }
+
+    int i;
+
+    Code *obj = (Code *) data;
+
+    std::cout << "------------------------------\n";
+    std::cout << obj->get_name()
+              << std::endl;
+
+    for(i = 0; i < argc; i++){
+        std::cout << azColName[i]
+                     << " = "
+                     <<  (argv[i] ? argv[i] : "NULL")
+                      << std::endl;
+    }
+
+    return 0;
+}
+
+int cb_delete_id_code(void  *data,
                       int    argc,
                       char **argv,
                       char **azColName)

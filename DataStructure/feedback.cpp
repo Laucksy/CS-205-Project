@@ -17,6 +17,7 @@ Feedback::Feedback(DBTool* db, string te, string ta, int cid, int p): Ident::Ide
     feedback_row_cnt = size();
 
     isNew = true; // assumes object is unique and not in table
+    toDelete = false;
 
     // initialize vars
     string text = te;
@@ -45,6 +46,10 @@ Feedback::~Feedback()
 // database methods
 void Feedback::store_in_db()
 {
+    if (toDelete) {
+        delete_id(id);
+        return;
+    }
     // if valid object, adds or updates it in table
     if (isNew && id >= 0) {
         add_row(id, text, tag, codeId, position);
@@ -53,6 +58,11 @@ void Feedback::store_in_db()
     } else {
 
     }
+}
+
+void Feedback::set_to_delete()
+{
+    toDelete = true;
 }
 
 int Feedback::get_row_cnt()
@@ -236,6 +246,40 @@ bool Feedback::update_id(int id, string text, string tag, int codeId, int positi
     return retCode;
 }
 
+// deletes entry by unique id
+bool Feedback::delete_id(int i) {
+
+    int   retCode = 0;
+    char *zErrMsg = 0;
+
+    sql_delete_id  = "DELETE FROM ";
+    sql_delete_id += table_name;
+    sql_delete_id += " WHERE ";
+    sql_delete_id += "     id = ";
+    sql_delete_id += to_string(i);
+    sql_delete_id += ";";
+
+    retCode = sqlite3_exec(curr_db->db_ref(),
+                           sql_delete_id.c_str(),
+                           cb_delete_id_feedback,
+                           this,
+                           &zErrMsg          );
+
+    if( retCode != SQLITE_OK ){
+
+        std::cerr << table_name
+                  << " template ::"
+                  << std::endl
+                  << "SQL error: "
+                  << zErrMsg;
+
+        sqlite3_free(zErrMsg);
+    }
+
+    return retCode;
+}
+
+
 // callbacks
 int cb_add_row_feedback(void  *data,
                       int    argc,
@@ -341,5 +385,40 @@ int cb_update_id_feedback(void  *data,
 
     return 0;
 }
+
+int cb_delete_id_feedback(void  *data,
+                        int    argc,
+                        char **argv,
+                        char **azColName)
+{
+
+
+
+    std::cerr << "cb_add_row being called\n";
+
+    if(argc < 1) {
+        std::cerr << "No data presented to callback "
+                  << "argc = " << argc
+                  << std::endl;
+    }
+
+    int i;
+
+    Feedback *obj = (Feedback *) data;
+
+    std::cout << "------------------------------\n";
+    std::cout << obj->get_name()
+              << std::endl;
+
+    for(i = 0; i < argc; i++){
+        std::cout << azColName[i]
+                     << " = "
+                     <<  (argv[i] ? argv[i] : "NULL")
+                      << std::endl;
+    }
+
+    return 0;
+}
+
 
 

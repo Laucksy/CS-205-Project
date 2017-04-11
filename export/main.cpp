@@ -25,5 +25,10 @@ int main(int argc, char *argv[])
 
     //cout << ExportHTML::export_assignment(assignment) << endl;
     ExportHTML::export_assignment(assignment);
+
+    delete assignment;
+    delete student;
+    delete rubric;
+
     return 0;
 }

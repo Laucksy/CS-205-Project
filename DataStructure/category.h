@@ -30,6 +30,8 @@ public:
     Category(DBTool* db, Rubric* r, double p, bool m);
     ~Category();
 
+    void set_to_delete();
+
     // data methods
     double get_pts();
     bool is_matrix();
@@ -66,11 +68,14 @@ public:
     bool update_id(int id, string quality, string points,
                    double pt, int matrix, int rubId);
 
+    bool delete_id(int i);
+
     Rubric* rubric;
     double pts; // total points
     bool isMatrix; // uses quality descriptions
     bool isNew; //used for db tracking
     int rubricId;
+    bool toDelete;
 
 private:
     vector<string> quality; // quality descrpictions
@@ -80,6 +85,7 @@ protected:
     // sql command templates
     std::string sql_select_id;
     std::string sql_update_id;
+    std::string sql_delete_id;
 };
 
 // This is a callback function that is sent to the library and used
@@ -100,6 +106,13 @@ int cb_update_id_category(void  *data,
                         int    argc,
                         char **argv,
                         char **azColName);
+// This is a callback function that is sent to the library and used
+// to parse the sql request being sent to the database.
+int cb_delete_id_category(void  *data,
+                        int    argc,
+                        char **argv,
+                        char **azColName);
+
 
 
 #endif // CATEGORY_H
