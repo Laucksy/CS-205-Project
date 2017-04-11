@@ -40,3 +40,12 @@ void RubricTitle::on_checkBox_clicked(bool checked)
 {
     d = checked;
 }
+
+void RubricTitle::on_pushButton_clicked()
+{
+    DataView *dv= new DataView();
+    dv->set_integ(integ);
+
+    dv->show();
+    this->hide();
+}

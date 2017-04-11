@@ -114,7 +114,7 @@
    <enum>Qt::ClickFocus</enum>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Axolotl Development</string>
   </property>
   <property name="autoFillBackground">
    <bool>true</bool>
