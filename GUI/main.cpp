@@ -14,7 +14,7 @@
 using namespace std;
 int main(int argc, char *argv[])
 {
-    Integration integ; //= new Integration();
+    Integration integ(".", "TestDB"); //= new Integration();
     QApplication a(argc, argv);
     MainWindow w;
     w.set_integ(&integ);

@@ -5,7 +5,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    Integration* integ = new Integration();
+    Integration* integ = new Integration(".", "TestDB");
 
     integ->add_new_class("testClass1");
 
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 
     delete integ;
 
-    Integration* integ2 = new Integration();
+    Integration* integ2 = new Integration(".", "TestDB");
 
     for (Assignments* k : integ2->assignments) {
         integ2->delete_assignment(k);

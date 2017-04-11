@@ -16,7 +16,7 @@
 class Integration
 {
 public:
-    Integration();
+    Integration(string path, string name);
     ~Integration();
 
     void populate();
