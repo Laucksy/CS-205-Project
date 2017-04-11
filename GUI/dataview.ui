@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Axolotl Developmet</string>
+   <string>Axolotl Development</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
