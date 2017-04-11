@@ -19,6 +19,8 @@ public:
     Feedback(DBTool* db, string te, string ta, int cid, int p);
     ~Feedback();
 
+    void set_to_delete();
+
     // database methods
     // stores program data in the database
     void store_in_db();
@@ -39,6 +41,8 @@ public:
 
     bool update_id(int id, string text, string tag, int codeId, int position);
 
+    bool delete_id(int i);
+
     string text;
     string tag;
     void change_text(string txt);
@@ -48,11 +52,13 @@ public:
     int codeId;
     int position;
     bool isNew;
+    bool toDelete;
 
 protected:
     // sql command templates
     string sql_select_id;
     string sql_update_id;
+    string sql_delete_id;
 };
 
 // This is a callback function that is sent to the library and used
@@ -70,6 +76,12 @@ int cb_select_id_feedback(void  *data,
 // This is a callback function that is sent to the library and used
 // to parse the sql request being sent to the database.
 int cb_update_id_feedback(void  *data,
+                        int    argc,
+                        char **argv,
+                        char **azColName);
+// This is a callback function that is sent to the library and used
+// to parse the sql request being sent to the database.
+int cb_delete_id_feedback(void  *data,
                         int    argc,
                         char **argv,
                         char **azColName);

@@ -31,6 +31,15 @@ public:
     void add_new_category(Rubric* rubric, string name, double points, vector<double> markers, vector<string> quality, bool matrix); // new category class instance
     void add_new_feedback(string text, string tag, int position); // new feedback class instance
 
+    void delete_class(Students* g); // delete students class instance
+    void delete_student(Student* s); // delete student class instance
+    void delete_assignment(Assignments* l); // delete assignments class instance
+    void delete_submission(Assignment* a); // delete assignment class instance
+    void delete_file(Code* o); // delete code class instance
+    void delete_rubric(Rubric* r); // delete rubric class instance
+    void delete_category(Category* c); // delete category class instance
+    void delete_feedback(Feedback* f); // delete feedback class instance
+
     void select_random_submission(); // selects student from pool
     void select_assignment_rubric(Rubric* rubric); // sets the rubric for all assignment instances in an assignments instance
     void finish_grading_submission(); // marks ann assignment instance as graded

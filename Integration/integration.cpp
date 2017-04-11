@@ -85,7 +85,7 @@ void Integration::populate()
             if (k->id == gid) {
                 k->list.push_back(s);
             }
-        } 
+        }
         studentList.push_back(s);
     }
 
@@ -245,6 +245,180 @@ void Integration::add_new_feedback(string text, string tag, int position)
 {
     Feedback* f = new Feedback(db, text, tag, activeFile->id, position);
     activeFile->add_feedback(f);
+}
+
+// delete students class instance
+void Integration::delete_class(Students* g)
+{
+    g->set_to_delete();
+
+    for (int i = 0; i < students.size(); i++) {
+        if (g == students[i]) {
+            students.erase(students.begin() + i);
+        }
+    }
+
+    for (Student* k : g->list) {
+        delete_student(k);
+    }
+
+    delete g;
+}
+
+// delete student class instance
+void Integration::delete_student(Student* s)
+{
+    s->set_to_delete();
+    int classId = s->classId;
+
+    for (Students* k : students) {
+        if (k->id == classId) {
+            for (int i = 0; i < k->list.size(); i++) {
+                if (s == k->list[i]) {
+                    k->list.erase(k->list.begin() + i);
+                }
+            }
+        }
+    }
+
+    delete s;
+}
+
+// delete assignments class instance
+void Integration::delete_assignment(Assignments* l)
+{
+    l->set_to_delete();
+
+    for (int i = 0; i < assignments.size(); i++) {
+        if (l == assignments[i]) {
+            assignments.erase(assignments.begin() + i);
+        }
+    }
+
+    for (Assignment* k : l->list) {
+        delete_submission(k);
+    }
+
+    delete l;
+}
+
+// delete assignment class instance
+void Integration::delete_submission(Assignment* a)
+{
+    a->set_to_delete();
+    int assignId = a->assignNum;
+
+    for (Assignments* k : assignments) {
+        if (k->id == assignId) {
+            for (int i = 0; i < k->list.size(); i++) {
+                if (a == k->list[i]) {
+                    k->list.erase(k->list.begin() + i);
+                }
+            }
+        }
+    }
+
+    for (Code* k : a->files) {
+        delete_file(k);
+    }
+
+    delete a;
+}
+
+// delete code class instance
+void Integration::delete_file(Code* o)
+{
+    o->set_to_delete();
+    int assignId = o->assignId;
+
+    Assignment* assign = nullptr;
+    for (Assignments* k : assignments) {
+        for (Assignment* h : k->list) {
+            if (h->id == assignId) {
+                assign = h;
+            }
+        }
+    }
+
+    if (assign != nullptr) {
+        for (int i = 0; i < assign->files.size(); i++) {
+            if (o == assign->files[i]) {
+                assign->files.erase(assign->files.begin() + i);
+            }
+        }
+    }
+
+    for (Feedback* k : o->profFeedback) {
+        delete_feedback(k);
+    }
+
+    delete o;
+}
+
+// delete rubric class instance
+void Integration::delete_rubric(Rubric* r)
+{
+    r->set_to_delete();
+
+    for (int i = 0; i < rubrics.size(); i++) {
+        if (r == rubrics[i]) {
+            rubrics.erase(rubrics.begin() + i);
+        }
+    }
+
+    for (Category* k : r->cat) {
+        delete_category(k);
+    }
+
+    delete r;
+}
+
+// delete category class instance
+void Integration::delete_category(Category* c)
+{
+    c->set_to_delete();
+    int rubId = c->rubricId;
+
+    for (Rubric* k : rubrics) {
+        if (k->id == rubId) {
+            for (int i = 0; i < k->cat.size(); i++) {
+                if (c == k->cat[i]) {
+                    k->cat.erase(k->cat.begin() + i);
+                    k->name.erase(k->name.begin() + i);
+                }
+            }
+        }
+    }
+
+    delete c;
+}
+
+// delete feedback class instance
+void Integration::delete_feedback(Feedback* f)
+{
+    f->set_to_delete();
+    int fileId = f->codeId;
+
+    Code* code = nullptr;
+    for (Assignments* k : assignments) {
+        for (Assignment* h : k->list) {
+            for (Code* l : h->files) {
+                if (l->id == fileId) {
+                    code = l;
+                }
+            }
+        }
+    }
+
+    if (code != nullptr) {
+        for (int i = 0; i < code->profFeedback.size(); i++) {
+            if (f == code->profFeedback[i]) {
+                code->profFeedback.erase(code->profFeedback.begin() + i);
+            }
+        }
+    }
+
+    delete f;
 }
 
 // pulls a random submission out of the assignemnt to grade

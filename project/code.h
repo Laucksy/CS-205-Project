@@ -37,10 +37,13 @@ public:
     int categorize(string word);
     vector<string> get_full_code();
 
+    void set_to_delete();
+
     ~Code();
 
     // Database additions
     bool isNew;
+    bool toDelete;
     int assignId;
     string fileName;
 
@@ -72,10 +75,13 @@ public:
     bool update_id(int id, string name, string full,
                    string comments, string line, int assignId);
 
+    bool delete_id(int i);
+
 protected:
     // sql command templates
     std::string sql_select_id;
     std::string sql_update_id;
+    std::string sql_delete_id;
 };
 
 // This is a callback function that is sent to the library and used
@@ -93,6 +99,12 @@ int cb_select_id_code(void  *data,
 // This is a callback function that is sent to the library and used
 // to parse the sql request being sent to the database.
 int cb_update_id_code(void  *data,
+                      int    argc,
+                      char **argv,
+                      char **azColName);
+// This is a callback function that is sent to the library and used
+// to parse the sql request being sent to the database.
+int cb_delete_id_code(void  *data,
                       int    argc,
                       char **argv,
                       char **azColName);
