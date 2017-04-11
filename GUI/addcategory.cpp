@@ -24,7 +24,7 @@ void AddCategory::set_integ(Integration *i, Rubric* r)
     QString qstr;
     string text;
     for (int i=0; i <rubric->name.size(); i++) {
-        text += rubric->name[i] + " | " + to_string(rubric->cat[i]->pts) + "/n";
+        text += rubric->name[i] + " | " + to_string(rubric->cat[i]->pts) + "\n";
     }
     qstr = QString::fromStdString(text);
 

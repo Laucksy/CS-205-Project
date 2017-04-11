@@ -1,6 +1,7 @@
 #include "dataview.h"
 #include "ui_dataview.h"
 #include "rubrictitle.h"
+#include "mainwindow.h"
 
 DataView::DataView(QWidget *parent) :
     QWidget(parent),
@@ -35,4 +36,14 @@ void DataView::on_pushButton_2_clicked()
 
     rv->show();
     this->hide();
+}
+
+void DataView::on_pushButton_4_clicked()
+{
+     MainWindow *rv= new MainWindow();
+    rv->set_integ(integ);
+
+    rv->show();
+    this->hide();
+
 }
