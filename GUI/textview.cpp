@@ -456,8 +456,8 @@ void textView::on_comboBox_2_activated(const QString &arg1)
         //Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/Student.java",0);
         //Code* x = new Code(tool,"/home/erik/Desktop/Student.java",0);
 
-        //Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java",0);
-        Code* x = new Code(tool,"/home/erik/Desktop/Student.java",0);
+        Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java",0);
+       // Code* x = new Code(tool,"/home/erik/Desktop/Student.java",0);
         //Code* x = new Code(tool,"/Student.java",0);
 
 
