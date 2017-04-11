@@ -55,7 +55,20 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Import Files</string>
+      <string>New Assignment</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_5">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>New Class</string>
      </property>
     </widget>
    </item>

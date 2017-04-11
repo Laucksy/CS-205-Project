@@ -31,7 +31,15 @@ SOURCES += main.cpp\
     newuser.cpp \
     forgotpassword.cpp \
     rubrictitle.cpp \
-    addcategory.cpp
+    addcategory.cpp \
+    newclass.cpp \
+    classview.cpp \
+    newstudent.cpp \
+    newassignment.cpp \
+    assignmentview.cpp \
+    newsubmission.cpp \
+    submissionview.cpp \
+    newfile.cpp
 
 
 
@@ -42,7 +50,15 @@ HEADERS  += mainwindow.h \
     newuser.h \
     forgotpassword.h \
     rubrictitle.h \
-    addcategory.h
+    addcategory.h \
+    newclass.h \
+    classview.h \
+    newstudent.h \
+    newassignment.h \
+    assignmentview.h \
+    newsubmission.h \
+    submissionview.h \
+    newfile.h
 
 
 FORMS    += mainwindow.ui \
@@ -52,7 +68,15 @@ FORMS    += mainwindow.ui \
     newuser.ui \
     forgotpassword.ui \
     rubrictitle.ui \
-    addcategory.ui
+    addcategory.ui \
+    newclass.ui \
+    classview.ui \
+    newstudent.ui \
+    newassignment.ui \
+    assignmentview.ui \
+    newsubmission.ui \
+    submissionview.ui \
+    newfile.ui
 
 RESOURCES += \
     logo.qrc

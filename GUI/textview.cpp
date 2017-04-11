@@ -448,6 +448,7 @@ void textView::on_comboBox_activated(const QString &arg1)
 
 void textView::on_comboBox_2_activated(const QString &arg1)
 {
+    ui->comboBox->addItem("studnent 2");
     if(student=="Drew"&&arg1=="Student")
     {
 
