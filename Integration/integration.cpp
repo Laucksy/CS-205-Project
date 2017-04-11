@@ -2,7 +2,7 @@
 
 Integration::Integration()
 {
-    db = new DBTool("database");
+    db = new DBTool("TestDB");
     populate();
 }
 
