@@ -19,6 +19,7 @@ Category::Category(DBTool* db, Rubric* r, double p, bool m) : Ident::Ident('c'),
     category_row_cnt = size();
 
     isNew = true; // assumes object is unique and not in table
+    toDelete = false;
 
     // initialize vars
     pts = p;
@@ -30,6 +31,12 @@ Category::Category(DBTool* db, Rubric* r, double p, bool m) : Ident::Ident('c'),
 // destructor
 Category::~Category()
 {
+    // if an object is slated for delete, delete it
+    if (toDelete) {
+        delete_id(id);
+        return;
+    }
+
     // if valid object, adds or updates it in table
     if (isNew && id >= 0) {
         add_row(id, convert_quality(), convert_points(), pts, (int)isMatrix, rubricId);
@@ -38,6 +45,11 @@ Category::~Category()
     } else {
 
     }
+}
+
+void Category::set_to_delete()
+{
+    toDelete = true;
 }
 
 double Category::get_pts()
@@ -349,6 +361,39 @@ bool Category::update_id(int id, string quality, string points,
     return retCode;
 }
 
+// deletes entry by unique id
+bool Category::delete_id(int i) {
+
+    int   retCode = 0;
+    char *zErrMsg = 0;
+
+    sql_delete_id  = "DELETE FROM ";
+    sql_delete_id += table_name;
+    sql_delete_id += " WHERE ";
+    sql_delete_id += "     id = ";
+    sql_delete_id += to_string(i);
+    sql_delete_id += ";";
+
+    retCode = sqlite3_exec(curr_db->db_ref(),
+                           sql_delete_id.c_str(),
+                           cb_delete_id_category,
+                           this,
+                           &zErrMsg          );
+
+    if( retCode != SQLITE_OK ){
+
+        std::cerr << table_name
+                  << " template ::"
+                  << std::endl
+                  << "SQL error: "
+                  << zErrMsg;
+
+        sqlite3_free(zErrMsg);
+    }
+
+    return retCode;
+}
+
 // callbacks
 int cb_add_row_category(void  *data,
                       int    argc,
@@ -423,6 +468,40 @@ int cb_select_id_category(void  *data,
 }
 
 int cb_update_id_category(void  *data,
+                        int    argc,
+                        char **argv,
+                        char **azColName)
+{
+
+
+
+    std::cerr << "cb_add_row being called\n";
+
+    if(argc < 1) {
+        std::cerr << "No data presented to callback "
+                  << "argc = " << argc
+                  << std::endl;
+    }
+
+    int i;
+
+    Category *obj = (Category *) data;
+
+    std::cout << "------------------------------\n";
+    std::cout << obj->get_name()
+              << std::endl;
+
+    for(i = 0; i < argc; i++){
+        std::cout << azColName[i]
+                     << " = "
+                     <<  (argv[i] ? argv[i] : "NULL")
+                      << std::endl;
+    }
+
+    return 0;
+}
+
+int cb_delete_id_category(void  *data,
                         int    argc,
                         char **argv,
                         char **azColName)

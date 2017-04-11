@@ -23,6 +23,8 @@ public:
     Students(DBTool* db, string n);
     ~Students();
 
+    void set_to_delete();
+
     // database methods
     // returns the row count of the categories table
     int get_row_cnt();
@@ -41,14 +43,18 @@ public:
 
     bool update_id(int id, string name);
 
+    bool delete_id(int i);
+
     vector<Student*> list;
     string name;
     bool isNew;
+    bool toDelete;
 
 protected:
     // sql command templates
     std::string sql_select_id;
     std::string sql_update_id;
+    std::string sql_delete_id;
 };
 
 // This is a callback function that is sent to the library and used
@@ -66,6 +72,12 @@ int cb_select_id_students(void  *data,
 // This is a callback function that is sent to the library and used
 // to parse the sql request being sent to the database.
 int cb_update_id_students(void  *data,
+                        int    argc,
+                        char **argv,
+                        char **azColName);
+// This is a callback function that is sent to the library and used
+// to parse the sql request being sent to the database.
+int cb_delete_id_students(void  *data,
                         int    argc,
                         char **argv,
                         char **azColName);

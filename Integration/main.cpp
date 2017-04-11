@@ -59,6 +59,18 @@ int main(int argc, char *argv[])
 
     Integration* integ2 = new Integration();
 
+    for (Assignments* k : integ2->assignments) {
+        integ2->delete_assignment(k);
+    }
+
+    for (Students* k : integ2->students) {
+        integ2->delete_class(k);
+    }
+
+    for (Rubric* k : integ2->rubrics) {
+        integ2->delete_rubric(k);
+    }
+
     delete integ2;
     return 0;
 }
