@@ -18,7 +18,7 @@ string ExportHTML::export_assignment(Assignment* a) {
                "div.tab button.active {background-color: #ccc;}"
                ".tabcontent {display: none;padding: 6px 12px;border: 1px solid #ccc;"
                "border-top: none;}</style>";
-    rawHTML += "</head><body><div class='tab'></div>";
+    rawHTML += "</head><body style='background-color:#333333'><div class='tab'></div>";
 
     if(a != nullptr) {
         ofstream file;
@@ -47,13 +47,13 @@ string ExportHTML::export_assignment(Assignment* a) {
             for(unsigned i = 0; i < v.size(); i++){
                 vector<string> tokens = firstFile->tokenize(v.at(i));
                 vector<string> delims = firstFile->delimiters(v.at(i));
-                if(i == 6)
-                    cout << endl << endl << endl;
+                if(true || i == 6)
+                    cout << v.at(i) << endl;
                 for(unsigned j = 0; j < delims.size(); j++) {
-                    cout << "DELIMS" << delims.at(j) << endl;
+                    //cout << "DELIMS" << delims.at(j) << endl;
                 }
-                if(i == 6)
-                    cout << endl << endl << endl;
+                //if(i == 6)
+                    //cout << endl << endl << endl;
                 //cout << endl;
                 string cumulativeLine = "";
                 //if(i > 0 && v.at(i-1) == "    public Student()")
@@ -93,11 +93,11 @@ string ExportHTML::export_assignment(Assignment* a) {
                         type = 9;
                     }
                     if(delims.at(0) == "*" && delims.at(1) == "/") {
-                        cout << "TESTING COMMENT" << endl;
-                        cout << v.at(i) << ",,,," << cumulativeLine << endl;
+                        //cout << "TESTING COMMENT" << endl;
+                        //cout << v.at(i) << ",,,," << cumulativeLine << endl;
                         if(v.at(i)[cumulativeLine.length()] == '*' && v.at(i)[cumulativeLine.length()+1] == '/') {
                             comment = false;
-                            cout << "AAAAAAAAAcoment" << endl;
+                            //cout << "AAAAAAAAAcoment" << endl;
                             type = 10;
                         }
                     }
@@ -105,7 +105,7 @@ string ExportHTML::export_assignment(Assignment* a) {
                     if(comment)
                         type = 9;
 
-                    if(j == 0) {
+                    /*if(j == 0) {
                         if(bracket) {
                             for(int tabs = 0; tabs < tabCounter-1; tabs++) {
                                 rawHTML += "<span>&emsp;</span>";
@@ -117,41 +117,41 @@ string ExportHTML::export_assignment(Assignment* a) {
                                 rawHTML += "<span>&emsp;</span>";
                             }
                         }
-                    }
+                    }*/
 
                     switch(type) {
                     case 1:
                         rawHTML += "<span style='color:Deepskyblue;'>";
                         break;
                     case 2:
-                        rawHTML += "<span style='color:Mediumvioletred;'>";
+                        rawHTML += "<span style='color:Plum;'>";
                         break;
                     case 3:
-                        rawHTML += "<span style='color:Mediumvioletred;'>";
+                        rawHTML += "<span style='color:Plum;'>";
                         break;
                     case 4:
-                        rawHTML += "<span style='color:red;'>";
+                        rawHTML += "<span style='color:Salmon;'>";
                         break;
                     case 5:
-                        rawHTML += "<span style='color:red;'>";
+                        rawHTML += "<span style='color:Salmon;'>";
                         break;
                     case 6:
                         rawHTML += "<span style='color:Dodgerblue;'>";
                         break;
                     case 7:
-                        rawHTML += "<span style='color:Mediumvioletred;'>";
+                        rawHTML += "<span style='color:Plum;'>";
                         break;
                     case 8:
-                        rawHTML += "<span style='color:Mediumvioletred;'>";
+                        rawHTML += "<span style='color:Plum;'>";
                         break;
                     case 9:
-                        rawHTML += "<span style='color:green;'>";
+                        rawHTML += "<span style='color:Lightgreen;'>";
                         break;
                     case 10:
-                        rawHTML += "<span style='color:green;'>";
+                        rawHTML += "<span style='color:Lightgreen;'>";
                         break;
                     case 11:
-                        rawHTML += "<span style='color:green;'>";
+                        rawHTML += "<span style='color:Lightgreen;'>";
                         break;
                     case 12:
                         tabCounter++;
@@ -161,31 +161,15 @@ string ExportHTML::export_assignment(Assignment* a) {
                         tabCounter--;
                         break;
                     case 0:
-                        rawHTML += "<span style='color:black;'>";
+                        rawHTML += "<span style='color:Cornsilk;'>";
                         break;
                     default:
-                        rawHTML += "<span cstyle='color:black;'>";
+                        rawHTML += "<span cstyle='color:Cornsilk;'>";
                         break;
-                    }
-
-                    if(tabCounter > 0) {
-                        for(int tc = 0; tc < tabCounter; tc++) {
-                            rawHTML += "<span>&emsp;</span>";
-                        }
-                        cumulativeLine += tokens.at(0);
-                        tokens.erase(tokens.begin());
-                        continue;
-                    }
-
-                    if(tokens.at(0) == " " /*|| tokens.at(0) == ""*/) {
-                        rawHTML += "<span>&nbsp;</span>";
-                        cumulativeLine += tokens.at(0);
-                        tokens.erase(tokens.begin());
-                        continue;
                     }
 
                     //cout << (cumulativeLine + tokens.at(0)) << "AAAA" << v.at(i).find(cumulativeLine + tokens.at(0)) << "AAAA" << v.at(i).length() << endl;
-                    cout << cumulativeLine << "BBBBBB" << v.at(i) << endl;
+                    //cout << cumulativeLine << "BBBBBB" << v.at(i) << endl;
 
                     //if(delims.size() > 0)
                         //cout << delims.front();
@@ -198,9 +182,9 @@ string ExportHTML::export_assignment(Assignment* a) {
                     bool delimFound = v.at(i).find(cumulativeLine + delims.at(0)) == 0;
                     bool tokenFound = v.at(i).find(cumulativeLine + tokens.at(0)) == 0;
                     if(delims.size() > 0 && delimFound && !tokenFound) {
-                        cout << "delims" << endl;
+                        //cout << "delims" << endl;
                         if(!comment && !lineComment)
-                            rawHTML += "<span style='color:black;'>";
+                            rawHTML += "<span style='color:Cornsilk;'>";
                         if(delims.at(0) != " ")
                             rawHTML += delims.at(0);
                         else
@@ -208,16 +192,16 @@ string ExportHTML::export_assignment(Assignment* a) {
                         if(!comment && !lineComment)
                             rawHTML += "</span>";
                         cumulativeLine += delims.at(0);
-                        cout << "ZZZZZZZZZZZ" << delims.at(0) << "ZZZZZZZZZZZZ" << endl;
+                        //cout << "ZZZZZZZZZZZ" << delims.at(0) << "ZZZZZZZZZZZZ" << endl;
                         delims.erase(delims.begin());
                     }
                     else if(tokens.size() > 0 && tokenFound) {
-                        cout << "token" << endl;
+                        //cout << "token" << endl;
                         rawHTML += tokens.at(0);
                         cumulativeLine += tokens.at(0);
                         tokens.erase(tokens.begin());
                     } else if(tokens.size() > 0 && delims.size() == 0) {
-                        cout << "token" << endl;
+                        //cout << "token" << endl;
                         rawHTML += tokens.at(0);
                         cumulativeLine += tokens.at(0);
                         tokens.erase(tokens.begin());
@@ -231,12 +215,12 @@ string ExportHTML::export_assignment(Assignment* a) {
                         comment = true;
                     }
                     if(comment)
-                        rawHTML += "<span style='color:green;'>" + delims.front() + "</span>";
+                        rawHTML += "<span style='color:Lightgreen;'>" + delims.front() + "</span>";
                     else
-                        rawHTML += "<span style='color:black;'>" + delims.front() + "</span>";
+                        rawHTML += "<span style='color:Cornsilk;'>" + delims.front() + "</span>";
                     if(delims.size() >= 1 && delims.at(0) == "/") {
                         //cout << "TESTING COMMENT" << endl;
-                        cout << v.at(i) << ",,,," << cumulativeLine << ",,,,," << endl;
+                        //cout << v.at(i) << ",,,," << cumulativeLine << ",,,,," << endl;
                         if(cumulativeLine.length() > 0 && v.at(i)[cumulativeLine.length()-1] == '*' && v.at(i)[cumulativeLine.length()] == '/') {
                             comment = false;
                             //cout << "AAAAAAAAAcoment" << endl;
