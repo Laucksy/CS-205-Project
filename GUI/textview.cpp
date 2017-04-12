@@ -267,13 +267,13 @@ Code* textView::updateCode(Code* myCode)
             else if(type == 10)
                 comment=false;
 
-            if(delims.at(0) == "/" && delims.at(1) == "*" && delims.at(2) == "*"
+            if(delims.size() > 0 && delims.at(0) == "/" && delims.at(1) == "*" && delims.at(2) == "*"
                     && v.at(i)[cumulativeLine.length()] == '/' && v.at(i)[cumulativeLine.length()+1] == '*'
                     && v.at(i)[cumulativeLine.length()+2] == '*') {
                 comment = true;
                 type = 9;
             }
-            if(delims.at(0) == "*" && delims.at(1) == "/") {
+            if(delims.size() > 0 && delims.at(0) == "*" && delims.at(1) == "/") {
                 if(v.at(i)[cumulativeLine.length()] == '*' && v.at(i)[cumulativeLine.length()+1] == '/') {
                     comment = false;
                     type = 10;
@@ -383,8 +383,8 @@ Code* textView::updateCode(Code* myCode)
             }
 
             QString qstr;
-            bool delimFound = v.at(i).find(cumulativeLine + delims.at(0)) == 0;
-            bool tokenFound = v.at(i).find(cumulativeLine + tokens.at(0)) == 0;
+            bool delimFound = delims.size() > 0 ? v.at(i).find(cumulativeLine + delims.at(0)) == 0 : false;
+            bool tokenFound = tokens.size() > 0 ? v.at(i).find(cumulativeLine + tokens.at(0)) == 0 : false;
             if(delims.size() > 0 && delimFound && !tokenFound) {
                 if(!comment && !lineComment)
                     ui->textBrowser->setTextColor("Cornsilk ");

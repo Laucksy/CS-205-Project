@@ -117,9 +117,16 @@ vector<string> Code::tokenize(string line)
             }
         }
     }
+    try {
+        secondIndex = line.length();
+        string test = line.substr(firstIndex,secondIndex-firstIndex);
+        cout << "TEST" << test << "TEST" << endl;
+        if(test.length() > 0)
+            tokens.push_back(test);
+    } catch(int e) {}
 
-    //for (unsigned long j =0; j< tokens.size(); j++)
-        //cout << "TOKENS:" << tokens.at(j) << "," << endl;
+    for (unsigned long j = 0; j< tokens.size(); j++)
+        cout << "TOKENS:" << tokens.at(j) << "," << endl;
 
     return tokens;
 }

@@ -47,8 +47,8 @@ string ExportHTML::export_assignment(Assignment* a) {
             for(unsigned i = 0; i < v.size(); i++){
                 vector<string> tokens = firstFile->tokenize(v.at(i));
                 vector<string> delims = firstFile->delimiters(v.at(i));
-                if(true || i == 6)
-                    cout << v.at(i) << endl;
+                //if(true || i == 6)
+                    //cout << v.at(i) << endl;
                 for(unsigned j = 0; j < delims.size(); j++) {
                     //cout << "DELIMS" << delims.at(j) << endl;
                 }
@@ -70,11 +70,13 @@ string ExportHTML::export_assignment(Assignment* a) {
                     continue;
                 }
 
+                //cout << "HEHERERER" << endl;
                 lineComment = false;
                 int j = 0;
                 while(tokens.size() > 0/* && delims.size() > 0*/) {
-                    //for(unsigned j = 0; j < tokens.size(); j++) {
-                    //cout << "Token size: " << tokens.size() << endl;
+                    for(unsigned j = 0; j < tokens.size(); j++) {
+                        cout << "Token size: " << tokens.size() << endl;
+                    }
                     int type = firstFile->categorize(tokens.at(j));
 
                     if(j == 0 && type == 11)
@@ -86,13 +88,13 @@ string ExportHTML::export_assignment(Assignment* a) {
                     else if(type == 10)
                         comment=false;
 
-                    if(delims.at(0) == "/" && delims.at(1) == "*" && delims.at(2) == "*"
+                    if(delims.size() > 0 && delims.at(0) == "/" && delims.at(1) == "*" && delims.at(2) == "*"
                             && v.at(i)[cumulativeLine.length()] == '/' && v.at(i)[cumulativeLine.length()+1] == '*'
                             && v.at(i)[cumulativeLine.length()+2] == '*') {
                         comment = true;
                         type = 9;
                     }
-                    if(delims.at(0) == "*" && delims.at(1) == "/") {
+                    if(delims.size() > 0 && delims.at(0) == "*" && delims.at(1) == "/") {
                         //cout << "TESTING COMMENT" << endl;
                         //cout << v.at(i) << ",,,," << cumulativeLine << endl;
                         if(v.at(i)[cumulativeLine.length()] == '*' && v.at(i)[cumulativeLine.length()+1] == '/') {
@@ -169,7 +171,7 @@ string ExportHTML::export_assignment(Assignment* a) {
                     }
 
                     //cout << (cumulativeLine + tokens.at(0)) << "AAAA" << v.at(i).find(cumulativeLine + tokens.at(0)) << "AAAA" << v.at(i).length() << endl;
-                    //cout << cumulativeLine << "BBBBBB" << v.at(i) << endl;
+                    cout << cumulativeLine << "BBBBBB" << v.at(i) << endl;
 
                     //if(delims.size() > 0)
                         //cout << delims.front();
@@ -179,10 +181,10 @@ string ExportHTML::export_assignment(Assignment* a) {
                     //cout << endl;
                     //if(delims.size() > 0)
                         //cout << v.at(i).length() << "AAAA" << v.at(i).find(cumulativeLine + delims.at(0)) < v.at(i).length() << "BBBB:" << v.at(i).find(cumulativeLine + delims.at(0)) << endl;
-                    bool delimFound = v.at(i).find(cumulativeLine + delims.at(0)) == 0;
-                    bool tokenFound = v.at(i).find(cumulativeLine + tokens.at(0)) == 0;
+                    bool delimFound = delims.size() > 0 ? v.at(i).find(cumulativeLine + delims.at(0)) == 0 : false;
+                    bool tokenFound = tokens.size() > 0 ? v.at(i).find(cumulativeLine + tokens.at(0)) == 0 : false;
                     if(delims.size() > 0 && delimFound && !tokenFound) {
-                        //cout << "delims" << endl;
+                        cout << "delims" << endl;
                         if(!comment && !lineComment)
                             rawHTML += "<span style='color:Cornsilk;'>";
                         if(delims.at(0) != " ")
@@ -196,24 +198,27 @@ string ExportHTML::export_assignment(Assignment* a) {
                         delims.erase(delims.begin());
                     }
                     else if(tokens.size() > 0 && tokenFound) {
-                        //cout << "token" << endl;
+                        cout << "token" << endl;
                         rawHTML += tokens.at(0);
                         cumulativeLine += tokens.at(0);
                         tokens.erase(tokens.begin());
                     } else if(tokens.size() > 0 && delims.size() == 0) {
-                        //cout << "token" << endl;
+                        cout << "token" << endl;
                         rawHTML += tokens.at(0);
                         cumulativeLine += tokens.at(0);
                         tokens.erase(tokens.begin());
                     }
                     rawHTML += "</span>";
+                    cout << "End of loop" << endl;
                 }
+                cout << "ITHERE" << endl;
                 while(delims.size() > 0) {
                     if(delims.size() >= 3 && delims.at(0) == "/" && delims.at(1) == "*" && delims.at(2) == "*"
                             && v.at(i)[cumulativeLine.length()] == '/' && v.at(i)[cumulativeLine.length()+1] == '*'
                             && v.at(i)[cumulativeLine.length()+2] == '*') {
                         comment = true;
                     }
+
                     if(comment)
                         rawHTML += "<span style='color:Lightgreen;'>" + delims.front() + "</span>";
                     else
@@ -229,6 +234,7 @@ string ExportHTML::export_assignment(Assignment* a) {
                     cumulativeLine += delims.at(0);
                     delims.erase(delims.begin());
                 }
+                cout << "AFTERDELIM" << endl;
                 rawHTML += "</p>";
             }
             rawHTML += "</div>";
