@@ -1,8 +1,8 @@
 #include "integration.h"
 
-Integration::Integration()
+Integration::Integration(string path, string name)
 {
-    db = new DBTool("TestDB");
+    db = new DBTool(path, name);
     populate();
 }
 
