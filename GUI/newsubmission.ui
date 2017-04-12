@@ -41,7 +41,7 @@
    <item row="3" column="0">
     <widget class="QPushButton" name="pushButton_2">
      <property name="text">
-      <string>Save</string>
+      <string>Add Files</string>
      </property>
     </widget>
    </item>

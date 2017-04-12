@@ -17,6 +17,11 @@ public:
     ~classView();
     void set_integ(Integration* integ);
 
+private slots:
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_clicked();
+
 private:
     Ui::classView *ui;
     Integration *integ;

@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include "../Integration/integration.h"
 #include <QMainWindow>
 #include "textview.h"
 #include "dataview.h"
@@ -18,9 +18,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
+    void set_integ(Integration* integ);
     //fills in the inegration slot
-    void set_integ(Integration* i);
+    //void set_integ(Integration* i);
 
 private slots:
     void on_pushButton_clicked();

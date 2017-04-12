@@ -48,3 +48,4 @@ void AddCategory::on_pushButton_2_clicked()
     rv->show();
     this->hide();
 }
+
