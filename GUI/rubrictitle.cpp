@@ -2,6 +2,7 @@
 #include "ui_rubrictitle.h"
 #include "rubrics.h"
 #include "addcategory.h"
+#include "selectrubric.h"
 
 RubricTitle::RubricTitle(QWidget *parent) :
     QWidget(parent),
@@ -43,7 +44,7 @@ void RubricTitle::on_checkBox_clicked(bool checked)
 
 void RubricTitle::on_pushButton_clicked()
 {
-    DataView *dv= new DataView();
+    selectRubric *dv= new selectRubric();
     dv->set_integ(integ);
 
     dv->show();

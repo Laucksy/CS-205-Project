@@ -2,6 +2,7 @@
 #include "ui_newclass.h"
 #include "dataview.h"
 #include "classview.h"
+#include "selectclass.h"
 
 newClass::newClass(QWidget *parent) :
     QWidget(parent),
@@ -17,7 +18,7 @@ newClass::~newClass()
 
 void newClass::on_pushButton_clicked()
 {
-    DataView *mv= new DataView();
+    selectClass *mv= new selectClass();
     mv->set_integ(integ);
 
     mv->show();
