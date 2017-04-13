@@ -159,6 +159,7 @@ void Integration::populate()
         for (Student* k : studentList) {
             if (k->id == sid) {
                 k->list.push_back(a);
+                a->stu = k;
             }
         }
     }
