@@ -41,8 +41,16 @@ HEADERS += ../DataStructure/dbtool.h \
 SOURCES += ../DataStructure/dbtool.cpp \
     ../DataStructure/dbtable.cpp
 
-LIBS += -l sqlite3
+LIBS += -l sqlite3 \
+        -pthread
 
 DISTFILES += \
     ../../../lab 7/t.java \
     ../../../lab 7/t.java
+
+SOURCES += ../gtest/googletest/src/gtest-all.cc
+
+INCLUDEPATH +=  ../gtest                                   \
+                ../gtest/googletest                        \
+                ../gtest/googletest/include                \
+                ../gtest/googletest/include/gtest

@@ -25,6 +25,12 @@ public:
 
     void set_to_delete();
 
+    void add_to_list(Student* x);
+
+    //remove once place for parse_csv is found
+    void parse_csv(DBTool* db, string csvFile);
+
+
     // database methods
     // returns the row count of the categories table
     int get_row_cnt();

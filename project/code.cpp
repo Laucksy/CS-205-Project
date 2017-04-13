@@ -42,6 +42,10 @@ Code::~Code() {
         } else {
 
         }
+
+        for (Feedback* k : profFeedback) {
+            delete k;
+        }
 }
 
 void Code::set_file(string name)
@@ -117,9 +121,16 @@ vector<string> Code::tokenize(string line)
             }
         }
     }
+    try {
+        secondIndex = line.length();
+        string test = line.substr(firstIndex,secondIndex-firstIndex);
+        cout << "TEST" << test << "TEST" << endl;
+        if(test.length() > 0)
+            tokens.push_back(test);
+    } catch(int e) {}
 
-    //for (unsigned long j =0; j< tokens.size(); j++)
-        //cout << "TOKENS:" << tokens.at(j) << "," << endl;
+    for (unsigned long j = 0; j< tokens.size(); j++)
+        cout << "TOKENS:" << tokens.at(j) << "," << endl;
 
     return tokens;
 }
@@ -646,8 +657,6 @@ int cb_select_id_code(void  *data,
                   << std::endl;
     }
 
-    int i;
-
     Code *obj = (Code *) data;
     obj->isNew = false; // object was generated from table
 
@@ -732,5 +741,4 @@ int cb_delete_id_code(void  *data,
 
     return 0;
 }
-
 

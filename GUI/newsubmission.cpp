@@ -17,6 +17,14 @@ newSubmission::~newSubmission()
 void newSubmission::set_integ(Integration *i)
 {
     integ = i;
+
+    for (Student* k : integ->activeClass->list) {
+        ui->comboBox->addItem(QString::fromStdString(k->name));
+    }
+
+    if (integ->activeClass->list.size() > 0) {
+        student = integ->activeClass->list[0];
+    }
 }
 void newSubmission::on_pushButton_clicked()
 {
@@ -30,8 +38,19 @@ void newSubmission::on_pushButton_clicked()
 void newSubmission::on_pushButton_2_clicked()
 {
     submissionView *dv= new submissionView();
-    dv->set_integ(integ);
+
+    Assignment* a = integ->add_new_submission(integ->activeAssignemnt->rubric, student);
+    dv->set_integ(integ, a);
 
     dv->show();
     this->hide();
+}
+
+void newSubmission::on_comboBox_activated(const QString &arg1)
+{
+    for (Student* k : integ->activeClass->list) {
+        if (arg1.toStdString() == k->name) {
+            student = k;
+        }
+    }
 }

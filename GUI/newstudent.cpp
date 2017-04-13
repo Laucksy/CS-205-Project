@@ -17,6 +17,9 @@ newStudent::~newStudent()
 void newStudent::on_pushButton_clicked()
 {
     classView *dv= new classView();
+
+    get_data();
+    integ->add_new_student(n);
     dv->set_integ(integ);
 
     dv->show();
@@ -34,4 +37,9 @@ void newStudent::on_pushButton_2_clicked()
 
     dv->show();
     this->hide();
+}
+
+void newStudent::get_data()
+{
+    n = ui->lineEdit->text().toStdString() + " " + ui->lineEdit_2->text().toStdString();
 }

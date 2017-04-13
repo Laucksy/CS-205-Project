@@ -27,6 +27,9 @@ void newClass::on_pushButton_clicked()
 void newClass::on_pushButton_2_clicked()
 {
     classView *mv= new classView();
+
+    get_data();
+    integ->add_new_class(name);
     mv->set_integ(integ);
 
     mv->show();
@@ -36,4 +39,9 @@ void newClass::on_pushButton_2_clicked()
 void newClass::set_integ(Integration *i)
 {
     integ = i;
+}
+
+void newClass::get_data()
+{
+    name = ui->lineEdit->text().toStdString();
 }

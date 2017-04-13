@@ -23,7 +23,7 @@ public:
 
     // user actions
     void add_new_class(string name); // new students class instance
-    void add_new_student(string first, string last); // new student class instance
+    void add_new_student(string name); // new student class instance
     void add_new_assignment(string name); // new assignments class instance
     Assignment* add_new_submission(Rubric* rubric, Student* student); // new assignment class instance
     void add_new_file(Assignment* assign, string name); // new code class instance
@@ -49,6 +49,8 @@ public:
     void set_active_submission(Assignment* a); // sets the active submission
     void set_active_file(Code* f); // sets the active file
 
+    vector<string> get_similar_feedback(string sim);
+
     vector<Rubric*> rubrics;
     vector<Assignments*> assignments;
     vector<Students*> students;
@@ -58,6 +60,7 @@ public:
     Assignment* activeSubmission;
     Code* activeFile;
     queue<Assignment*> submissionQueue;
+    Feedback* autoComplete;
 
     DBTool* db;
 

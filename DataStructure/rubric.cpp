@@ -31,6 +31,7 @@ Rubric::Rubric(DBTool* db, bool d, string n) : Ident::Ident('r'), DBTable::DBTab
 // destructor
 Rubric::~Rubric()
 {
+    calc_grade();
     // if an object is slated for delete, delete it
     if (toDelete) {
         delete_id(id);
@@ -59,6 +60,7 @@ void Rubric::set_to_delete()
 // determines the total grade from the grade parts in categories
 void Rubric::calc_grade()
 {
+    grade = 0;
     for (Category* k : cat) {
         grade += k->get_pts();
     }

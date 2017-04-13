@@ -51,9 +51,32 @@ Students::~Students()
     }
 }
 
+//this shall move once there is an appropriate location for csv parsing
+void Students::parse_csv(DBTool* db, string csvFile)
+{
+    string line;
+    ifstream file;
+    file.open(csvFile, ifstream::in);
+    int cnt = 0;
+    while(getline(file,line, ','))
+    {
+        cnt++;
+        Student *cnt = new Student(db, line);
+        add_to_list(cnt);
+
+    }
+    file.close();
+
+}
+
 void Students::set_to_delete()
 {
     toDelete = true;
+}
+
+void Students::add_to_list(Student *x)
+{
+    list.push_back(x);
 }
 
 // database methods

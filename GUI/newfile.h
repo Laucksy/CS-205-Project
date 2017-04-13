@@ -14,7 +14,8 @@ class newFile : public QWidget
 public:
     explicit newFile(QWidget *parent = 0);
     ~newFile();
-    void set_integ(Integration* integ);
+    void set_integ(Integration* integ, Assignment* assign);
+    void get_data();
 private slots:
     void on_pushButton_2_clicked();
 
@@ -23,6 +24,8 @@ private slots:
 private:
     Ui::newFile *ui;
     Integration* integ;
+    Assignment* assign;
+    string fn;
 };
 
 #endif // NEWFILE_H

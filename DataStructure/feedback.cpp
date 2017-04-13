@@ -5,7 +5,7 @@ Feedback::Feedback()
 
 }
 
-Feedback::Feedback(DBTool* db, string te, string ta, int cid, int p): Ident::Ident('f'), DBTable::DBTable(db, feedback_table)
+Feedback::Feedback(DBTool* db, std::string te, std::string ta, int cid, int p): Ident::Ident('f'), DBTable::DBTable(db, feedback_table)
 {
     // Load SQL specific to child class.
     store_add_row_sql();
@@ -53,6 +53,7 @@ void Feedback::store_in_db()
     // if valid object, adds or updates it in table
     if (isNew && id >= 0) {
         add_row(id, text, tag, codeId, position);
+        isNew = false;
     } else if (!isNew && id >= 0){
         update_id(id, text, tag, codeId, position);
     } else {
@@ -279,6 +280,43 @@ bool Feedback::delete_id(int i) {
     return retCode;
 }
 
+// selects entry by similarity to provied string
+bool Feedback::select_similar(string sim) {
+
+    int   retCode = 0;
+    char *zErrMsg = 0;
+
+    sql_select_similar  = "SELECT text FROM ";
+    sql_select_similar += table_name;
+    sql_select_similar += " WHERE ";
+    sql_select_similar += "     text LIKE ";
+    sql_select_similar += "\"";
+    sql_select_similar += "%";
+    sql_select_similar += sim;
+    sql_select_similar += "%";
+    sql_select_similar += "\"";
+    sql_select_similar += ";";
+
+    retCode = sqlite3_exec(curr_db->db_ref(),
+                           sql_select_similar.c_str(),
+                           cb_select_similar_feedback,
+                           this,
+                           &zErrMsg          );
+
+    if( retCode != SQLITE_OK ){
+
+        std::cerr << table_name
+                  << " template ::"
+                  << std::endl
+                  << "SQL error: "
+                  << zErrMsg;
+
+        sqlite3_free(zErrMsg);
+    }
+
+    return retCode;
+}
+
 
 // callbacks
 int cb_add_row_feedback(void  *data,
@@ -415,6 +453,39 @@ int cb_delete_id_feedback(void  *data,
                      << " = "
                      <<  (argv[i] ? argv[i] : "NULL")
                       << std::endl;
+    }
+
+    return 0;
+}
+
+int cb_select_similar_feedback(void  *data,
+                        int    argc,
+                        char **argv,
+                        char **azColName)
+{
+
+
+
+    std::cerr << "cb_select_all being called\n";
+
+    if(argc < 1) {
+        std::cerr << "No data presented to callback "
+                  << "argc = " << argc
+                  << std::endl;
+    }
+
+    int i;
+
+    Feedback *obj = (Feedback *) data;
+    obj->isNew = false; // object was generated from table
+
+    std::cout << "------------------------------\n";
+    std::cout << obj->get_name()
+              << std::endl;
+
+    // assign object members from table data
+    for (int i = 0; i < argc; i++) {
+        obj->simillar.push_back(argv[i]);
     }
 
     return 0;
