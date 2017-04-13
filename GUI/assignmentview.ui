@@ -24,7 +24,7 @@
    <item row="2" column="0">
     <widget class="QPushButton" name="pushButton">
      <property name="text">
-      <string>Add Submission</string>
+      <string>Add Student Submission</string>
      </property>
     </widget>
    </item>

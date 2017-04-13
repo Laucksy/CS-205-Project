@@ -15,9 +15,19 @@ submissionView::~submissionView()
     delete ui;
 }
 
-void submissionView::set_integ(Integration *i)
+void submissionView::set_integ(Integration *i, Assignment* a)
 {
     integ = i;
+    assign = a;
+
+    QString qstra;
+    string text;
+    for (int i=0; i <assign->files.size(); i++) {
+        text += assign->files[i]->fileName + "\n";
+    }
+    qstra = QString::fromStdString(text);
+
+    ui->textBrowser->setText(qstra);
 }
 
 void submissionView::on_pushButton_2_clicked()
@@ -32,7 +42,7 @@ void submissionView::on_pushButton_2_clicked()
 void submissionView::on_pushButton_clicked()
 {
     newFile *dv= new newFile();
-    dv->set_integ(integ);
+    dv->set_integ(integ, assign);
 
     dv->show();
     this->hide();

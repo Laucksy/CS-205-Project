@@ -3,7 +3,19 @@
 Integration::Integration(string path, string name)
 {
     db = new DBTool(path, name);
+
+    autoComplete = new Feedback(db, "dummy", "test", -1, -1);
+    autoComplete->id = -1;
+    autoComplete->id_feedback = 0;
+
     populate();
+    if (assignments.size() > 0) {
+        set_active_assignment(assignments[0]);
+    }
+
+    if (students.size() > 0) {
+        set_active_class(students[0]);
+    }
 }
 
 Integration::~Integration()
@@ -21,6 +33,7 @@ Integration::~Integration()
     }
 
     delete db;
+    delete autoComplete;
 }
 
 // creates objects from the data in the database
@@ -146,6 +159,7 @@ void Integration::populate()
         for (Student* k : studentList) {
             if (k->id == sid) {
                 k->list.push_back(a);
+                a->stu = k;
             }
         }
     }
@@ -244,6 +258,10 @@ void Integration::add_new_category(Rubric* rubric, string name, double points, v
 void Integration::add_new_feedback(string text, string tag, int position)
 {
     Feedback* f = new Feedback(db, text, tag, activeFile->id, position);
+    f->change_text(text);
+    f->update_tag(tag);
+    f->codeId = activeFile->id;
+    f->position = position;
     activeFile->add_feedback(f);
 }
 
@@ -424,8 +442,10 @@ void Integration::delete_feedback(Feedback* f)
 // pulls a random submission out of the assignemnt to grade
 void Integration::select_random_submission()
 {
-    activeSubmission = submissionQueue.front();
-    submissionQueue.pop();
+    if (!submissionQueue.empty()){
+        activeSubmission = submissionQueue.front();
+        submissionQueue.pop();
+    }
 }
 
 // sets the rubrirc for all submissions in the active assignemnt
@@ -438,6 +458,7 @@ void Integration::select_assignment_rubric(Rubric* rubric)
 void Integration::finish_grading_submission()
 {
     activeSubmission->status = 2;
+    select_random_submission();
 }
 
 // sets the active class
@@ -482,6 +503,8 @@ void Integration::set_active_assignment(Assignments* l)
     for ( Assignment* k : temp0) {
         submissionQueue.push(k);
     }
+
+    select_random_submission();
 }
 
 // sets the active submission
@@ -489,10 +512,21 @@ void Integration::set_active_submission(Assignment* a)
 {
     activeSubmission = a;
     a->status = 1;
+    if (a->files.size() > 0) {
+        set_active_file(a->files[0]);
+    }
 }
 
 // sets the active file
 void Integration::set_active_file(Code* f)
 {
     activeFile = f;
+}
+
+vector<string> Integration::get_similar_feedback(string sim)
+{
+    autoComplete->select_similar(sim);
+    vector<string> ret = autoComplete->simillar;
+    autoComplete->simillar.clear();
+    return ret;
 }

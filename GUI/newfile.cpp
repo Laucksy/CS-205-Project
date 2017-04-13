@@ -13,15 +13,19 @@ newFile::~newFile()
     delete ui;
 }
 
-void newFile::set_integ(Integration *i)
+void newFile::set_integ(Integration *i, Assignment* a)
 {
     integ = i;
+    assign = a;
 }
 
 void newFile::on_pushButton_2_clicked()
 {
     submissionView *dv= new submissionView();
-    dv->set_integ(integ);
+
+    get_data();
+    integ->add_new_file(assign, fn);
+    dv->set_integ(integ, assign);
 
     dv->show();
     this->hide();
@@ -30,9 +34,14 @@ void newFile::on_pushButton_2_clicked()
 void newFile::on_pushButton_clicked()
 {
     submissionView *dv= new submissionView();
-    dv->set_integ(integ);
+    dv->set_integ(integ, assign);
 
     dv->show();
     this->hide();
 
+}
+
+void newFile::get_data()
+{
+    fn = ui->lineEdit->text().toStdString();
 }

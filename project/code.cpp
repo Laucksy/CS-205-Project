@@ -42,6 +42,10 @@ Code::~Code() {
         } else {
 
         }
+
+        for (Feedback* k : profFeedback) {
+            delete k;
+        }
 }
 
 void Code::set_file(string name)

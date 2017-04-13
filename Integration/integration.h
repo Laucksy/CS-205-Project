@@ -49,6 +49,8 @@ public:
     void set_active_submission(Assignment* a); // sets the active submission
     void set_active_file(Code* f); // sets the active file
 
+    vector<string> get_similar_feedback(string sim);
+
     vector<Rubric*> rubrics;
     vector<Assignments*> assignments;
     vector<Students*> students;
@@ -58,6 +60,7 @@ public:
     Assignment* activeSubmission;
     Code* activeFile;
     queue<Assignment*> submissionQueue;
+    Feedback* autoComplete;
 
     DBTool* db;
 

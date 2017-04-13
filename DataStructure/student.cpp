@@ -91,8 +91,7 @@ void Student::store_create_sql() {
     sql_create += table_name;
     sql_create += " ( ";
     sql_create += "  id INT PRIMARY KEY NOT NULL, ";
-    sql_create += "  firstName TEXT,";
-    sql_create += "  lastName TEXT,";
+    sql_create += "  name TEXT,";
     sql_create += "  classId INT,";
     sql_create += "  score REAL";
     sql_create += " );";
