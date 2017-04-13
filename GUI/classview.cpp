@@ -24,7 +24,7 @@ void classView::set_integ(Integration *i)
     QString qstra;
     string text;
     for (int i=0; i <integ->activeClass->list.size(); i++) {
-        text += integ->activeClass->list[i]->firstName + " " + integ->activeClass->list[i]->lastName + "\n";
+        text += integ->activeClass->list[i]->name + "\n";
     }
     qstra = QString::fromStdString(text);
 

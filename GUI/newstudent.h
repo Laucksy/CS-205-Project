@@ -25,8 +25,7 @@ private slots:
 private:
     Ui::newStudent *ui;
     Integration* integ;
-    string fn;
-    string ln;
+    string n;
 };
 
 #endif // NEWSTUDENT_H

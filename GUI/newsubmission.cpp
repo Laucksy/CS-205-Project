@@ -19,7 +19,7 @@ void newSubmission::set_integ(Integration *i)
     integ = i;
 
     for (Student* k : integ->activeClass->list) {
-        ui->comboBox->addItem(QString::fromStdString(k->firstName + " " + k->lastName));
+        ui->comboBox->addItem(QString::fromStdString(k->name));
     }
 
     if (integ->activeClass->list.size() > 0) {
@@ -49,7 +49,7 @@ void newSubmission::on_pushButton_2_clicked()
 void newSubmission::on_comboBox_activated(const QString &arg1)
 {
     for (Student* k : integ->activeClass->list) {
-        if (arg1.toStdString() == k->firstName + " " + k->lastName) {
+        if (arg1.toStdString() == k->name) {
             student = k;
         }
     }
