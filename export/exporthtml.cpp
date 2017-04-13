@@ -22,7 +22,7 @@ string ExportHTML::export_assignment(Assignment* a) {
 
     if(a != nullptr) {
         ofstream file;
-        string fileName = "assignment_" + a->stu->lastName + "_" + a->stu->firstName + "_" + to_string(a->assignNum);
+        string fileName = "assignment_" + a->stu->name + "_" + to_string(a->assignNum);
         file.open(fileName.c_str());
 
         for(unsigned f = 0; f < a->files.size(); f++) {

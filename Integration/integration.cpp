@@ -32,7 +32,7 @@ void Integration::populate()
     dg.id_students = 0;
     int dgc = dg.students_row_cnt;
 
-    Student ds(db, "dummy", "test");
+    Student ds(db, "dummy test");
     ds.id = -1;
     ds.id_student = 0;
     int dsc = ds.student_row_cnt;
@@ -78,7 +78,7 @@ void Integration::populate()
     // student
     vector<Student*> studentList;
     for (int i = 0; i < dsc; i++) {
-        Student* s = new Student(db, "", "");
+        Student* s = new Student(db, "");
         s->select_id(i);
         int gid = s->classId;
         for (Students* k : students) {
@@ -186,9 +186,9 @@ void Integration::add_new_class(string name)
 }
 
 // creates aa new student and adds it to the active class
-void Integration::add_new_student(string first, string last)
+void Integration::add_new_student(string name)
 {
-    Student* s = new Student(db, first, last);
+    Student* s = new Student(db, name);
     activeClass->list.push_back(s);
     s->classId = activeClass->id;
 }

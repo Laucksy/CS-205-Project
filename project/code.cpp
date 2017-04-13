@@ -653,8 +653,6 @@ int cb_select_id_code(void  *data,
                   << std::endl;
     }
 
-    int i;
-
     Code *obj = (Code *) data;
     obj->isNew = false; // object was generated from table
 
@@ -739,5 +737,4 @@ int cb_delete_id_code(void  *data,
 
     return 0;
 }
-
 

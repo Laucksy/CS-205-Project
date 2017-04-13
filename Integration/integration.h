@@ -23,7 +23,7 @@ public:
 
     // user actions
     void add_new_class(string name); // new students class instance
-    void add_new_student(string first, string last); // new student class instance
+    void add_new_student(string name); // new student class instance
     void add_new_assignment(string name); // new assignments class instance
     Assignment* add_new_submission(Rubric* rubric, Student* student); // new assignment class instance
     void add_new_file(Assignment* assign, string name); // new code class instance
