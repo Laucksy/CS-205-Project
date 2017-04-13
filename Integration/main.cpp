@@ -1,4 +1,5 @@
 #include <iostream>
+#include "gtest/gtest.h"
 #include "integration.h"
 
 using namespace std;
@@ -99,20 +100,20 @@ int main(int argc, char *argv[])
 
     delete integ;
 
-//    Integration* integ2 = new Integration(".", "TestDB");
+    Integration* integ2 = new Integration(".", "TestDB");
 
-//    for (Assignments* k : integ2->assignments) {
-//        integ2->delete_assignment(k);
-//    }
+    for (Assignments* k : integ2->assignments) {
+        integ2->delete_assignment(k);
+    }
 
-//    for (Students* k : integ2->students) {
-//        integ2->delete_class(k);
-//    }
+    for (Students* k : integ2->students) {
+        integ2->delete_class(k);
+    }
 
-//    for (Rubric* k : integ2->rubrics) {
-//        integ2->delete_rubric(k);
-//    }
+    for (Rubric* k : integ2->rubrics) {
+        integ2->delete_rubric(k);
+    }
 
-//    delete integ2;
+    delete integ2;
     return 0;
 }
