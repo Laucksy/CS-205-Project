@@ -437,42 +437,42 @@ Code* textView::updateCode(Code* myCode)
 
 }
 
-void textView::on_comboBox_activated(const QString &arg1)
-{
-    if(arg1=="Drew")
-    {
-        student="Drew";
-    }
+//void textView::on_comboBox_activated(const QString &arg1)
+//{
+//    if(arg1=="Drew")
+//    {
+//        student="Drew";
+//    }
+//
+//}
 
-}
+//void textView::on_comboBox_2_activated(const QString &arg1)
+//{
+//    ui->comboBox->addItem("studnent 2");
+//    if(student=="Drew"&&arg1=="Student")
+//    {
 
-void textView::on_comboBox_2_activated(const QString &arg1)
-{
-    ui->comboBox->addItem("studnent 2");
-    if(student=="Drew"&&arg1=="Student")
-    {
+//        DBTool* tool = new DBTool("TestDB");
 
-        DBTool* tool = new DBTool("TestDB");
+//        //Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/Student.java",0);
+//        //Code* x = new Code(tool,"/home/erik/Desktop/Student.java",0);
 
-        //Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/Student.java",0);
-        //Code* x = new Code(tool,"/home/erik/Desktop/Student.java",0);
-
-        Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java",0);
-      //  Code* x = new Code(tool,"/home/erik/Desktop/Student.java",0);
-        //Code* x = new Code(tool,"/Student.java",0);
-
-
-        myCode=this->updateCode(x);
+//        Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java",0);
+//      //  Code* x = new Code(tool,"/home/erik/Desktop/Student.java",0);
+//        //Code* x = new Code(tool,"/Student.java",0);
 
 
-        //  ui->textBrowser->cursor().pos()
+//        myCode=this->updateCode(x);
 
-        //int para= ui->textBrowser->paragraphAt(QCursor::pos());     // te is the textEdit object
-        //  QString line=ui->textBrowser->text(para);
-        // cerr<<line;
-    }
 
-}
+//        //  ui->textBrowser->cursor().pos()
+
+//        //int para= ui->textBrowser->paragraphAt(QCursor::pos());     // te is the textEdit object
+//        //  QString line=ui->textBrowser->text(para);
+//        // cerr<<line;
+//    }
+
+//}
 
 
 
@@ -504,3 +504,5 @@ void textView::on_pushButton_2_clicked()
     rv->show();
     this->hide();
 }
+
+

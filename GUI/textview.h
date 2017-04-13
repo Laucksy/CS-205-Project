@@ -39,9 +39,9 @@ private slots:
 
 
 
-    void on_comboBox_activated(const QString &arg1);
+   // void on_comboBox_activated(const QString &arg1);
 
-    void on_comboBox_2_activated(const QString &arg1);
+   // void on_comboBox_2_activated(const QString &arg1);
 
 
 
@@ -52,6 +52,8 @@ private slots:
     void on_lineEdit_textEdited(const QString &arg1);
 
     void on_pushButton_2_clicked();
+
+
 
 private:
     Ui::textView *ui;
