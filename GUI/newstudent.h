@@ -15,6 +15,8 @@ public:
     explicit newStudent(QWidget *parent = 0);
     ~newStudent();
     void set_integ(Integration* integ);
+    void get_data();
+
 private slots:
     void on_pushButton_clicked();
 
@@ -23,6 +25,8 @@ private slots:
 private:
     Ui::newStudent *ui;
     Integration* integ;
+    string fn;
+    string ln;
 };
 
 #endif // NEWSTUDENT_H

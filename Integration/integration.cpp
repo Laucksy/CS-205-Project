@@ -4,6 +4,13 @@ Integration::Integration(string path, string name)
 {
     db = new DBTool(path, name);
     populate();
+    if (assignments.size() > 0) {
+        set_active_assignment(assignments[0]);
+    }
+
+    if (students.size() > 0) {
+        set_active_class(students[0]);
+    }
 }
 
 Integration::~Integration()
@@ -482,6 +489,8 @@ void Integration::set_active_assignment(Assignments* l)
     for ( Assignment* k : temp0) {
         submissionQueue.push(k);
     }
+
+    select_random_submission();
 }
 
 // sets the active submission
@@ -489,6 +498,9 @@ void Integration::set_active_submission(Assignment* a)
 {
     activeSubmission = a;
     a->status = 1;
+    if (a->files.size() > 0) {
+        set_active_file(a->files[0]);
+    }
 }
 
 // sets the active file

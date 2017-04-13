@@ -16,6 +16,7 @@ public:
     explicit newClass(QWidget *parent = 0);
     ~newClass();
     void set_integ(Integration* integ);
+    void get_data();
 
 private slots:
     void on_pushButton_clicked();
@@ -25,6 +26,7 @@ private slots:
 private:
     Ui::newClass *ui;
     Integration *integ;
+    string name;
 };
 
 #endif // NEWCLASS_H

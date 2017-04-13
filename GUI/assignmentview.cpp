@@ -18,6 +18,19 @@ assignmentView::~assignmentView()
 void assignmentView::set_integ(Integration *i)
 {
     integ = i;
+
+    QString qstra;
+    string text;
+    for (int i=0; i <integ->activeAssignemnt->list.size(); i++) {
+        text += integ->activeAssignemnt->list[i]->stu->firstName + " " + integ->activeAssignemnt->list[i]->stu->lastName + "\n";
+    }
+    qstra = QString::fromStdString(text);
+
+    ui->textBrowser->setText(qstra);
+
+    QString qstrb =  QString::fromStdString(integ->activeAssignemnt->name);
+
+    ui->label_2->setText(qstrb);
 }
 void assignmentView::on_pushButton_2_clicked()
 {
