@@ -29,6 +29,7 @@ public:
 
     //remove once place for parse_csv is found
     void parse_csv(DBTool* db, string csvFile);
+    vector<string> parse_csv_vector(string csvFile);
 
 
     // database methods

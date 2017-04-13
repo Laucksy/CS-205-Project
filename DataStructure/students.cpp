@@ -69,6 +69,21 @@ void Students::parse_csv(DBTool* db, string csvFile)
 
 }
 
+//second parsing for csv method option
+vector<string> Students::parse_csv_vector(string csvFile)
+{
+    vector<string> nameList;
+    string line;
+    ifstream file;
+    file.open(csvFile, ifstream::in);
+    while(getline(file,line, ','))
+    {
+        nameList.push_back(line);
+    }
+    file.close();
+    return nameList;
+}
+
 void Students::set_to_delete()
 {
     toDelete = true;
