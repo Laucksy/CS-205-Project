@@ -55,22 +55,64 @@ int main(int argc, char *argv[])
     integ->add_new_file(test3, "class1.java");
     integ->add_new_file(test3, "class2.java");
 
+    integ->set_active_assignment(integ->assignments[0]);
+
+    integ->set_active_submission(test0);
+    integ->set_active_file(integ->activeSubmission->files[0]);
+    integ->add_new_feedback("cat", "", 0);
+    integ->set_active_file(integ->activeSubmission->files[1]);
+    integ->add_new_feedback("dog", "", 0);
+
+    integ->set_active_submission(test1);
+    integ->set_active_file(integ->activeSubmission->files[0]);
+    integ->add_new_feedback("bat", "", 0);
+    integ->set_active_file(integ->activeSubmission->files[1]);
+    integ->add_new_feedback("bog", "", 0);
+
+    integ->set_active_submission(test2);
+    integ->set_active_file(integ->activeSubmission->files[0]);
+    integ->add_new_feedback("hat", "", 0);
+    integ->set_active_file(integ->activeSubmission->files[1]);
+    integ->add_new_feedback("cog", "", 0);
+
+    integ->set_active_submission(test3);
+    integ->set_active_file(integ->activeSubmission->files[0]);
+    integ->add_new_feedback("mat", "", 0);
+    integ->set_active_file(integ->activeSubmission->files[1]);
+    integ->add_new_feedback("clog", "", 0);
+
+    vector<string> aut = integ->get_similar_feedback("at");
+    vector<string> aut1 = integ->get_similar_feedback("og");
+    vector<string> aut2 = integ->get_similar_feedback("b");
+
+    for (string k : aut) {
+        cerr << k << endl;
+    }
+
+    for (string k : aut1) {
+        cerr << k << endl;
+    }
+
+    for (string k : aut2) {
+        cerr << k << endl;
+    }
+
     delete integ;
 
-    Integration* integ2 = new Integration(".", "TestDB");
+//    Integration* integ2 = new Integration(".", "TestDB");
 
-    for (Assignments* k : integ2->assignments) {
-        integ2->delete_assignment(k);
-    }
+//    for (Assignments* k : integ2->assignments) {
+//        integ2->delete_assignment(k);
+//    }
 
-    for (Students* k : integ2->students) {
-        integ2->delete_class(k);
-    }
+//    for (Students* k : integ2->students) {
+//        integ2->delete_class(k);
+//    }
 
-    for (Rubric* k : integ2->rubrics) {
-        integ2->delete_rubric(k);
-    }
+//    for (Rubric* k : integ2->rubrics) {
+//        integ2->delete_rubric(k);
+//    }
 
-    delete integ2;
+//    delete integ2;
     return 0;
 }

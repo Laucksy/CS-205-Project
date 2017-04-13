@@ -22,7 +22,7 @@ void assignmentView::set_integ(Integration *i)
     QString qstra;
     string text;
     for (int i=0; i <integ->activeAssignemnt->list.size(); i++) {
-        text += integ->activeAssignemnt->list[i]->stu->firstName + " " + integ->activeAssignemnt->list[i]->stu->lastName + "\n";
+        text += integ->activeAssignemnt->list[i]->stu->name + "\n";
     }
     qstra = QString::fromStdString(text);
 
