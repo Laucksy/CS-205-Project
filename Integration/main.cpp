@@ -9,10 +9,10 @@ int main(int argc, char *argv[])
 
     integ->add_new_class("testClass1");
 
-    integ->add_new_student("test0", "test");
-    integ->add_new_student("test1", "test");
-    integ->add_new_student("test2", "test");
-    integ->add_new_student("test3", "test");
+    integ->add_new_student("test0");
+    integ->add_new_student("test1");
+    integ->add_new_student("test2");
+    integ->add_new_student("test3");
 
     integ->add_new_assignment("test_lab_0");
     //integ->set_active_assignment(integ->assignments[0]);

@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     //cout << "Compiles!" << endl;
     cout << "foo" << endl;
     cout << QDir::currentPath().toStdString() << endl;
-    DBTool* t = new DBTool("BaseDrop");
+    //DBTool* t = new DBTool("BaseDrop");
     vector<string> testVect;
     testVect.push_back("first");
     testVect.push_back("second");

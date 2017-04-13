@@ -23,7 +23,7 @@ class Student : public Ident, public DBTable
 public:
     // constuctors and deconstructors
     Student();
-    Student(DBTool* db, string f, string l);
+    Student(DBTool* db, string n);
     ~Student();
 
     void set_to_delete();
@@ -44,18 +44,17 @@ public:
     virtual void store_add_row_sql();
 
     // executes specific sql
-    bool add_row(int id, string firstName, string lastName, int classId, double score);
+    bool add_row(int id, string name, int classId, double score);
 
     bool select_id(int i);
 
-    bool update_id(int id, string firstName, string lastName, int classId, double score);
+    bool update_id(int id, string name, int classId, double score);
 
     bool delete_id(int i);
 
     //members
     vector<Assignment*> list;
-    string firstName;
-    string lastName;
+    string name;
     double score;
     bool isNew;
     int classId;
