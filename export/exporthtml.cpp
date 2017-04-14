@@ -18,12 +18,18 @@ string ExportHTML::export_assignment(Assignment* a) {
                "div.tab button.active {background-color: #ccc;}"
                ".tabcontent {display: none;padding: 6px 12px;border: 1px solid #ccc;"
                "border-top: none;}</style>";
-    rawHTML += "</head><body style='background-color:#333333'><div class='tab'></div>";
+    rawHTML += "</head><body style='background-color:#333333'>";
 
     if(a != nullptr) {
+        rawHTML += "<p style='color:Yellow;'>Assignment Grading Breakdown: </p>";
+        for(unsigned i = 0; i < a->gradeCategory.size(); i++) {
+            rawHTML += "<span style='color:Yellow;'>" + a->gradeCategory.at(i) + " - " + to_string(a->gradeComponent.at(i)) + "</span>";
+        }
+        rawHTML += "<p style='color:Yellow;'>Total Grade: " + to_string(a->grade) + "</p>";
         ofstream file;
         string fileName = "assignment_" + a->stu->name + "_" + to_string(a->assignNum);
         file.open(fileName.c_str());
+        rawHTML += "<div class='tab'></div>";
 
         for(unsigned f = 0; f < a->files.size(); f++) {
             Code* firstFile = a->files.at(f);
