@@ -4,6 +4,9 @@
 #include "mainwindow.h"
 #include "newclass.h"
 #include "newassignment.h"
+#include "selectclass.h"
+#include "selectrubric.h"
+#include "selectassignment.h"
 
 DataView::DataView(QWidget *parent) :
     QWidget(parent),
@@ -33,7 +36,7 @@ void DataView::on_pushButton_clicked()
 
 void DataView::on_pushButton_2_clicked()
 {
-    RubricTitle *rv= new RubricTitle();
+    selectRubric *rv= new selectRubric();
     rv->set_integ(integ);
 
     rv->show();
@@ -52,16 +55,16 @@ void DataView::on_pushButton_4_clicked()
 
 void DataView::on_pushButton_5_clicked()
 {
-    newClass *rv= new newClass();
-   rv->set_integ(integ);
+    selectClass *sc= new selectClass();
+   sc->set_integ(integ);
 
-   rv->show();
+   sc->show();
    this->hide();
 }
 
 void DataView::on_pushButton_3_clicked()
 {
-    newAssignment *dv= new newAssignment();
+    selectAssignment *dv= new selectAssignment();
     dv->set_integ(integ);
 
     dv->show();

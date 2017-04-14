@@ -39,7 +39,10 @@ SOURCES += main.cpp\
     assignmentview.cpp \
     newsubmission.cpp \
     submissionview.cpp \
-    newfile.cpp
+    newfile.cpp \
+    selectclass.cpp \
+    selectrubric.cpp \
+    selectassignment.cpp
 
 
 
@@ -58,7 +61,10 @@ HEADERS  += mainwindow.h \
     assignmentview.h \
     newsubmission.h \
     submissionview.h \
-    newfile.h
+    newfile.h \
+    selectclass.h \
+    selectrubric.h \
+    selectassignment.h
 
 
 FORMS    += mainwindow.ui \
@@ -76,7 +82,10 @@ FORMS    += mainwindow.ui \
     assignmentview.ui \
     newsubmission.ui \
     submissionview.ui \
-    newfile.ui
+    newfile.ui \
+    selectclass.ui \
+    selectrubric.ui \
+    selectassignment.ui
 
 RESOURCES += \
     logo.qrc

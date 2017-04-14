@@ -2,6 +2,7 @@
 #include "ui_newassignment.h"
 #include "dataview.h"
 #include "assignmentview.h"
+#include "selectassignment.h"
 
 newAssignment::newAssignment(QWidget *parent) :
     QWidget(parent),
@@ -32,7 +33,7 @@ void newAssignment::set_integ(Integration *i)
 
 void newAssignment::on_pushButton_clicked()
 {
-    DataView *dv= new DataView();
+    selectAssignment *dv= new selectAssignment();
     dv->set_integ(integ);
 
     dv->show();
