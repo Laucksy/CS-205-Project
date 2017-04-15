@@ -2,6 +2,7 @@
 #include "ui_textview.h"
 #include <iostream>
 #include "dataview.h"
+#include <QMouseEvent>
 using namespace std;
 
 
@@ -11,8 +12,10 @@ textView::textView(QWidget *parent) :
 {
 
     ui->setupUi(this);
+    ui->textBrowser->setMouseTracking(true);
 
 }
+
 
 textView::~textView()
 {
@@ -29,6 +32,13 @@ void textView::makeComment(Code* myCode){
     //ui->textBrowser->clear();
     this->updateCode(myCode);
 }
+
+void textView::clickComment(int pos, Code* myCode){
+    myCode->insert(pos,newFeedback);
+    //ui->textBrowser->clear();
+    this->updateCode(myCode);
+}
+
 
 //Code* textView::updateCode(string file)
 //{
@@ -198,6 +208,7 @@ void textView::makeComment(Code* myCode){
 
 Code* textView::updateCode(Code* myCode)
 {
+    writing=true;
 
     ui->textBrowser->clear();
     int tabCounter=0;
@@ -232,6 +243,7 @@ Code* textView::updateCode(Code* myCode)
             }
             ui->textBrowser->setTextColor("Orange");
             QString temp= QString::fromStdString(s);
+
             ui->textBrowser->insertPlainText(temp);
         }
 
@@ -432,7 +444,7 @@ Code* textView::updateCode(Code* myCode)
         }
         ui->textBrowser->append("");
     }
-
+    writing=false;
     return x;
 
 }
@@ -509,5 +521,54 @@ void textView::on_pushButton_2_clicked()
 
 void textView::on_comboBox_2_activated(const QString &arg1)
 {
+        DBTool* tool = new DBTool("TestDB");
+        Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java",0);
+        myCode=this->updateCode(x);
+}
 
+
+
+void textView::mousePressEvent(QMouseEvent *e)
+    {
+
+
+
+        cerr<<"click";
+
+
+    }
+
+
+
+void textView::on_textBrowser_anchorClicked(const QUrl &arg1)
+{
+         cerr<<"click";
+}
+
+
+
+void textView::on_textBrowser_cursorPositionChanged()
+{
+  //  ui->textBrowser->cursor()
+    if(!writing){
+       int temp=ui->textBrowser->textCursor().blockNumber();
+        this->clickComment(temp,myCode);
+    }
+
+
+
+}
+
+bool textView::eventFilter(QObject *watched, QEvent *event){
+    if(event->type()==QMouseEvent::MouseButtonDblClick)
+    {
+        cerr<<"double";
+    }
+}
+
+
+void textView::on_pushButton_4_clicked()
+{
+    myCode->delete_space_for_feedback(commentLoc);
+     this->updateCode(myCode);
 }
