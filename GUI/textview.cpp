@@ -506,3 +506,8 @@ void textView::on_pushButton_2_clicked()
 }
 
 
+
+void textView::on_comboBox_2_activated(const QString &arg1)
+{
+
+}
