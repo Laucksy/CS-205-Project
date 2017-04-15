@@ -68,7 +68,7 @@ string ExportHTML::export_assignment(Assignment* a) {
                 //for(unsigned j = 0; j < delims.size() && j < tokens.size(); j++)
                 //cout << tokens.at(j) + ".........." + delims.at(j) << endl;
 
-                if(v.at(i)[0] == '#' && v.at(i)[1] == '#' && v.at(i)[v.at(i).length()-1] == '#') {
+                if(v.at(i)[0] == '`' && v.at(i)[1] == '`' && v.at(i)[v.at(i).length()-1] == '`') {
                     rawHTML += "<span style='color:yellow;'>FEEDBACK: ";
                     rawHTML += v.at(i).substr(2,v.at(i).length()-3);
                     rawHTML += "\n";
