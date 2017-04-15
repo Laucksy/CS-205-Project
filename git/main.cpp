@@ -17,5 +17,7 @@ int main(int argc, char *argv[])
     //cout << Git::pull() << endl;
     cout << Git::push() << endl;
     //cout << Git::reset() << endl;
+    Git* test;
+    cout << test->find_file_path("exampleImportant.pages") << endl;
     return 0;
 }
