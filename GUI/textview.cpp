@@ -523,6 +523,7 @@ void textView::on_comboBox_2_activated(const QString &arg1)
 {
         DBTool* tool = new DBTool("TestDB");
         Code* x = new Code(tool,"/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java",0);
+        //Code* x = new Code(tool,"/Users/swein/Desktop/205Project/Wheel.java",0);
         myCode=this->updateCode(x);
 }
 
