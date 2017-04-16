@@ -490,12 +490,12 @@ Code* textView::updateCode(Code* myCode)
 
 
 
-void textView::on_pushButton_clicked()
-{
-    //Code* temp =this->updateCode("/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java");
-    this->makeComment(myCode);
+//void textView::on_pushButton_clicked()
+//{
+//    //Code* temp =this->updateCode("/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java");
+//    this->makeComment(myCode);
 
-}
+//}
 
 void textView::on_lineEdit_2_textChanged(const QString &arg1)
 {
