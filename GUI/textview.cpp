@@ -2,6 +2,7 @@
 #include "ui_textview.h"
 #include <iostream>
 #include "dataview.h"
+#include <QMouseEvent>
 using namespace std;
 
 
@@ -11,8 +12,10 @@ textView::textView(QWidget *parent) :
 {
 
     ui->setupUi(this);
+    ui->textBrowser->setMouseTracking(true);
 
 }
+
 
 textView::~textView()
 {
@@ -26,6 +29,10 @@ void textView::set_integ(Integration *i)
     for (Code* k : integ->activeSubmission->files) {
         ui->comboBox_2->addItem(QString::fromStdString(k->fileName));
     }
+
+    ui->comboBox->clear();
+    ui->comboBox_2->clear();
+    ui->comboBox_3->clear();
 
     ui->comboBox_3->addItem("None");
 
@@ -59,6 +66,15 @@ void textView::makeComment(Code* myCode){
     this->updateCode(myCode);
     this->update_rubric();
 }
+
+void textView::clickComment(int pos, Code* myCode){
+    myCode->insert(pos,newFeedback);
+    integ->add_new_feedback(newFeedback, tag, commentLoc);
+    //ui->textBrowser->clear();
+    this->updateCode(myCode);
+    this->update_rubric();
+}
+
 
 //Code* textView::updateCode(string file)
 //{
@@ -228,6 +244,7 @@ void textView::makeComment(Code* myCode){
 
 Code* textView::updateCode(Code* myCode)
 {
+    writing=true;
 
     ui->textBrowser->clear();
     int tabCounter=0;
@@ -262,10 +279,11 @@ Code* textView::updateCode(Code* myCode)
             }
             ui->textBrowser->setTextColor("Orange");
             QString temp= QString::fromStdString(s);
+
             ui->textBrowser->insertPlainText(temp);
         }
 
-        if(v.at(i)[0] == '#' && v.at(i)[1] == '#' && v.at(i)[v.at(i).length()-1] == '#') {
+        if(v.at(i)[0] == '`' && v.at(i)[1] == '`' && v.at(i)[v.at(i).length()-1] == '`') {
             ui->textBrowser->setTextColor("Yellow");
             QString qstr = QString::fromStdString("FEEDBACK: ");
             ui->textBrowser->insertPlainText(qstr);
@@ -462,7 +480,7 @@ Code* textView::updateCode(Code* myCode)
         }
         ui->textBrowser->append("");
     }
-
+    writing=false;
     return x;
 
 }
@@ -508,12 +526,12 @@ Code* textView::updateCode(Code* myCode)
 
 
 
-void textView::on_pushButton_clicked()
-{
-    //Code* temp =this->updateCode("/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java");
-    this->makeComment(myCode);
+//void textView::on_pushButton_clicked()
+//{
+//    //Code* temp =this->updateCode("/Users/drewcarleton/Project205/axolotl/GUI/BinaryTree.java");
+//    this->makeComment(myCode);
 
-}
+//}
 
 void textView::on_lineEdit_2_textChanged(const QString &arg1)
 {
@@ -615,4 +633,51 @@ void textView::on_pushButton_3_clicked()
         updateCode(integ->activeFile);
         update_rubric();
     }
+}
+
+
+
+void textView::mousePressEvent(QMouseEvent *e)
+    {
+
+
+
+        cerr<<"click";
+
+
+    }
+
+
+
+void textView::on_textBrowser_anchorClicked(const QUrl &arg1)
+{
+         cerr<<"click";
+}
+
+
+
+void textView::on_textBrowser_cursorPositionChanged()
+{
+  //  ui->textBrowser->cursor()
+    if(!writing){
+       int temp=ui->textBrowser->textCursor().blockNumber();
+        this->clickComment(temp,myCode);
+    }
+
+
+
+}
+
+bool textView::eventFilter(QObject *watched, QEvent *event){
+    if(event->type()==QMouseEvent::MouseButtonDblClick)
+    {
+        cerr<<"double";
+    }
+}
+
+
+void textView::on_pushButton_4_clicked()
+{
+    myCode->delete_space_for_feedback(commentLoc);
+     this->updateCode(myCode);
 }

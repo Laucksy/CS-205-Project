@@ -6,6 +6,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <QMouseEvent>
 
 #include <QWidget>
 using namespace std;
@@ -25,7 +26,7 @@ public:
 
     void update_rubric();
 
-
+    bool writing=false;
     Code* updateCode(Code*);
      void makeComment(Code*);
     string newFeedback;
@@ -36,7 +37,7 @@ public:
 
     std::string student;
 
-
+    QString clickedAnchor;
 
 private slots:
 
@@ -49,7 +50,7 @@ private slots:
 
 
 
-    void on_pushButton_clicked();
+   // void on_pushButton_clicked();
 
     void on_lineEdit_2_textChanged(const QString &arg1);
 
@@ -68,6 +69,20 @@ private slots:
     void on_lineEdit_3_textChanged(const QString &arg1);
 
     void on_pushButton_3_clicked();
+
+
+
+
+    void on_textBrowser_anchorClicked(const QUrl &arg1);
+
+    void mousePressEvent(QMouseEvent *e);
+
+    bool eventFilter(QObject *watched, QEvent *event);
+
+    void on_textBrowser_cursorPositionChanged();
+    void clickComment(int pos, Code* myCode);
+
+    void on_pushButton_4_clicked();
 
 private:
     Ui::textView *ui;

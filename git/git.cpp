@@ -57,6 +57,11 @@ string Git::status() {
     return result;
 }
 
+string Git::find_file_path(string fileName) {
+    string result = Bash::exec("find . -name " + fileName);
+    return result;
+}
+
 bool Git::push() {
     if(!initialized)
         init();
