@@ -6,10 +6,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    bool pulled = Git::pull();
+    if(!pulled) {
+        Git::reset();
+    }
 }
 
 MainWindow::~MainWindow()
 {
+    Git::push();
     delete ui;
 }
 
