@@ -14,7 +14,7 @@ class ExportHTML
 public:
     static string export_assignment(Assignment* a);
     static void export_csv_assignment(Assignments* a);
-    static void export_csv_section(Assignments* s);
+    static void export_csv_section(Students* s);
 
 private:
     ExportHTML();

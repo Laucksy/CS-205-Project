@@ -14,6 +14,9 @@
 #include "student.h"
 #include "assignments.h"
 
+class Student;
+class Assignments;
+
 using namespace std;
 
 // list class to hold Student submissions
@@ -54,7 +57,7 @@ public:
     bool delete_id(int i);
 
     vector<Student*> list;
-    vector<Assignments> assignList;
+    vector<Assignments*> assignList;
     string name;
     bool isNew;
     bool toDelete;

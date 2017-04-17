@@ -97,6 +97,7 @@ void Integration::populate()
         for (Students* k : students) {
             if (k->id == gid) {
                 k->list.push_back(s);
+                s->section = k;
             }
         }
         studentList.push_back(s);
@@ -128,9 +129,16 @@ void Integration::populate()
         l->select_id(i);
         assignments.push_back(l);
         int rid = l->rubId;
+        int cid = l->classId;
         for (Rubric* k : rubrics) {
             if (k->id == rid) {
                 l->rubric = k;
+            }
+        }
+
+        for (Students* k : students) {
+            if (k->id == cid) {
+                k->assignList.push_back(l);
             }
         }
     }
