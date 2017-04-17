@@ -18,7 +18,20 @@ selectClass::~selectClass()
 void selectClass::set_integ(Integration *i)
 {
     integ = i;
+    QString qstra;
+    string text;
+    for (int i=0; i <integ->students.size(); i++) {
+        Students* temp = integ->students.at(i);
+        text+= temp->name+ "\n";
+       // text += integ->activeClass->list[i]->name + "\n";
+    }
+    qstra = QString::fromStdString(text);
+
+    ui->textBrowser->setText(qstra);
+
 }
+
+
 
 void selectClass::on_pushButton_4_clicked()
 {
