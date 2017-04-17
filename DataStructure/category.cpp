@@ -37,11 +37,18 @@ Category::~Category()
         return;
     }
 
+    int mat;
+    if (isMatrix) {
+        mat = 1;
+    } else {
+        mat = 0;
+    }
+
     // if valid object, adds or updates it in table
     if (isNew && id >= 0) {
-        add_row(id, convert_quality(), convert_points(), pts, (int)isMatrix, rubricId);
+        add_row(id, convert_quality(), convert_points(), pts, mat, rubricId);
     } else if (!isNew && id >= 0){
-        update_id(id, convert_quality(), convert_points(), pts, (int)isMatrix, rubricId);
+        update_id(id, convert_quality(), convert_points(), pts, mat, rubricId);
     } else {
 
     }

@@ -22,12 +22,42 @@ textView::~textView()
 void textView::set_integ(Integration *i)
 {
     integ = i;
+
+    for (Code* k : integ->activeSubmission->files) {
+        ui->comboBox_2->addItem(QString::fromStdString(k->fileName));
+    }
+
+    ui->comboBox_3->addItem("None");
+
+    for (string k : integ->activeSubmission->gradeCategory) {
+        ui->comboBox->addItem(QString::fromStdString(k));
+        ui->comboBox_3->addItem(QString::fromStdString(k));
+    }
+
+    tag = "None";
+
+    if (integ->activeSubmission->gradeCategory.size() > 0) {
+        categoryIndex = 0;
+        //tag = integ->activeSubmission->gradeCategory[0];
+    } else {
+        categoryIndex = -1;
+    }
+
+    if (integ->activeSubmission->files.size() > 0) {
+        updateCode(integ->activeSubmission->files[0]);
+        integ->activeFile = integ->activeSubmission->files[0];
+        myCode = integ->activeFile;
+    }
+
+    update_rubric();
 }
 
 void textView::makeComment(Code* myCode){
-    myCode->insert(commentLoc,newFeedback);
+    myCode->insert(commentLoc,newFeedback + ":: " + tag);
+    integ->add_new_feedback(newFeedback, tag, commentLoc);
     //ui->textBrowser->clear();
     this->updateCode(myCode);
+    this->update_rubric();
 }
 
 //Code* textView::updateCode(string file)
@@ -506,3 +536,83 @@ void textView::on_pushButton_2_clicked()
 }
 
 
+
+void textView::on_comboBox_2_activated(const QString &arg1)
+{
+    for (Code* k : integ->activeSubmission->files) {
+        if (arg1 == QString::fromStdString(k->fileName)) {
+            integ->activeFile = k;
+            myCode = integ->activeFile;
+        }
+    }
+
+    if (integ->activeFile != nullptr) {
+        updateCode(integ->activeFile);
+
+    }
+}
+
+void textView::update_rubric()
+{
+    Assignment* active = integ->activeSubmission;
+    vector<Feedback*> comments;
+    for (Code* k : integ->activeSubmission->files) {
+        for (Feedback* j : k->profFeedback) {
+            comments.push_back(j);
+        }
+    }
+
+    string rubric;
+    for (int i = 0; i < integ->activeSubmission->gradeCategory.size(); i++) {
+        if (active->gradeQuality[i] == "NULL") {
+            rubric += active->gradeCategory[i] + ": " + to_string(active->gradeComponent[i]) + "/" + to_string(active->rubric->cat[i]->pts) + "\n";
+        } else {
+            rubric += active->gradeCategory[i] + ": " + to_string(active->gradeComponent[i]) + "/" + to_string(active->rubric->cat[i]->pts) + "; " + active->gradeQuality[i] + "\n";
+        }
+
+        for (Feedback* k : comments) {
+            if (k->tag == active->gradeCategory[i]) {
+                rubric += "       " + k->text + "\n";
+            }
+        }
+
+        ui->textBrowser_2->setText(QString::fromStdString(rubric));
+    }
+}
+
+void textView::on_comboBox_3_activated(const QString &arg1)
+{
+    tag = arg1.toStdString();
+}
+
+void textView::on_comboBox_activated(const QString &arg1)
+{
+    for (int i = 0; i <integ->activeSubmission->gradeCategory.size(); i++) {
+        if (arg1.toStdString() == integ->activeSubmission->gradeCategory[i]) {
+            categoryIndex = i;
+        }
+    }
+}
+
+void textView::on_lineEdit_3_textChanged(const QString &arg1)
+{
+    integ->activeSubmission->change_grade(arg1.toDouble(), integ->activeSubmission->gradeCategory[categoryIndex]);
+    update_rubric();
+}
+
+void textView::on_pushButton_3_clicked()
+{
+    integ->finish_grading_submission();
+
+    if (integ->activeSubmission == nullptr) {
+        DataView *rv= new DataView();
+        rv->set_integ(integ);
+
+        rv->show();
+        this->hide();
+    } else {
+        set_integ(integ);
+        updateCode(integ->activeFile);
+        update_rubric();
+    }
+}

@@ -13,6 +13,7 @@ DataView::DataView(QWidget *parent) :
     ui(new Ui::DataView)
 {
     ui->setupUi(this);
+    ui->label->setText("");
 }
 
 DataView::~DataView()
@@ -27,6 +28,10 @@ void DataView::set_integ(Integration *i)
 
 void DataView::on_pushButton_clicked()
 {
+    if (integ->activeSubmission == nullptr) {
+        ui->label->setText("Please create an assignment and submissions");
+        return;
+    }
     textView *tv= new textView();
     tv->set_integ(integ);
 
@@ -64,6 +69,14 @@ void DataView::on_pushButton_5_clicked()
 
 void DataView::on_pushButton_3_clicked()
 {
+    if (integ->activeClass == nullptr) {
+        ui->label->setText("Please create a class before creating an assignemnt");
+        return;
+    }
+    if (integ->activeClass->list[0] == nullptr) {
+        ui->label->setText("Please create a student before creating an assignemnt");
+        return;
+    }
     selectAssignment *dv= new selectAssignment();
     dv->set_integ(integ);
 
