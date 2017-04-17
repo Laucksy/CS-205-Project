@@ -82,19 +82,26 @@ void Assignment::change_grade(double g, string c)
         }
     }
 
-    if (ind != -1 && !rubric->is_deduction()) {
-        if (rubric->cat[ind]->pts >= gradeComponent[ind] + g){
-        gradeComponent[ind] += g;
-        gradeQuality[ind] = rubric->find_qual(g, gradeCategory[ind]);
-        }
+//    if (ind != -1 && !rubric->is_deduction()) {
+//        if (rubric->cat[ind]->pts >= gradeComponent[ind] + g){
+//        gradeComponent[ind] += g;
+//        gradeQuality[ind] = rubric->find_qual(g, gradeCategory[ind]);
+//        }
+//    }
+
+//    if (ind != -1 && rubric->is_deduction()) {
+//        if (gradeComponent[ind] - g >= 0){
+//        gradeComponent[ind] -= g;
+//        gradeQuality[ind] = rubric->find_qual(gradeComponent[ind], gradeCategory[ind]);
+//        }
+//    }
+
+    if (g >= 0 && g <= rubric->cat[ind]->pts){
+        gradeComponent[ind] = g;
+        gradeQuality[ind] = rubric->find_qual(gradeComponent[ind], gradeCategory[ind]);
     }
 
-    if (ind != -1 && rubric->is_deduction()) {
-        if (gradeComponent[ind] - g >= 0){
-        gradeComponent[ind] -= g;
-        gradeQuality[ind] = rubric->find_qual(gradeComponent[ind], gradeCategory[ind]);
-        }
-    }
+    grade = 0;
 
     for (double k : gradeComponent) {
         grade += k;

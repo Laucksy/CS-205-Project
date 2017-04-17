@@ -34,6 +34,7 @@ void assignmentView::set_integ(Integration *i)
 }
 void assignmentView::on_pushButton_2_clicked()
 {
+    integ->set_active_assignment(integ->activeAssignemnt);
     DataView *dv= new DataView();
     dv->set_integ(integ);
 

@@ -30,6 +30,7 @@ Student::Student(DBTool* db, string n) : Ident::Ident('s'), DBTable::DBTable(db,
 //destructor
 Student::~Student()
 {
+    calc_score();
     // if an object is slated for delete, delete it
     if (toDelete) {
         delete_id(id);
