@@ -13,7 +13,8 @@ class ExportHTML
 {
 public:
     static string export_assignment(Assignment* a);
-    static void export_csv(Assignments* a);
+    static void export_csv_assignment(Assignments* a);
+    static void export_csv_section(Assignments* s);
 
 private:
     ExportHTML();
