@@ -12,6 +12,7 @@
 #include "dbtable.h"
 #include "ident.h"
 #include "student.h"
+#include "assignments.h"
 
 using namespace std;
 
@@ -53,6 +54,7 @@ public:
     bool delete_id(int i);
 
     vector<Student*> list;
+    vector<Assignments> assignList;
     string name;
     bool isNew;
     bool toDelete;

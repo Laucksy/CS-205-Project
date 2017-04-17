@@ -36,9 +36,9 @@ Assignments::~Assignments()
 
     //if valid object, adds or updates it in table
     if (isNew && id >= 0) {
-        add_row(id, name, rubId);
+        add_row(id, name, classId, rubId);
     } else if (!isNew && id >= 0){
-        update_id(id, name, rubId);
+        update_id(id, name, classId, rubId);
     } else {
 
     }
@@ -63,6 +63,18 @@ void Assignments::set_rubric(Rubric *r)
 void Assignments::set_to_delete()
 {
     toDelete = true;
+}
+
+bool Assignments::did_submit(Student *s)
+{
+    bool ret = false;
+    for (Assignment* k : list) {
+        if (k->stu == s) {
+            ret = true;
+        }
+    }
+
+    return ret;
 }
 
 // database methods
@@ -91,13 +103,14 @@ void Assignments::store_create_sql() {
     sql_create += " ( ";
     sql_create += "  id INT PRIMARY KEY NOT NULL, ";
     sql_create += "  name TEXT,";
+    sql_create += "  classId INT,";
     sql_create += "  rubId INT";
     sql_create += " );";
 
 }
 
 
-bool Assignments::add_row(int id, string name, int rubId) {
+bool Assignments::add_row(int id, string name, int classId, int rubId) {
     int   retCode = 0;
     char *zErrMsg = 0;
 
@@ -105,7 +118,7 @@ bool Assignments::add_row(int id, string name, int rubId) {
 
     sql_add_row  = "INSERT INTO ";
     sql_add_row += table_name;
-    sql_add_row += " ( id, name, rubId ) ";
+    sql_add_row += " ( id, name, classId, rubId ) ";
     sql_add_row += "VALUES (";
 
     sprintf (tempval, "%d", id);
@@ -115,6 +128,10 @@ bool Assignments::add_row(int id, string name, int rubId) {
     sql_add_row += "\"";
     sql_add_row += std::string(name);
     sql_add_row += "\", ";
+
+    sprintf (tempval, "%d", classId);
+    sql_add_row += tempval;
+    sql_add_row += ", ";
 
     sprintf (tempval, "%d", rubId);
     sql_add_row += tempval;
@@ -177,7 +194,7 @@ bool Assignments::select_id(int i) {
 }
 
 // updates entry by unique id
-bool Assignments::update_id(int id, string name, int rubId) {
+bool Assignments::update_id(int id, string name, int classId, int rubId) {
     int   retCode = 0;
     char *zErrMsg = 0;
 
@@ -191,6 +208,11 @@ bool Assignments::update_id(int id, string name, int rubId) {
     sql_update_id += "\"";
     sql_update_id += std::string(name);
     sql_update_id += "\", ";
+
+    sql_update_id += "classId = ";
+    sprintf (tempval, "%d", classId);
+    sql_update_id += tempval;
+    sql_update_id += ", ";
 
     sql_update_id += "rubId = ";
     sprintf (tempval, "%d", rubId);
@@ -325,7 +347,8 @@ int cb_select_id_assignments(void  *data,
     obj->id = atoi(argv[0]);
     obj->id_assignments = atoi(argv[0]) + 1;
     obj->name =argv[1];
-    obj->rubId = atoi(argv[2]);
+    obj->classId = atoi(argv[2]);
+    obj->rubId = atoi(argv[3]);
 
     return 0;
 }

@@ -28,6 +28,7 @@ public:
 
     void set_rubric(Rubric* r);
     void set_to_delete();
+    bool did_submit(Student* s);
 
     // database methods
     // returns the row count of the categories table
@@ -41,11 +42,11 @@ public:
     virtual void store_add_row_sql();
 
     // executes specific sql
-    bool add_row(int id, string name, int rubId);
+    bool add_row(int id, string name, int classId, int rubId);
 
     bool select_id(int i);
 
-    bool update_id(int id, string name, int rubId);
+    bool update_id(int id, string name, int classId, int rubId);
 
     bool delete_id(int i);
 
@@ -53,6 +54,7 @@ public:
     string name;
     Rubric* rubric;
     int rubId;
+    int classId;
     bool isNew;
     bool toDelete;
 
