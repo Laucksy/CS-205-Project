@@ -42,7 +42,8 @@ SOURCES += main.cpp\
     newfile.cpp \
     selectclass.cpp \
     selectrubric.cpp \
-    selectassignment.cpp
+    selectassignment.cpp \
+    gitmanager.cpp
 
 
 
@@ -64,7 +65,8 @@ HEADERS  += mainwindow.h \
     newfile.h \
     selectclass.h \
     selectrubric.h \
-    selectassignment.h
+    selectassignment.h \
+    gitmanager.h
 
 
 FORMS    += mainwindow.ui \
@@ -85,7 +87,8 @@ FORMS    += mainwindow.ui \
     newfile.ui \
     selectclass.ui \
     selectrubric.ui \
-    selectassignment.ui
+    selectassignment.ui \
+    gitmanager.ui
 
 RESOURCES += \
     logo.qrc

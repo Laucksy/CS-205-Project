@@ -281,15 +281,15 @@ void ExportHTML::export_csv_assignment(Assignments* a) {
     file.close();
 }
 
-void ExportHTML::export_csv_section(Students* s) {
+/*void ExportHTML::export_csv_section(Students* s) {
     ofstream file;
     string fileName = "section_" + s->name + ".csv";
     file.open(fileName.c_str());
     file << s->name << "\n";
-    /*for(unsigned i = 0; i < s->list.size(); i++) {
+    for(unsigned i = 0; i < s->list.size(); i++) {
         Assignment* temp = s->list.at(i);
         file << temp->stu->name << "," << temp->grade;
         file.flush();
-    }*/
+    }
     file.close();
-}
+}*/
