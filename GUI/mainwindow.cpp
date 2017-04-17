@@ -1,15 +1,22 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "gitmanager.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
+
+    //it::reset();
+
     ui->setupUi(this);
 }
 
+
 MainWindow::~MainWindow()
 {
+    Git::push();
     delete ui;
 }
 
@@ -20,11 +27,23 @@ void MainWindow::set_integ(Integration *i)
 
 void MainWindow::on_pushButton_clicked()
 {
-  DataView *dv= new DataView();
-  dv->set_integ(integ);
 
-  dv->show();
-  this->hide();
+    bool pulled = Git::pull();
+    if(!pulled||true) {
+        gitManager *dv= new gitManager();
+        dv->set_integ(integ);
+
+        dv->show();
+        this->hide();
+    }
+    else
+    {
+        DataView *dv= new DataView();
+        dv->set_integ(integ);
+
+        dv->show();
+        this->hide();
+    }
 }
 
 void MainWindow::on_pushButton_2_clicked()
