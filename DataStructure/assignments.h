@@ -13,6 +13,9 @@
 #include "ident.h"
 #include "assignment.h"
 #include "rubric.h"
+#include "student.h"
+
+class Student;
 
 using namespace std;
 

@@ -14,6 +14,9 @@
 #include "student.h"
 #include "assignments.h"
 
+class Student;
+class Assignments;
+
 using namespace std;
 
 // list class to hold Student submissions

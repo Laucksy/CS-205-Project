@@ -55,11 +55,12 @@ void Student::set_to_delete()
 // data methods
 void Student::calc_score()
 {
+    score = 0;
     for (Assignment* k : list) {
         score += k->get_grade();
     }
 
-    score = score/list.size();
+    score = score/section->assignList.size();
 }
 
 double Student::get_score()

@@ -12,10 +12,12 @@
 #include "dbtable.h"
 #include "ident.h"
 #include "assignment.h"
+#include "students.h"
 
 using namespace std;
 
 class Assignment;
+class Students;
 
 // holds the grade and information for a student
 class Student : public Ident, public DBTable
@@ -54,6 +56,7 @@ public:
 
     //members
     vector<Assignment*> list;
+    Students* section;
     string name;
     double score;
     bool isNew;
