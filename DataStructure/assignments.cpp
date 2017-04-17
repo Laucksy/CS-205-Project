@@ -77,6 +77,16 @@ bool Assignments::did_submit(Student *s)
     return ret;
 }
 
+Assignment* Assignments::get_assignment(Student *s)
+{
+    for (Assignment* k : list) {
+        if (k->stu == s) {
+            return k;
+        }
+    }
+    return nullptr;
+}
+
 // database methods
 int Assignments::get_row_cnt()
 {

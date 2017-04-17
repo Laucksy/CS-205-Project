@@ -281,15 +281,25 @@ void ExportHTML::export_csv_assignment(Assignments* a) {
     file.close();
 }
 
+/*Changing csv to loop through students in section, print name, loop
+ * through assignments in section, if submitted print grade, else 0, print get_score()*/
 void ExportHTML::export_csv_section(Students* s) {
     ofstream file;
     string fileName = "section_" + s->name + ".csv";
     file.open(fileName.c_str());
     file << s->name << "\n";
     for(unsigned i = 0; i < s->list.size(); i++) {
-        //Assignment* temp = s->list.at(i);
-        //file << temp->stu->name << "," << temp->grade;
-        //file.flush();
+        Student* stu = s->list.at(i);
+        file << stu->name << ",";
+        for(unsigned j = 0; j < s->assignList.size(); j++) {
+            Assignments* assign = s->assignList.at(j);
+            if(assign->did_submit(stu)) {
+                file << assign->get_assignment(stu) << ",";
+            } else {
+                file << "0" << ",";
+            }
+        }
+        file.flush();
     }
     file.close();
 }
