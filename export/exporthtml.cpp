@@ -27,7 +27,7 @@ string ExportHTML::export_assignment(Assignment* a) {
         }
         rawHTML += "<p style='color:Yellow;'>Total Grade: " + to_string(a->grade) + "</p>";
         ofstream file;
-        string fileName = "assignment_" + a->stu->name + "_" + to_string(a->assignNum);
+        string fileName = "assignment_" + a->stu->name + "_" + to_string(a->assignNum) + ".html";
         file.open(fileName.c_str());
         rawHTML += "<div class='tab'></div>";
 
@@ -81,7 +81,7 @@ string ExportHTML::export_assignment(Assignment* a) {
                 int j = 0;
                 while(tokens.size() > 0/* && delims.size() > 0*/) {
                     for(unsigned j = 0; j < tokens.size(); j++) {
-                        cout << "Token size: " << tokens.size() << endl;
+                        //cout << "Token size: " << tokens.size() << endl;
                     }
                     int type = firstFile->categorize(tokens.at(j));
 
@@ -177,7 +177,7 @@ string ExportHTML::export_assignment(Assignment* a) {
                     }
 
                     //cout << (cumulativeLine + tokens.at(0)) << "AAAA" << v.at(i).find(cumulativeLine + tokens.at(0)) << "AAAA" << v.at(i).length() << endl;
-                    cout << cumulativeLine << "BBBBBB" << v.at(i) << endl;
+                    //cout << cumulativeLine << "BBBBBB" << v.at(i) << endl;
 
                     //if(delims.size() > 0)
                         //cout << delims.front();
@@ -190,7 +190,7 @@ string ExportHTML::export_assignment(Assignment* a) {
                     bool delimFound = delims.size() > 0 ? v.at(i).find(cumulativeLine + delims.at(0)) == 0 : false;
                     bool tokenFound = tokens.size() > 0 ? v.at(i).find(cumulativeLine + tokens.at(0)) == 0 : false;
                     if(delims.size() > 0 && delimFound && !tokenFound) {
-                        cout << "delims" << endl;
+                        //cout << "delims" << endl;
                         if(!comment && !lineComment)
                             rawHTML += "<span style='color:Cornsilk;'>";
                         if(delims.at(0) != " ")
@@ -204,20 +204,20 @@ string ExportHTML::export_assignment(Assignment* a) {
                         delims.erase(delims.begin());
                     }
                     else if(tokens.size() > 0 && tokenFound) {
-                        cout << "token" << endl;
+                        //cout << "token" << endl;
                         rawHTML += tokens.at(0);
                         cumulativeLine += tokens.at(0);
                         tokens.erase(tokens.begin());
                     } else if(tokens.size() > 0 && delims.size() == 0) {
-                        cout << "token" << endl;
+                        //cout << "token" << endl;
                         rawHTML += tokens.at(0);
                         cumulativeLine += tokens.at(0);
                         tokens.erase(tokens.begin());
                     }
                     rawHTML += "</span>";
-                    cout << "End of loop" << endl;
+                    //cout << "End of loop" << endl;
                 }
-                cout << "ITHERE" << endl;
+                //cout << "ITHERE" << endl;
                 while(delims.size() > 0) {
                     if(delims.size() >= 3 && delims.at(0) == "/" && delims.at(1) == "*" && delims.at(2) == "*"
                             && v.at(i)[cumulativeLine.length()] == '/' && v.at(i)[cumulativeLine.length()+1] == '*'
@@ -240,7 +240,7 @@ string ExportHTML::export_assignment(Assignment* a) {
                     cumulativeLine += delims.at(0);
                     delims.erase(delims.begin());
                 }
-                cout << "AFTERDELIM" << endl;
+                //cout << "AFTERDELIM" << endl;
                 rawHTML += "</p>";
             }
             rawHTML += "</div>";
@@ -266,4 +266,30 @@ string ExportHTML::export_assignment(Assignment* a) {
         rawHTML += "</body></html>";
     }
     return rawHTML;
+}
+
+void ExportHTML::export_csv_assignment(Assignments* a) {
+    ofstream file;
+    string fileName = "assignment_" + a->name + ".csv";
+    file.open(fileName.c_str());
+    file << a->name << "\n";
+    for(unsigned i = 0; i < a->list.size(); i++) {
+        Assignment* temp = a->list.at(i);
+        file << temp->stu->name << "," << temp->grade;
+        file.flush();
+    }
+    file.close();
+}
+
+void ExportHTML::export_csv_section(Students* s) {
+    ofstream file;
+    string fileName = "section_" + s->name + ".csv";
+    file.open(fileName.c_str());
+    file << s->name << "\n";
+    /*for(unsigned i = 0; i < s->list.size(); i++) {
+        Assignment* temp = s->list.at(i);
+        file << temp->stu->name << "," << temp->grade;
+        file.flush();
+    }*/
+    file.close();
 }

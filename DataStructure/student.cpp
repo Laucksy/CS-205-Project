@@ -64,6 +64,7 @@ void Student::calc_score()
 
 double Student::get_score()
 {
+    calc_score();
     return score;
 }
 

@@ -85,6 +85,10 @@ bool Git::pull() {
     if(result.find("fatal") != string::npos || result.find("error") != string::npos) {
         return false;
     }
+    for(unsigned i = 0; i < files.size(); i++) {
+        string cmd = "cp backup/" + files.at(i) + " ./" ;
+        Bash::exec(cmd);
+    }
     return true;
 }
 

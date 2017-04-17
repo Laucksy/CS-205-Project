@@ -6,6 +6,7 @@
 #include "dataview.h"
 #include "newuser.h"
 #include "forgotpassword.h"
+#include "../git/git.h"
 
 namespace Ui {
 class MainWindow;

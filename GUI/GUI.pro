@@ -126,6 +126,12 @@ HEADERS += ../project/code.h
 
 SOURCES += ../project/code.cpp
 
+HEADERS += ../git/bash.h
+SOURCES += ../git/bash.cpp
+
+HEADERS += ../git/git.h
+SOURCES += ../git/git.cpp
+
 HEADERS += ../DataStructure/dbtool.h \
     ../DataStructure/dbtable.h
 
