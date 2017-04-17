@@ -16,6 +16,7 @@ public:
     static void set_repo(string r);
     static void add_file(string path);
     static string get_file(int index);
+    string find_file_path(string fileName);
     static string status();
     static bool push();
     static bool pull();

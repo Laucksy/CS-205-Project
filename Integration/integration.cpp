@@ -445,6 +445,9 @@ void Integration::select_random_submission()
     if (!submissionQueue.empty()){
         activeSubmission = submissionQueue.front();
         submissionQueue.pop();
+    } else {
+        activeSubmission= nullptr;
+        activeFile = nullptr;
     }
 }
 

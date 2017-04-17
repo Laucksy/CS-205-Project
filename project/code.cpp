@@ -1,4 +1,3 @@
-//#include <boost/algorithm/string.hpp>
 //using namespace boost;
 #include "code.h"
 
@@ -194,8 +193,8 @@ void Code::insert(int position,string feed)
 {
     //iterating through code to insert text at a given position inside the vector
     vector<string>::iterator it = fullCode.begin();
-string s1= "##";
-string s2= "#";
+string s1= "``";
+string s2= "`";
 string s3= s1+feed+s2;
     fullCode.insert (it+position,s3);
     /*also if we only want to insert blank text as to make room for an overlay comment
@@ -301,7 +300,7 @@ string Code::convert_full()
 {
     string ret;
     for(vector<string>::iterator it = fullCode.begin(); it != fullCode.end(); ++it) {
-        ret = ret+ *it + "#";
+        ret = ret+ *it + "`";
     }
     //cout << ret << endl;
     return ret;
@@ -312,7 +311,7 @@ string Code::convert_comments()
 
     string ret;
     for(vector<string>::iterator it = comments.begin(); it != comments.end(); ++it) {
-        ret = ret+ *it + "#";
+        ret = ret+ *it + "`";
     }
     //cout << ret << endl;
     return ret;
@@ -322,7 +321,7 @@ string Code::convert_lines()
 {
     string ret;
     for(vector<string>::iterator it = linesOfCode.begin(); it != linesOfCode.end(); ++it) {
-        ret = ret+ *it + "#";
+        ret = ret+ *it + "`";
     }
     //cout << ret << endl;
     return ret;
@@ -335,7 +334,7 @@ vector<string> Code::parse_full(string s)
     stringstream ss(s);
     string piece;
     vector<string> vect;
-    while (getline(ss, piece, '#')) {
+    while (getline(ss, piece, '`')) {
         vect.push_back(piece);
     }
     return vect;
@@ -351,7 +350,7 @@ vector<string> Code::parse_comments(string s)
     stringstream ss(s);
     string piece;
     vector<string> vect;
-    while (getline(ss, piece, '#')) {
+    while (getline(ss, piece, '`')) {
         vect.push_back(piece);
     }
     return vect;
@@ -368,7 +367,7 @@ vector<string> Code::parse_lines(string s)
     stringstream ss(s);
     string piece;
     vector<string> vect;
-    while (getline(ss, piece, '#')) {
+    while (getline(ss, piece, '`')) {
         vect.push_back(piece);
     }
     return vect;

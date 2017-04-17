@@ -24,10 +24,14 @@ public:
     ~textView();
     void set_integ(Integration* integ);
 
+    void update_rubric();
+
     bool writing=false;
     Code* updateCode(Code*);
      void makeComment(Code*);
     string newFeedback;
+    string tag;
+    int categoryIndex;
      Code* myCode=nullptr;
      int commentLoc=0;
 
@@ -58,6 +62,13 @@ private slots:
 
     void on_comboBox_2_activated(const QString &arg1);
 
+    void on_comboBox_3_activated(const QString &arg1);
+
+    void on_comboBox_activated(const QString &arg1);
+
+    void on_lineEdit_3_textChanged(const QString &arg1);
+
+    void on_pushButton_3_clicked();
 
 
 
