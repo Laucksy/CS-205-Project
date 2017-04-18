@@ -1,6 +1,7 @@
 #ifndef SELECTCLASS_H
 #define SELECTCLASS_H
 #include "../Integration/integration.h"
+#include "../export/exporthtml.h"
 #include <QWidget>
 
 namespace Ui {

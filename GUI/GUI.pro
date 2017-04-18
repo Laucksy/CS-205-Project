@@ -132,6 +132,9 @@ SOURCES += ../project/code.cpp
 HEADERS += ../git/bash.h
 SOURCES += ../git/bash.cpp
 
+HEADERS += ../export/exporthtml.h
+SOURCES += ../export/exporthtml.cpp
+
 HEADERS += ../git/git.h
 SOURCES += ../git/git.cpp
 

@@ -1,7 +1,7 @@
 #ifndef SELECTASSIGNMENT_H
 #define SELECTASSIGNMENT_H
 #include "../Integration/integration.h"
-
+#include "../export/exporthtml.h"
 #include <QWidget>
 
 namespace Ui {

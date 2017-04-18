@@ -53,7 +53,7 @@ void selectAssignment::on_pushButton_5_clicked()
 
 void selectAssignment::on_export_2_clicked()
 {
-
+    ExportHTML::export_csv_assignment(integ->activeAssignemnt);
 }
 
 void selectAssignment::on_comboBox_activated(const QString &arg1)
