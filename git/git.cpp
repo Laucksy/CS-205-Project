@@ -85,6 +85,16 @@ bool Git::pull() {
     if(result.find("fatal") != string::npos || result.find("error") != string::npos) {
         return false;
     }
+
+    string names = Bash::exec("cd backup ; ls");
+    //vector<string> files;
+    string token;
+    istringstream iss(names);
+    while(getline(iss, token, '\n')) {
+        //cout << "AAA" << token << "AAA" << endl;
+        files.push_back(token);
+    }
+
     for(unsigned i = 0; i < files.size(); i++) {
         string cmd = "cp backup/" + files.at(i) + " ./" ;
         Bash::exec(cmd);
