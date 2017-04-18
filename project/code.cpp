@@ -33,18 +33,18 @@ Code::~Code() {
         delete_id(id);
         return;
     }
-     //if valid object, adds or updates it in table
-        if (isNew && id >= 0) {
-            add_row(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
-        } else if (!isNew && id >= 0){
-            update_id(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
-        } else {
+    //if valid object, adds or updates it in table
+    if (isNew && id >= 0) {
+        add_row(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+    } else if (!isNew && id >= 0){
+        update_id(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+    } else {
 
-        }
+    }
 
-        for (Feedback* k : profFeedback) {
-            delete k;
-        }
+    for (Feedback* k : profFeedback) {
+        delete k;
+    }
 }
 
 void Code::set_file(string name)
@@ -57,17 +57,47 @@ void Code::set_to_delete()
     toDelete = true;
 }
 
+
+string Code::exec_sec(string cmd) {
+    array<char, 128> buffer;
+    string result;
+    shared_ptr<FILE> pipe(popen(cmd.c_str(), "r"), pclose);
+    if (!pipe) throw runtime_error("popen() failed!");
+    while (!feof(pipe.get())) {
+        if (fgets(buffer.data(), 128, pipe.get()) != NULL)
+            result += buffer.data();
+    }
+    return result;
+}
+
+//THIS IS TO FIND PATH OF WHERE FILE IS BEING CREATED
+/*
+ *string r = Bash::exec("pwd");
+ *find_file_path();
+ * when opening file in parse method,  instead of fileName use string of absolute path
+*/
+string Code::file_path(string file)
+{
+    string use = "pwd";
+    string r = exec_sec(use);
+    string ret = r + file;
+    return ret;
+}
+
+
+
+
 vector<string> Code::parse()
 {
     if(fullCode.size() == 0) {
         string line;
         string space =" ";
         char commentTest[2];
-
+        string fullFileName = file_path(fileName);
         //going through each line of the selected file
         ifstream file;
-        file.open(fileName, ifstream::in);
-        cout << fileName << endl;
+        file.open(fullFileName, ifstream::in);
+        cout << fullFileName << endl;
         int cnt=0;
         while(file.good())
         {
@@ -193,9 +223,9 @@ void Code::insert(int position,string feed)
 {
     //iterating through code to insert text at a given position inside the vector
     vector<string>::iterator it = fullCode.begin();
-string s1= "``";
-string s2= "`";
-string s3= s1+feed+s2;
+    string s1= "``";
+    string s2= "`";
+    string s3= s1+feed+s2;
     fullCode.insert (it+position,s3);
     /*also if we only want to insert blank text as to make room for an overlay comment
       * rather than text, we could take in only position and add in a blank line.

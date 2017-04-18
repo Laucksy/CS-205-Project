@@ -32,6 +32,7 @@ public:
     void set_rubric(Rubric* r);
     void set_to_delete();
     bool did_submit(Student* s);
+    Assignment* get_assignment(Student* s);
 
     // database methods
     // returns the row count of the categories table

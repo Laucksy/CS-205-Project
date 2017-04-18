@@ -56,6 +56,18 @@ string Git::status() {
     string result = Bash::exec("cd backup ; git status");
     return result;
 }
+//and in git, make method that makes vector of strings from -ls
+vector<string> Git::find_all_files(string pathName) {
+    string result = Bash::exec("cd " + pathName + " ; " +"ls");
+    stringstream ss(result);
+    string final;
+    vector<string> retVector;
+    while(getline(ss,final,'\n'))
+    {
+        retVector.push_back(final);
+    }
+    return retVector;
+}
 
 string Git::find_file_path(string fileName) {
     string result = Bash::exec("find . -name " + fileName);
@@ -85,6 +97,16 @@ bool Git::pull() {
     if(result.find("fatal") != string::npos || result.find("error") != string::npos) {
         return false;
     }
+
+    string names = Bash::exec("cd backup ; ls");
+    //vector<string> files;
+    string token;
+    istringstream iss(names);
+    while(getline(iss, token, '\n')) {
+        //cout << "AAA" << token << "AAA" << endl;
+        files.push_back(token);
+    }
+
     for(unsigned i = 0; i < files.size(); i++) {
         string cmd = "cp backup/" + files.at(i) + " ./" ;
         Bash::exec(cmd);

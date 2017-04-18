@@ -8,7 +8,12 @@
 #include "../DataStructure/ident.h"
 #include "../DataStructure/dbtool.h"
 #include "../DataStructure/dbtable.h"
-
+#include "stdexcept"
+#include "cstdio"
+#include "memory"
+#include "string"
+#include "array"
+#include <sstream>
 
 #ifndef CODE_H
 #define CODE_H
@@ -29,6 +34,10 @@ public:
     vector<Feedback*> profFeedback;
     void insert(int position,string);
     void set_file(string name);
+
+    string exec_sec(string cmd);
+
+    string file_path(string file);
 
     void deleteFeedback(int pos);
 

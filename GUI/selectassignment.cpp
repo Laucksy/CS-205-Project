@@ -48,3 +48,15 @@ void selectAssignment::on_pushButton_5_clicked()
     dv->show();
     this->hide();
 }
+
+
+
+void selectAssignment::on_export_2_clicked()
+{
+    ExportHTML::export_csv_assignment(integ->activeAssignemnt);
+}
+
+void selectAssignment::on_comboBox_activated(const QString &arg1)
+{
+
+}
