@@ -48,6 +48,7 @@ void Integration::populate()
     Student ds(db, "dummy test");
     ds.id = -1;
     ds.id_student = 0;
+    ds.section = &dg;
     int dsc = ds.student_row_cnt;
 
     Rubric dr(db, true, "dummy");
@@ -216,9 +217,10 @@ void Integration::add_new_student(string name)
 }
 
 // create a new category of assignemnt submissions
-void Integration::add_new_assignment(string name)
+void Integration::add_new_assignment(string name, int classId)
 {
     Assignments* l = new Assignments(db, name);
+    l->classId = classId;
     assignments.push_back(l);
     set_active_assignment(l);
 }

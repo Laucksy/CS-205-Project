@@ -24,6 +24,10 @@ void newAssignment::set_integ(Integration *i)
         ui->comboBox->addItem(QString::fromStdString(k->title));
     }
 
+    for (Students* k : integ->students) {
+        ui->comboBox_2->addItem(QString::fromStdString(k->name));
+    }
+
     if (integ->rubrics.size() > 0) {
         rubric = integ->rubrics[0];
     } else {
@@ -46,7 +50,7 @@ void newAssignment::on_pushButton_2_clicked()
     assignmentView *dv= new assignmentView();
 
     get_data();
-    integ->add_new_assignment(name);
+    integ->add_new_assignment(name, stu->id);
     integ->select_assignment_rubric(rubric);
     dv->set_integ(integ);
 
@@ -65,6 +69,15 @@ void newAssignment::on_comboBox_activated(const QString &arg1)
     for (Rubric* k : integ->rubrics) {
         if (k->title == arg1.toStdString()) {
             rubric = k;
+        }
+    }
+}
+
+void newAssignment::on_comboBox_2_activated(const QString &arg1)
+{
+    for (Students* k : integ->students) {
+        if (k->name == arg1.toStdString()) {
+            stu = k;
         }
     }
 }

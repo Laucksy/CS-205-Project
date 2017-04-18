@@ -74,7 +74,7 @@ TEST_F(IntegTest, ADDTEST) {
     integ->add_new_student("test2");
     integ->add_new_student("test3");
 
-    integ->add_new_assignment("test_lab_0");
+    integ->add_new_assignment("test_lab_0", 0);
     //integ->set_active_assignment(integ->assignments[0]);
 
     Rubric* testRubric = integ->add_new_rubric(true, "test_lab_0_rubric");
