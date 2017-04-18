@@ -31,6 +31,14 @@ void selectRubric::set_integ(Integration *i)
 
     ui->textBrowser->setText(qstra);
 
+    grade = nullptr;
+
+    ui->comboBox->addItem("None");
+
+    for (Rubric* k : integ->rubrics) {
+        ui->comboBox->addItem(QString::fromStdString(k->title));
+    }
+
 }
 
 void selectRubric::on_pushButton_5_clicked()
@@ -49,4 +57,17 @@ void selectRubric::on_pushButton_4_clicked()
 
    sc->show();
    this->hide();
+}
+
+void selectRubric::on_comboBox_activated(const QString &arg1)
+{
+    for (Rubric* k : integ->rubrics) {
+        if (arg1.toStdString() == k->title) {
+            grade = k;
+        }
+    }
+
+    if (arg1.toStdString() == "None") {
+        grade = nullptr;
+    }
 }

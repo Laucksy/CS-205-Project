@@ -30,6 +30,7 @@ void on_comboBox_activated(const QString &arg1);
 private:
     Ui::selectClass *ui;
     Integration* integ;
+    Students* section;
 };
 
 #endif // SELECTCLASS_H

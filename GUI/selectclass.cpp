@@ -29,6 +29,14 @@ void selectClass::set_integ(Integration *i)
 
     ui->textBrowser->setText(qstra);
 
+    section = nullptr;
+
+    ui->comboBox->addItem("None");
+
+    for (Students* k : integ->students) {
+        ui->comboBox->addItem(QString::fromStdString(k->name));
+    }
+
 }
 
 
@@ -55,10 +63,20 @@ void selectClass::on_pushButton_5_clicked()
 
 void selectClass::on_export_2_clicked()
 {
-    ExportHTML::export_csv_section(integ->activeClass);
+   if(section!=nullptr){
+    ExportHTML::export_csv_section(section);
+   }
 }
 
 void selectClass::on_comboBox_activated(const QString &arg1)
 {
+    for (Students* k : integ->students) {
+        if (arg1.toStdString() == k->name) {
+            section = k;
+        }
+    }
 
+    if (arg1.toStdString() == "None") {
+        section = nullptr;
+    }
 }

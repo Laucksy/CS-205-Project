@@ -20,6 +20,7 @@ void selectAssignment::set_integ(Integration *i)
     integ = i;
     QString qstra;
     string text;
+   // ui->comboBox->addItem("None");
     for (int i=0; i <integ->assignments.size(); i++) {
       Assignments* temp = integ->assignments.at(i);
         // Rubric* temp = integ->rubrics.at(i);
@@ -29,6 +30,18 @@ void selectAssignment::set_integ(Integration *i)
     qstra = QString::fromStdString(text);
 
     ui->textBrowser->setText(qstra);
+
+    assign = nullptr;
+
+    ui->comboBox->addItem("None");
+
+    for (Assignments* k : integ->assignments) {
+        ui->comboBox->addItem(QString::fromStdString(k->name));
+    }
+
+
+
+
 }
 
 void selectAssignment::on_pushButton_4_clicked()
@@ -53,10 +66,20 @@ void selectAssignment::on_pushButton_5_clicked()
 
 void selectAssignment::on_export_2_clicked()
 {
-    ExportHTML::export_csv_assignment(integ->activeAssignemnt);
+    if(assign!=nullptr){
+    ExportHTML::export_csv_assignment(assign);
+    }
 }
 
 void selectAssignment::on_comboBox_activated(const QString &arg1)
 {
+    for (Assignments* k : integ->assignments) {
+        if (arg1.toStdString() == k->name) {
+            assign = k;
+        }
+    }
 
+    if (arg1.toStdString() == "None") {
+        assign = nullptr;
+    }
 }

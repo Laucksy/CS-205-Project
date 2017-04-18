@@ -31,6 +31,7 @@ private slots:
 private:
     Ui::selectAssignment *ui;
     Integration* integ;
+    Assignments* assign;
 };
 
 #endif // SELECTASSIGNMENT_H

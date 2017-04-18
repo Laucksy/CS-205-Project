@@ -21,9 +21,12 @@ void on_pushButton_5_clicked();
 
 void on_pushButton_4_clicked();
 
+void on_comboBox_activated(const QString &arg1);
+
 private:
     Ui::selectRubric *ui;
     Integration* integ;
+    Rubric* grade;
 };
 
 #endif // SELECTRUBRIC_H
