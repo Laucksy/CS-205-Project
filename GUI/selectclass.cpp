@@ -50,3 +50,15 @@ void selectClass::on_pushButton_5_clicked()
    sc->show();
    this->hide();
 }
+
+
+
+void selectClass::on_export_2_clicked()
+{
+
+}
+
+void selectClass::on_comboBox_activated(const QString &arg1)
+{
+
+}
