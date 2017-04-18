@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     argc = 0;
     argv = nullptr;
 
-   // cout << "Hello World!" << endl;
+    // cout << "Hello World!" << endl;
     //Git::init();
     Git::add_file("test.txt");
     Git::add_file("TestDB");
@@ -17,7 +17,13 @@ int main(int argc, char *argv[])
     cout << Git::pull() << endl;
     //cout << Git::push() << endl;
     //cout << Git::reset() << endl;
-    //Git* test;
+    //    Git* test;
     //cout << test->find_file_path("exampleImportant.pages") << endl;
+    //    vector<string> res = test->find_all_files("/Users/swein/Desktop");
+
+    //    for(unsigned long i = 0; i < res.size(); i++)
+    //    {
+    //        cout << res.at(i) << " working " <<  endl;
+    //    }
     return 0;
 }

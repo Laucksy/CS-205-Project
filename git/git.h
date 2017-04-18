@@ -6,6 +6,9 @@
 #include "stdlib.h"
 #include "vector"
 #include "bash.h"
+#include <string>
+#include <sstream>
+#include <iostream>
 using namespace std;
 
 class Git
@@ -17,6 +20,8 @@ public:
     static void add_file(string path);
     static string get_file(int index);
     string find_file_path(string fileName);
+    vector<string> find_all_files(string pathName);
+
     static string status();
     static bool push();
     static bool pull();
