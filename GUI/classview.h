@@ -22,9 +22,12 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_comboBox_activated(const QString &arg1);
+
 private:
     Ui::classView *ui;
     Integration *integ;
+    Student* stu;
 };
 
 #endif // CLASSVIEW_H

@@ -21,10 +21,13 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_comboBox_activated(const QString &arg1);
+
 private:
     Ui::submissionView *ui;
     Integration* integ;
     Assignment* assign;
+    Code* code;
 };
 
 #endif // SUBMISSIONVIEW_H

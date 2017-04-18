@@ -132,7 +132,7 @@ string Category::convert_quality()
 
     for (string k : quality) {
         ret += k;
-        ret += " ";
+        ret += "#";
     }
 
     return ret;
@@ -157,7 +157,7 @@ void Category::parse_quality(string s)
 
     string i;
 
-    while (ss >> i) {
+    while (getline(ss, i, '#')) {
         quality.push_back(i);
     }
 

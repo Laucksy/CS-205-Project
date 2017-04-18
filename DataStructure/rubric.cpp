@@ -126,7 +126,7 @@ string Rubric::convert_name()
 
     for (string k : name) {
         ret += k;
-        ret += " ";
+        ret += "#";
     }
 
     return ret;
@@ -139,7 +139,7 @@ void Rubric::parse_name(string s)
 
     string i;
 
-    while (ss >> i) {
+    while (getline(ss, i, '#')) {
         name.push_back(i);
     }
 

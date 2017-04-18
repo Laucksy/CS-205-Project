@@ -28,6 +28,14 @@ void submissionView::set_integ(Integration *i, Assignment* a)
     qstra = QString::fromStdString(text);
 
     ui->textBrowser->setText(qstra);
+
+    code = nullptr;
+
+    ui->comboBox->addItem("None");
+
+    for (Code* k : a->files) {
+        ui->comboBox->addItem(QString::fromStdString(k->fileName));
+    }
 }
 
 void submissionView::on_pushButton_2_clicked()
@@ -46,4 +54,17 @@ void submissionView::on_pushButton_clicked()
 
     dv->show();
     this->hide();
+}
+
+void submissionView::on_comboBox_activated(const QString &arg1)
+{
+    for (Code* k : assign->files) {
+        if (arg1.toStdString() == k->fileName) {
+            code = k;
+        }
+    }
+
+    if (arg1.toStdString() == "None") {
+        code = nullptr;
+    }
 }

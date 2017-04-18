@@ -22,10 +22,13 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_comboBox_activated(const QString &arg1);
+
 private:
     Ui::AddCategory *ui;
     Integration* integ;
     Rubric* rubric;
+    Category* cat;
 };
 
 #endif // ADDCATEGORY_H

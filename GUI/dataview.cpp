@@ -73,7 +73,7 @@ void DataView::on_pushButton_3_clicked()
         ui->label->setText("Please create a class before creating an assignemnt");
         return;
     }
-    if (integ->activeClass->list[0] == nullptr) {
+    if (integ->activeClass->list.size() > 0 && integ->activeClass->list[0] == nullptr) {
         ui->label->setText("Please create a student before creating an assignemnt");
         return;
     }

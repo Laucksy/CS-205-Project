@@ -31,6 +31,14 @@ void assignmentView::set_integ(Integration *i)
     QString qstrb =  QString::fromStdString(integ->activeAssignemnt->name);
 
     ui->label_2->setText(qstrb);
+
+    submit = nullptr;
+
+    ui->comboBox->addItem("None");
+
+    for (Assignment* k : integ->activeAssignemnt->list) {
+        ui->comboBox->addItem(QString::fromStdString(k->stu->name));
+    }
 }
 void assignmentView::on_pushButton_2_clicked()
 {
@@ -49,4 +57,17 @@ void assignmentView::on_pushButton_clicked()
 
     dv->show();
     this->hide();
+}
+
+void assignmentView::on_comboBox_activated(const QString &arg1)
+{
+    for (Assignment* k : integ->activeAssignemnt->list) {
+        if (arg1.toStdString() == k->stu->name) {
+            submit = k;
+        }
+    }
+
+    if (arg1.toStdString() == "None") {
+        submit = nullptr;
+    }
 }

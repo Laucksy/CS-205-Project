@@ -29,6 +29,15 @@ void AddCategory::set_integ(Integration *i, Rubric* r)
     qstr = QString::fromStdString(text);
 
     ui->textBrowser->setText(qstr);
+
+    cat = nullptr;
+
+    ui->comboBox->addItem("None");
+
+    for (string k : r->name) {
+        ui->comboBox->addItem(QString::fromStdString(k));
+    }
+
 }
 
 void AddCategory::on_pushButton_clicked()
@@ -49,3 +58,19 @@ void AddCategory::on_pushButton_2_clicked()
     this->hide();
 }
 
+
+void AddCategory::on_comboBox_activated(const QString &arg1)
+{
+    int ind = -1;
+    for (int i = 0; i < rubric->name.size(); i++) {
+        if (arg1.toStdString() == rubric->name[i]) {
+            ind = i;
+        }
+    }
+
+    if (ind != -1) {
+        cat = rubric->cat[ind];
+    } else {
+        cat = nullptr;
+    }
+}

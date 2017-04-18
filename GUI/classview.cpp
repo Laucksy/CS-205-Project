@@ -33,6 +33,14 @@ void classView::set_integ(Integration *i)
     QString qstrb =  QString::fromStdString(integ->activeClass->name);
 
     ui->classTitle->setText(qstrb);
+
+    stu = nullptr;
+
+    ui->comboBox->addItem("None");
+
+    for (Student* k : integ->activeClass->list) {
+        ui->comboBox->addItem(QString::fromStdString(k->name));
+    }
 }
 
 void classView::on_pushButton_2_clicked()
@@ -53,3 +61,16 @@ void classView::on_pushButton_clicked()
     this->hide();
 }
 
+
+void classView::on_comboBox_activated(const QString &arg1)
+{
+    for (Student* k : integ->activeClass->list) {
+        if (arg1.toStdString() == k->name) {
+            stu = k;
+        }
+    }
+
+    if (arg1.toStdString() == "None") {
+        stu = nullptr;
+    }
+}
