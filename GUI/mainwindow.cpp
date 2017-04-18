@@ -29,15 +29,14 @@ void MainWindow::on_pushButton_clicked()
 {
 
     bool pulled = Git::pull();
-    if(!pulled||true) {
+    if(!pulled) {
         gitManager *dv= new gitManager();
         dv->set_integ(integ);
 
         dv->show();
         this->hide();
     }
-    else
-    {
+    else {
         DataView *dv= new DataView();
         dv->set_integ(integ);
 
