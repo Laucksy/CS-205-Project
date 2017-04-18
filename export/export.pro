@@ -29,6 +29,9 @@ HEADERS += ../DataStructure/dbtool.h
 SOURCES += ../DataStructure/assignment.cpp
 HEADERS += ../DataStructure/assignment.h
 
+SOURCES += ../DataStructure/assignments.cpp
+HEADERS += ../DataStructure/assignments.h
+
 SOURCES += ../DataStructure/rubric.cpp
 HEADERS += ../DataStructure/rubric.h
 

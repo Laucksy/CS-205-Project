@@ -26,13 +26,13 @@ void textView::set_integ(Integration *i)
 {
     integ = i;
 
-    for (Code* k : integ->activeSubmission->files) {
-        ui->comboBox_2->addItem(QString::fromStdString(k->fileName));
-    }
-
     ui->comboBox->clear();
     ui->comboBox_2->clear();
     ui->comboBox_3->clear();
+
+    for (Code* k : integ->activeSubmission->files) {
+        ui->comboBox_2->addItem(QString::fromStdString(k->fileName));
+    }
 
     ui->comboBox_3->addItem("None");
 
