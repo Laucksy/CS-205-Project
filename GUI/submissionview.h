@@ -23,6 +23,8 @@ private slots:
 
     void on_comboBox_activated(const QString &arg1);
 
+    void on_pushButton_3_clicked();
+
 private:
     Ui::submissionView *ui;
     Integration* integ;

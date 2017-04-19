@@ -20,6 +20,8 @@ void submissionView::set_integ(Integration *i, Assignment* a)
     integ = i;
     assign = a;
 
+    ui->comboBox->clear();
+
     QString qstra;
     string text;
     for (int i=0; i <assign->files.size(); i++) {
@@ -66,5 +68,13 @@ void submissionView::on_comboBox_activated(const QString &arg1)
 
     if (arg1.toStdString() == "None") {
         code = nullptr;
+    }
+}
+
+void submissionView::on_pushButton_3_clicked()
+{
+    if (code != nullptr) {
+        integ->delete_file(code);
+        set_integ(integ, assign);
     }
 }

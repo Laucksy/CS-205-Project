@@ -18,6 +18,9 @@ selectAssignment::~selectAssignment()
 void selectAssignment::set_integ(Integration *i)
 {
     integ = i;
+
+    ui->comboBox->clear();
+
     QString qstra;
     string text;
    // ui->comboBox->addItem("None");
@@ -81,5 +84,20 @@ void selectAssignment::on_comboBox_activated(const QString &arg1)
 
     if (arg1.toStdString() == "None") {
         assign = nullptr;
+    }
+}
+
+void selectAssignment::on_pushButton_2_clicked()
+{
+    if (assign != nullptr) {
+        integ->delete_assignment(assign);
+        set_integ(integ);
+    }
+}
+
+void selectAssignment::on_pushButton_3_clicked()
+{
+    if (assign != nullptr) {
+        integ->set_active_assignment(assign);
     }
 }

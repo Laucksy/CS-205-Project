@@ -19,6 +19,8 @@ void assignmentView::set_integ(Integration *i)
 {
     integ = i;
 
+    ui->comboBox->clear();
+
     QString qstra;
     string text;
     for (int i=0; i <integ->activeAssignemnt->list.size(); i++) {
@@ -69,5 +71,13 @@ void assignmentView::on_comboBox_activated(const QString &arg1)
 
     if (arg1.toStdString() == "None") {
         submit = nullptr;
+    }
+}
+
+void assignmentView::on_pushButton_3_clicked()
+{
+    if(submit != nullptr) {
+        integ->delete_submission(submit);
+        set_integ(integ);
     }
 }
