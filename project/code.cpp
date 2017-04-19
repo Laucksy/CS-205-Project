@@ -81,6 +81,7 @@ string Code::file_path(string file)
     string use = "pwd";
     string r = exec_sec(use);
     string ret = r + file;
+    cout << ret << endl;
     return ret;
 }
 

@@ -68,7 +68,7 @@ void textView::makeComment(Code* myCode){
 }
 
 void textView::clickComment(int pos, Code* myCode){
-    myCode->insert(pos,newFeedback);
+    myCode->insert(pos,newFeedback + ":: " + tag);
     integ->add_new_feedback(newFeedback, tag, commentLoc);
     //ui->textBrowser->clear();
     this->updateCode(myCode);

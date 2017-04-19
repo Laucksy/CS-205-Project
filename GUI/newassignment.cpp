@@ -33,6 +33,12 @@ void newAssignment::set_integ(Integration *i)
     } else {
         rubric = nullptr;
     }
+
+    if (integ->students.size() > 0) {
+        stu = integ->students[0];
+    } else {
+        stu = nullptr;
+    }
 }
 
 void newAssignment::on_pushButton_clicked()
@@ -46,6 +52,9 @@ void newAssignment::on_pushButton_clicked()
 
 void newAssignment::on_pushButton_2_clicked()
 {
+    if (rubric == nullptr || stu == nullptr) {
+        return;
+    }
 
     assignmentView *dv= new assignmentView();
 
