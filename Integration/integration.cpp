@@ -309,6 +309,10 @@ void Integration::delete_student(Student* s)
         }
     }
 
+    for (Assignment* k : s->list) {
+        delete_submission(k);
+    }
+
     delete s;
 }
 

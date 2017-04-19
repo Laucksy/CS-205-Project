@@ -17,6 +17,16 @@ void newFile::set_integ(Integration *i, Assignment* a)
 {
     integ = i;
     assign = a;
+    assignment = nullptr;
+    assignEdit = false;
+}
+
+void newFile::set_integ(Integration *i, Assignment* a, Assignments* as)
+{
+    integ = i;
+    assign = a;
+    assignment = as;
+    assignEdit = true;
 }
 
 void newFile::on_pushButton_2_clicked()
@@ -25,7 +35,12 @@ void newFile::on_pushButton_2_clicked()
 
     get_data();
     integ->add_new_file(assign, fn);
-    dv->set_integ(integ, assign);
+
+    if (assignEdit) {
+        dv->set_integ(integ, assign, assignment);
+    } else {
+        dv->set_integ(integ, assign);
+    }
 
     dv->show();
     this->hide();
@@ -34,7 +49,12 @@ void newFile::on_pushButton_2_clicked()
 void newFile::on_pushButton_clicked()
 {
     submissionView *dv= new submissionView();
-    dv->set_integ(integ, assign);
+
+    if (assignEdit) {
+        dv->set_integ(integ, assign, assignment);
+    } else {
+        dv->set_integ(integ, assign);
+    }
 
     dv->show();
     this->hide();

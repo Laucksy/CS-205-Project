@@ -15,6 +15,7 @@ public:
     explicit newFile(QWidget *parent = 0);
     ~newFile();
     void set_integ(Integration* integ, Assignment* assign);
+    void set_integ(Integration* integ, Assignment* assign, Assignments* as);
     void get_data();
 private slots:
     void on_pushButton_2_clicked();
@@ -26,6 +27,8 @@ private:
     Integration* integ;
     Assignment* assign;
     string fn;
+    Assignments* assignment;
+    bool assignEdit;
 };
 
 #endif // NEWFILE_H

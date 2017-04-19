@@ -15,6 +15,7 @@ public:
     explicit newSubmission(QWidget *parent = 0);
     ~newSubmission();
     void set_integ(Integration* integ);
+    void set_integ(Integration* integ, Assignments* a);
 private slots:
     void on_pushButton_clicked();
 
@@ -26,6 +27,8 @@ private:
     Ui::newSubmission *ui;
     Integration* integ;
     Student* student;
+    Assignments* assign;
+    bool assignEdit;
 };
 
 #endif // NEWSUBMISSION_H

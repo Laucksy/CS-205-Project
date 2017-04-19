@@ -17,6 +17,8 @@ newSubmission::~newSubmission()
 void newSubmission::set_integ(Integration *i)
 {
     integ = i;
+    assign = integ->activeAssignemnt;
+    assignEdit = false;
 
     for (Student* k : integ->activeClass->list) {
         ui->comboBox->addItem(QString::fromStdString(k->name));
@@ -26,20 +28,49 @@ void newSubmission::set_integ(Integration *i)
         student = integ->activeClass->list[0];
     }
 }
+
+void newSubmission::set_integ(Integration *i, Assignments* a)
+{
+    integ = i;
+    assign = a;
+    assignEdit = true;
+
+    for (Student* k : integ->activeClass->list) {
+        ui->comboBox->addItem(QString::fromStdString(k->name));
+    }
+
+    if (integ->activeClass->list.size() > 0) {
+        student = integ->activeClass->list[0];
+    }
+}
+
 void newSubmission::on_pushButton_clicked()
 {
-    assignmentView *dv= new assignmentView();
-    dv->set_integ(integ);
+    if (!assignEdit) {
+        assignmentView *dv= new assignmentView();
+        dv->set_integ(integ);
 
-    dv->show();
-    this->hide();
+        dv->show();
+        this->hide();
+    } else {
+        assignmentView *dv= new assignmentView();
+        dv->set_integ(integ, assign);
+
+        dv->show();
+        this->hide();
+    }
 }
 
 void newSubmission::on_pushButton_2_clicked()
 {
     submissionView *dv= new submissionView();
 
-    Assignment* a = integ->add_new_submission(integ->activeAssignemnt->rubric, student);
+    Assignments* temp = integ->activeAssignemnt;
+    integ->activeAssignemnt = assign;
+
+    Assignment* a = integ->add_new_submission(assign->rubric, student);
+    integ->activeAssignemnt = temp;
+
     dv->set_integ(integ, a);
 
     dv->show();

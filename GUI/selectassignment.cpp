@@ -2,6 +2,7 @@
 #include "ui_selectassignment.h"
 #include "newassignment.h"
 #include "dataview.h"
+#include "assignmentview.h"
 
 selectAssignment::selectAssignment(QWidget *parent) :
     QWidget(parent),
@@ -99,5 +100,16 @@ void selectAssignment::on_pushButton_3_clicked()
 {
     if (assign != nullptr) {
         integ->set_active_assignment(assign);
+    }
+}
+
+void selectAssignment::on_pushButton_clicked()
+{
+    if (assign != nullptr) {
+        assignmentView *dv= new assignmentView();
+        dv->set_integ(integ);
+
+        dv->show();
+        this->hide();
     }
 }

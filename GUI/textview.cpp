@@ -582,7 +582,7 @@ void textView::update_rubric()
 
     string rubric;
     for (int i = 0; i < integ->activeSubmission->gradeCategory.size(); i++) {
-        if (active->gradeQuality[i] == "NULL") {
+        if (active->gradeQuality[i] == "NULL" || active->gradeQuality[i] == "NULL2") {
             rubric += active->gradeCategory[i] + ": " + to_string(active->gradeComponent[i]) + "/" + to_string(active->rubric->cat[i]->pts) + "\n";
         } else {
             rubric += active->gradeCategory[i] + ": " + to_string(active->gradeComponent[i]) + "/" + to_string(active->rubric->cat[i]->pts) + "; " + active->gradeQuality[i] + "\n";

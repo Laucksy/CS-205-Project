@@ -2,6 +2,7 @@
 #include "ui_submissionview.h"
 #include "newsubmission.h"
 #include "newfile.h"
+#include "assignmentview.h"
 
 submissionView::submissionView(QWidget *parent) :
     QWidget(parent),
@@ -19,6 +20,35 @@ void submissionView::set_integ(Integration *i, Assignment* a)
 {
     integ = i;
     assign = a;
+    assignment= nullptr;
+    assignEdit = false;
+
+    ui->comboBox->clear();
+
+    QString qstra;
+    string text;
+    for (int i=0; i <assign->files.size(); i++) {
+        text += assign->files[i]->fileName + "\n";
+    }
+    qstra = QString::fromStdString(text);
+
+    ui->textBrowser->setText(qstra);
+
+    code = nullptr;
+
+    ui->comboBox->addItem("None");
+
+    for (Code* k : a->files) {
+        ui->comboBox->addItem(QString::fromStdString(k->fileName));
+    }
+}
+
+void submissionView::set_integ(Integration *i, Assignment* a, Assignments* as)
+{
+    integ = i;
+    assign = a;
+    assignment= as;
+    assignEdit = true;
 
     ui->comboBox->clear();
 
@@ -42,20 +72,36 @@ void submissionView::set_integ(Integration *i, Assignment* a)
 
 void submissionView::on_pushButton_2_clicked()
 {
-    newSubmission *dv= new newSubmission();
-    dv->set_integ(integ);
+    if (assignEdit) {
+        assignmentView *dv= new assignmentView();
+        dv->set_integ(integ, assignment);
 
-    dv->show();
-    this->hide();
+        dv->show();
+        this->hide();
+    } else {
+        assignmentView *dv= new assignmentView();
+        dv->set_integ(integ);
+
+        dv->show();
+        this->hide();
+    }
 }
 
 void submissionView::on_pushButton_clicked()
 {
-    newFile *dv= new newFile();
-    dv->set_integ(integ, assign);
+   if (assignEdit) {
+       newFile *dv= new newFile();
+       dv->set_integ(integ, assign, assignment);
 
-    dv->show();
-    this->hide();
+       dv->show();
+       this->hide();
+   } else {
+       newFile *dv= new newFile();
+       dv->set_integ(integ, assign);
+
+       dv->show();
+       this->hide();
+   }
 }
 
 void submissionView::on_comboBox_activated(const QString &arg1)

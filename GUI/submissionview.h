@@ -14,7 +14,8 @@ class submissionView : public QWidget
 public:
     explicit submissionView(QWidget *parent = 0);
     ~submissionView();
-    void set_integ(Integration* integ, Assignment* assign);
+    void set_integ(Integration* integ, Assignment* assign); 
+    void set_integ(Integration* integ, Assignment* assign, Assignments* assignments);
 
 private slots:
     void on_pushButton_2_clicked();
@@ -30,6 +31,8 @@ private:
     Integration* integ;
     Assignment* assign;
     Code* code;
+    bool assignEdit;
+    Assignments* assignment;
 };
 
 #endif // SUBMISSIONVIEW_H
