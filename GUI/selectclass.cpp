@@ -2,6 +2,7 @@
 #include "ui_selectclass.h"
 #include "newclass.h"
 #include "dataview.h"
+#include "classview.h"
 
 selectClass::selectClass(QWidget *parent) :
     QWidget(parent),
@@ -18,12 +19,15 @@ selectClass::~selectClass()
 void selectClass::set_integ(Integration *i)
 {
     integ = i;
+
+    ui->comboBox->clear();
+
     QString qstra;
     string text;
     for (int i=0; i <integ->students.size(); i++) {
         Students* temp = integ->students.at(i);
         text+= temp->name+ "\n";
-       // text += integ->activeClass->list[i]->name + "\n";
+        // text += integ->activeClass->list[i]->name + "\n";
     }
     qstra = QString::fromStdString(text);
 
@@ -44,28 +48,28 @@ void selectClass::set_integ(Integration *i)
 void selectClass::on_pushButton_4_clicked()
 {
     newClass *sc= new newClass();
-   sc->set_integ(integ);
+    sc->set_integ(integ);
 
-   sc->show();
-   this->hide();
+    sc->show();
+    this->hide();
 }
 
 void selectClass::on_pushButton_5_clicked()
 {
     DataView *sc= new DataView();
-   sc->set_integ(integ);
+    sc->set_integ(integ);
 
-   sc->show();
-   this->hide();
+    sc->show();
+    this->hide();
 }
 
 
 
 void selectClass::on_export_2_clicked()
 {
-   if(section!=nullptr){
-    ExportHTML::export_csv_section(section);
-   }
+    if(section!=nullptr){
+        ExportHTML::export_csv_section(section);
+    }
 }
 
 void selectClass::on_comboBox_activated(const QString &arg1)
@@ -78,5 +82,32 @@ void selectClass::on_comboBox_activated(const QString &arg1)
 
     if (arg1.toStdString() == "None") {
         section = nullptr;
+    }
+}
+
+void selectClass::on_pushButton_clicked()
+{
+    if (section != nullptr) {
+        classView *sc= new classView();
+        sc->set_integ(integ, section);
+
+        sc->show();
+        this->hide();
+    }
+}
+
+void selectClass::on_pushButton_2_clicked()
+{
+    if (section != nullptr) {
+        integ->delete_class(section);
+        set_integ(integ);
+    }
+}
+
+void selectClass::on_pushButton_3_clicked()
+{
+    if (section != nullptr) {
+        integ->set_active_class(section);
+        set_integ(integ);
     }
 }

@@ -46,6 +46,7 @@ Students::~Students()
     // deletes all students
     if (list.size() >= 1) {
         for (Student* k : list) {
+            k->numClassAssign = assignList.size();
             delete k;
         }
     }

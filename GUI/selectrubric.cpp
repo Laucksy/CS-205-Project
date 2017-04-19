@@ -3,6 +3,7 @@
 #include "dataview.h"
 #include "../DataStructure/rubric.h"
 #include "rubrictitle.h"
+#include "addcategory.h"
 
 selectRubric::selectRubric(QWidget *parent) :
     QWidget(parent),
@@ -19,6 +20,8 @@ selectRubric::~selectRubric()
 void selectRubric::set_integ(Integration *i)
 {
     integ = i;
+
+    ui->comboBox->clear();
 
     QString qstra;
     string text;
@@ -69,5 +72,24 @@ void selectRubric::on_comboBox_activated(const QString &arg1)
 
     if (arg1.toStdString() == "None") {
         grade = nullptr;
+    }
+}
+
+void selectRubric::on_pushButton_clicked()
+{
+   if (grade != nullptr) {
+   AddCategory *sc= new AddCategory();
+   sc->set_integ(integ, grade);
+
+   sc->show();
+   this->hide();
+   }
+}
+
+void selectRubric::on_pushButton_2_clicked()
+{
+    if (grade != nullptr) {
+        integ->delete_rubric(grade);
+        set_integ(integ);
     }
 }

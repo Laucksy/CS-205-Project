@@ -62,6 +62,7 @@ public:
     bool isNew;
     int classId;
     bool toDelete;
+    int numClassAssign;
 
 protected:
     // sql command templates

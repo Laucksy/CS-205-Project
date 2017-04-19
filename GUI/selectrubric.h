@@ -23,6 +23,10 @@ void on_pushButton_4_clicked();
 
 void on_comboBox_activated(const QString &arg1);
 
+void on_pushButton_clicked();
+
+void on_pushButton_2_clicked();
+
 private:
     Ui::selectRubric *ui;
     Integration* integ;

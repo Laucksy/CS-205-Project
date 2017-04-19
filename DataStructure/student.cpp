@@ -60,11 +60,16 @@ void Student::calc_score()
         score += k->get_grade();
     }
 
-    score = score/section->assignList.size();
+    score = score/numClassAssign;
+
+    if (numClassAssign == 0) {
+        score = 0;
+    }
 }
 
 double Student::get_score()
 {
+    numClassAssign = section->assignList.size();
     calc_score();
     return score;
 }
@@ -130,7 +135,7 @@ bool Student::add_row(int id, string name, int classId, double score) {
 
     sql_add_row += " );";
 
-    //std::cout << sql_add_row << std::endl;
+    std::cout << sql_add_row << std::endl;
 
     retCode = sqlite3_exec(curr_db->db_ref(),
                            sql_add_row.c_str(),

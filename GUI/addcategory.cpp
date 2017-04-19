@@ -21,6 +21,8 @@ void AddCategory::set_integ(Integration *i, Rubric* r)
     integ = i;
     rubric = r;
 
+    ui->comboBox->clear();
+
     QString qstr;
     string text;
     for (int i=0; i <rubric->name.size(); i++) {
@@ -72,5 +74,13 @@ void AddCategory::on_comboBox_activated(const QString &arg1)
         cat = rubric->cat[ind];
     } else {
         cat = nullptr;
+    }
+}
+
+void AddCategory::on_pushButton_4_clicked()
+{
+    if (cat != nullptr) {
+        integ->delete_category(cat);
+        set_integ(integ, rubric);
     }
 }

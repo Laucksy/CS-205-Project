@@ -18,9 +18,19 @@ void newStudent::on_pushButton_clicked()
 {
     classView *dv= new classView();
 
+    Students* temp = integ->activeClass;
+    integ->set_active_class(sec);
+
     get_data();
     integ->add_new_student(n);
-    dv->set_integ(integ);
+
+    integ->set_active_class(temp);
+
+    if (classEdit) {
+        dv->set_integ(integ, sec);
+    } else {
+        dv->set_integ(integ);
+    }
 
     dv->show();
     this->hide();
@@ -29,11 +39,24 @@ void newStudent::on_pushButton_clicked()
 void newStudent::set_integ(Integration *i)
 {
     integ = i;
+    sec = integ->activeClass;
+    classEdit = false;
+}
+
+void newStudent::set_integ(Integration *i, Students* s)
+{
+    integ = i;
+    sec = s;
+    classEdit= true;
 }
 void newStudent::on_pushButton_2_clicked()
 {
     classView *dv= new classView();
-    dv->set_integ(integ);
+    if (classEdit) {
+        dv->set_integ(integ, sec);
+    } else {
+        dv->set_integ(integ);
+    }
 
     dv->show();
     this->hide();

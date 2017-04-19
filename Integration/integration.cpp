@@ -20,15 +20,15 @@ Integration::Integration(string path, string name)
 
 Integration::~Integration()
 {
+    for (Students* k : students) {
+        delete k;
+    }
+
     for (Rubric* k : rubrics) {
         delete k;
     }
 
     for (Assignments* k : assignments) {
-        delete k;
-    }
-
-    for (Students* k : students) {
         delete k;
     }
 
