@@ -34,6 +34,7 @@ Integration::~Integration()
 
     delete db;
     delete autoComplete;
+    Git::push();
 }
 
 // creates objects from the data in the database

@@ -12,6 +12,7 @@
 #include "../DataStructure/student.h"
 #include "../DataStructure/students.h"
 #include "../project/code.h"
+#include "../git/git.h"
 
 class Integration
 {
