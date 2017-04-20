@@ -3,6 +3,7 @@
 #include "newsubmission.h"
 #include "newfile.h"
 #include "assignmentview.h"
+#include "sudentsubdirectory.h"
 
 submissionView::submissionView(QWidget *parent) :
     QWidget(parent),
@@ -123,4 +124,13 @@ void submissionView::on_pushButton_3_clicked()
         integ->delete_file(code);
         set_integ(integ, assign);
     }
+}
+
+void submissionView::on_pushButton_5_clicked()
+{
+    sudentSubDirectory *dv= new sudentSubDirectory();
+    dv->set_integ(integ);
+
+    dv->show();
+    this->hide();
 }

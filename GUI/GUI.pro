@@ -43,7 +43,10 @@ SOURCES += main.cpp\
     selectclass.cpp \
     selectrubric.cpp \
     selectassignment.cpp \
-    gitmanager.cpp
+    gitmanager.cpp \
+    sudentsubdirectory.cpp \
+    importclass.cpp \
+    importrubric.cpp
 
 
 
@@ -66,7 +69,10 @@ HEADERS  += mainwindow.h \
     selectclass.h \
     selectrubric.h \
     selectassignment.h \
-    gitmanager.h
+    gitmanager.h \
+    sudentsubdirectory.h \
+    importclass.h \
+    importrubric.h
 
 
 FORMS    += mainwindow.ui \
@@ -88,7 +94,10 @@ FORMS    += mainwindow.ui \
     selectclass.ui \
     selectrubric.ui \
     selectassignment.ui \
-    gitmanager.ui
+    gitmanager.ui \
+    sudentsubdirectory.ui \
+    importclass.ui \
+    importrubric.ui
 
 RESOURCES += \
     logo.qrc
