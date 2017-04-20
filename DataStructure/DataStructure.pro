@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     category.cpp \
     ident.cpp \
     feedback.cpp \
-    students.cpp
+    students.cpp \
+    importedrubric.cpp
 
 HEADERS += \
     student.h \
@@ -25,7 +26,8 @@ HEADERS += \
     category.h \
     ident.h \
     feedback.h \
-    students.h
+    students.h \
+    importedrubric.h
 
 HEADERS += ../project/code.h
 
