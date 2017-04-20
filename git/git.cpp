@@ -75,15 +75,18 @@ string Git::find_file_path(string fileName) {
 }
 
 bool Git::push() {
+    cout << "push" << endl;
     if(!initialized)
         init();
     for(unsigned i = 0; i < files.size(); i++) {
-        string cmd = "cp " + files.at(i) + " backup/" ;
-        Bash::exec(cmd);
+        string cmd = "cp -f " + files.at(i) + " backup/" ;
+        cout << Bash::exec(cmd) << endl;
+        cout << cmd << endl;
     }
     string result = Bash::exec("cd backup ; git add .");
     result += Bash::exec("cd backup ; git commit -m 'Committing'");
     result += Bash::exec("cd backup ; git push");
+    cout << result << endl;
     if(result.find("nothing to commit") != string::npos || result.find("fatal") != string::npos || result.find("error") != string::npos) {
         return false;
     }
@@ -91,6 +94,7 @@ bool Git::push() {
 }
 
 bool Git::pull() {
+    cout << "pull" << endl;
     if(!initialized)
         init();
     string result = Bash::exec("cd backup ; git pull");
@@ -108,7 +112,7 @@ bool Git::pull() {
     }
 
     for(unsigned i = 0; i < files.size(); i++) {
-        string cmd = "cp backup/" + files.at(i) + " ./" ;
+        string cmd = "cp -f backup/" + files.at(i) + " ./" ;
         Bash::exec(cmd);
     }
     return true;

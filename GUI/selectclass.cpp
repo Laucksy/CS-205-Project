@@ -67,7 +67,7 @@ void selectClass::on_pushButton_5_clicked()
 
 void selectClass::on_export_2_clicked()
 {
-    if(section!=nullptr){
+    if(section != nullptr){
         ExportHTML::export_csv_section(section);
     }
 }
