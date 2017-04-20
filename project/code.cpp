@@ -80,7 +80,8 @@ string Code::file_path(string file)
 {
     string use = "pwd";
     string r = exec_sec(use);
-    string ret = r + file;
+    string ret = r.substr(0, r.size()-1);
+    ret += file;
     cout << ret << endl;
     return ret;
 }

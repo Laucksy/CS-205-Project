@@ -20,12 +20,24 @@ void newSubmission::set_integ(Integration *i)
     assign = integ->activeAssignemnt;
     assignEdit = false;
 
+    vector<Student*> add;
+
     for (Student* k : integ->activeClass->list) {
-        ui->comboBox->addItem(QString::fromStdString(k->name));
+        bool has;
+        for (Assignment* l : k->list) {
+            if (l->assignNum == assign->id) {
+                has = true;
+            }
+        }
+
+        if (!has) {
+            ui->comboBox->addItem(QString::fromStdString(k->name));
+            add.push_back(k);
+        }
     }
 
-    if (integ->activeClass->list.size() > 0) {
-        student = integ->activeClass->list[0];
+    if (add.size() > 0) {
+        student = add[0];
     }
 }
 
@@ -35,12 +47,24 @@ void newSubmission::set_integ(Integration *i, Assignments* a)
     assign = a;
     assignEdit = true;
 
+    vector<Student*> add;
+
     for (Student* k : integ->activeClass->list) {
-        ui->comboBox->addItem(QString::fromStdString(k->name));
+        bool has;
+        for (Assignment* l : k->list) {
+            if (l->assignNum == assign->id) {
+                has = true;
+            }
+        }
+
+        if (!has) {
+            ui->comboBox->addItem(QString::fromStdString(k->name));
+            add.push_back(k);
+        }
     }
 
-    if (integ->activeClass->list.size() > 0) {
-        student = integ->activeClass->list[0];
+    if (add.size() > 0) {
+        student = add[0];
     }
 }
 
