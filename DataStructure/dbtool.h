@@ -31,6 +31,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <set>
 #include <map>
 
+#include "../git/git.h"
+
 /**
  * @brief The Database management tool
  *

@@ -241,6 +241,7 @@ void Integration::add_new_file(Assignment* assign, string name)
 {
     Code* f = new Code(db, name, assign->id);
     assign->files.push_back(f);
+    Git::add_file(name.substr(1,name.size()-1));
 }
 
 // creates  new rubric and adds it to the rubrics list

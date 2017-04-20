@@ -22,6 +22,12 @@ HEADERS += ../DataStructure/dbtable.h
 SOURCES += ../DataStructure/dbtool.cpp
 HEADERS += ../DataStructure/dbtool.h
 
+HEADERS += ../git/git.h \
+           ../git/bash.h
+
+SOURCES += ../git/git.cpp \
+           ../git/bash.cpp
+
 LIBS += -l sqlite3
 
 DISTFILES += \
