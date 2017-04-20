@@ -195,7 +195,6 @@ void Integration::populate()
         for (Code* k : codeList) {
             if (k->id == uid) {
                 k->profFeedback.push_back(f);
-                k->insert(f->position, f->text + ":: " + f->tag);
             }
         }
     }

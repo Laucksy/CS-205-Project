@@ -98,6 +98,9 @@ void Assignment::change_grade(double g, string c)
 
     if (g >= 0 && g <= rubric->cat[ind]->pts){
         gradeComponent[ind] = g;
+        while (gradeQuality.size() <= ind) {
+            gradeQuality.push_back("");
+        }
         gradeQuality[ind] = rubric->find_qual(gradeComponent[ind], gradeCategory[ind]);
     }
 

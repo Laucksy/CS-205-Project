@@ -69,7 +69,7 @@ void textView::makeComment(Code* myCode){
 
 void textView::clickComment(int pos, Code* myCode){
     myCode->insert(pos,newFeedback + ":: " + tag);
-    integ->add_new_feedback(newFeedback, tag, commentLoc);
+    integ->add_new_feedback(newFeedback, tag, pos);
     //ui->textBrowser->clear();
     this->updateCode(myCode);
     this->update_rubric();
@@ -573,6 +573,11 @@ void textView::on_comboBox_2_activated(const QString &arg1)
 void textView::update_rubric()
 {
     Assignment* active = integ->activeSubmission;
+
+    for (int i = 0; i < active->gradeCategory.size(); i++) {
+        active->change_grade(active->gradeComponent[i], active->gradeCategory[i]);
+    }
+
     vector<Feedback*> comments;
     for (Code* k : integ->activeSubmission->files) {
         for (Feedback* j : k->profFeedback) {

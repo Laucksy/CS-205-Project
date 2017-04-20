@@ -89,7 +89,7 @@ string Category::find_qual(double p)
     string ret;
 
     for (int i = 0; i < points.size(); i++) {
-        if (p <= points[i]) {
+        if (p >= points[i]) {
           ret = quality[i];
           break;
         }

@@ -122,6 +122,10 @@ vector<string> Code::parse()
             }
             file.close();
         }
+
+        for (Feedback* k : profFeedback) {
+            insert(k->position, k->text + ":: " + k->tag);
+        }
     }
     //prints out all items of fullCode
     //only there to show to demonstrate functionality
