@@ -41,6 +41,12 @@ HEADERS += ../DataStructure/dbtool.h \
 SOURCES += ../DataStructure/dbtool.cpp \
     ../DataStructure/dbtable.cpp
 
+HEADERS += ../git/bash.h
+SOURCES += ../git/bash.cpp
+
+HEADERS += ../git/git.h
+SOURCES += ../git/git.cpp
+
 LIBS += -l sqlite3 \
         -pthread
 

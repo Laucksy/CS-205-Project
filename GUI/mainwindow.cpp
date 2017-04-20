@@ -16,7 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    //Git::push();
     delete ui;
 }
 
@@ -28,21 +27,21 @@ void MainWindow::set_integ(Integration *i)
 void MainWindow::on_pushButton_clicked()
 {
 
-//    bool pulled = Git::pull();
-//    if(!pulled) {
-//        gitManager *dv= new gitManager();
-//        dv->set_integ(integ);
+    bool pulled = Git::pull();
+    if(!pulled) {
+        gitManager *dv= new gitManager();
+        dv->set_integ(integ);
 
-//        dv->show();
-//        this->hide();
-//    }
-//    else {
+        dv->show();
+        this->hide();
+    }
+    else {
         DataView *dv= new DataView();
         dv->set_integ(integ);
 
         dv->show();
         this->hide();
-//    }
+    }
 }
 
 void MainWindow::on_pushButton_2_clicked()

@@ -70,7 +70,7 @@ void selectAssignment::on_pushButton_5_clicked()
 
 void selectAssignment::on_export_2_clicked()
 {
-    if(assign!=nullptr){
+    if(assign != nullptr){
     ExportHTML::export_csv_assignment(assign);
     }
 }
