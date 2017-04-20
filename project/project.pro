@@ -5,12 +5,10 @@ CONFIG -= app_bundle
 QT+= core
 
 SOURCES += main.cpp \
-    code.cpp \
-    commentonly.cpp
+    code.cpp
 
 HEADERS += \
-    code.h \
-    commentonly.h
+    code.h
 
 SOURCES += ../DataStructure/feedback.cpp
 HEADERS += ../DataStructure/feedback.h
