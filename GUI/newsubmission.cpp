@@ -21,9 +21,10 @@ void newSubmission::set_integ(Integration *i)
     assignEdit = false;
 
     vector<Student*> add;
+    bool has;
 
     for (Student* k : integ->activeClass->list) {
-        bool has;
+        has = false;
         for (Assignment* l : k->list) {
             if (l->assignNum == assign->id) {
                 has = true;
@@ -48,9 +49,10 @@ void newSubmission::set_integ(Integration *i, Assignments* a)
     assignEdit = true;
 
     vector<Student*> add;
+    bool has;
 
     for (Student* k : integ->activeClass->list) {
-        bool has;
+        has = false;
         for (Assignment* l : k->list) {
             if (l->assignNum == assign->id) {
                 has = true;
