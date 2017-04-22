@@ -159,13 +159,13 @@ vector<string> Code::tokenize(string line)
     try {
         secondIndex = line.length();
         string test = line.substr(firstIndex,secondIndex-firstIndex);
-        cout << "TEST" << test << "TEST" << endl;
+        //cout << "TEST" << test << "TEST" << endl;
         if(test.length() > 0)
             tokens.push_back(test);
     } catch(int e) {}
 
-    for (unsigned long j = 0; j< tokens.size(); j++)
-        cout << "TOKENS:" << tokens.at(j) << "," << endl;
+    //for (unsigned long j = 0; j< tokens.size(); j++)
+        //cout << "TOKENS:" << tokens.at(j) << "," << endl;
 
     return tokens;
 }
@@ -241,9 +241,12 @@ void Code::insert(int position,string feed)
 //remove blank space (slot for feedback) from given position
 void Code::delete_space_for_feedback(int position)
 {
-    vector<string>::iterator itDelete = fullCode.begin();
-    advance(itDelete, position);
-    fullCode.erase(itDelete);
+    cout << "TESTINGFEED" << fullCode.at(position).substr(0,9) << endl;
+    if(fullCode.at(position)[0] == '`' && fullCode.at(position)[1] == '`' && fullCode.at(position)[fullCode.at(position).length()-1] == '`') {
+        vector<string>::iterator itDelete = fullCode.begin();
+        advance(itDelete, position);
+        fullCode.erase(itDelete);
+    }
 }
 
 void Code::add_feedback(Feedback* newComment)
