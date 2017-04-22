@@ -1,5 +1,12 @@
 #include "feedback.h"
 
+/*	The Feedback class handles the user’s comments on the student’s assignment.
+ * The Feedback class contains a text string, which is the content of the
+ * comment and the tag string which aligns with the matching Category’s name.
+ * Two Feedback  methods enable changing the text (change_text)
+ * and updating the tag (update_tag).
+ * */
+
 Feedback::Feedback()
 {
 

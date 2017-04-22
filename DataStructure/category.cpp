@@ -1,5 +1,12 @@
 #include "category.h"
 
+/*	The Category class is used in matrix-style rubric grading systems.
+ * A Category contains a name, which is the category header, and a
+ * vector of Strings that are the different point options within the
+ * category. Category contains a method to get the name of the Category
+ * for in an Assignment’s pointBreakdown.
+ * */
+
 //basic constructor, will crash program
 Category::Category() : Ident::Ident('c')
 {

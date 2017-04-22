@@ -1,5 +1,16 @@
 #include "assignment.h"
 
+/*	Assignment class contains information on a single assignment.
+ * An Assignment contains information about the code through a vector
+ * of type Code called javaFiles and the grade received for the
+ * assignment. Assignment contains a Rubric, which is the rubric being
+ * used for that submission, as well as a method to change the Rubric.
+ * Assignment also contains a point breakdown as based on the Rubric.
+ * Based on the Rubric type, the pointBreakdown key of type String
+ * will either be the name of a Category or the String in listRubric
+ * in Rubric.
+ * */
+
 // basic constructor, do not use
 Assignment::Assignment() : Ident::Ident('a')
 {

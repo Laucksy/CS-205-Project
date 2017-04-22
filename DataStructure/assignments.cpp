@@ -1,5 +1,9 @@
 #include "assignments.h"
 
+/*	Assignments is a collection of assignments for a single student.
+ * Assignments contains a vector of type Assignment.
+ * */
+
 // basic constructor
 Assignments::Assignments() : Ident::Ident('l')
 {

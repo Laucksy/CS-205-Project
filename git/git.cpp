@@ -1,5 +1,12 @@
 #include "git.h"
 
+/*	The Git class is used for interaction with the Git repository.
+ * Git contains a vector of Strings of the files to be uploaded to git.
+ * Git class also contains method to upload and download files, add files,
+ * commit, pull, move files to the git repository, push files,
+ * convert files, and merge.
+ * */
+
 string Git::repo = "ssh://spr2017_l1g3@139.147.9.185/home/spr2017_l1g3/backup.git";
 bool Git::initialized = false;
 vector<string> Git::files;

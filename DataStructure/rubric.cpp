@@ -1,5 +1,16 @@
 #include "rubric.h"
 
+/* The Rubric class shows the characteristics of all possible rubric types.
+ * In order to implement functionality for different grading and rubric styles,
+ * the Rubric class provides option handling for unique grading styles.
+ * Rubric contains two maps, to be used if the rubric being parsed
+ * is in list versus matrix form, as well as a boolean for whether the grader
+ * will be using a reward or deduction point-based system.
+ * Rubric also contains a method to add a new point category to a rubric
+ * and to go back and change the point value associated with category.
+ * */
+
+
 // basic constructor, closes program
 Rubric::Rubric()
 {

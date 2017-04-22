@@ -1,5 +1,12 @@
 #include "student.h"
 
+/*	Student class contains information on a student.
+ * The Student class contains the student’s name, lab grade, and assignments.
+ * It also has a method to update the students assignments and
+ * re-calculates the lab grade, which is the average grade of the
+ * student’s graded assignments.
+*/
+
 //basic constructor, closes program
 Student::Student() : Ident::Ident('s')
 {
