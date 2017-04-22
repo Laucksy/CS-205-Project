@@ -96,6 +96,7 @@ int DBTool::open_db() {
         exit(0);
     }else{
         std::cerr << "Opened database successfully\n";
+        Git::add_file(db_name);
     }
 
     return retCode;

@@ -33,6 +33,12 @@ HEADERS += ../project/code.h
 
 SOURCES += ../project/code.cpp
 
+HEADERS += ../git/git.h \
+           ../git/bash.h
+
+SOURCES += ../git/git.cpp \
+           ../git/bash.cpp
+
 HEADERS += dbtool.h \
     dbtable.h
 

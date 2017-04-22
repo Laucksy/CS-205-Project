@@ -484,8 +484,17 @@ int cb_select_similar_feedback(void  *data,
               << std::endl;
 
     // assign object members from table data
+    bool has= false;
     for (int i = 0; i < argc; i++) {
-        obj->simillar.push_back(argv[i]);
+        for (string k : obj->simillar) {
+            if (k == argv[i]) {
+                has = true;
+            }
+        }
+        if (!has) {
+            obj->simillar.push_back(argv[i]);
+        }
+        has = false;
     }
 
     return 0;

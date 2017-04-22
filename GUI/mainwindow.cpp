@@ -28,6 +28,8 @@ void MainWindow::on_pushButton_clicked()
 {
 
     bool pulled = Git::pull();
+    Integration* i = new Integration(".", "TestDB");
+    set_integ(i);
     if(!pulled) {
         gitManager *dv= new gitManager();
         dv->set_integ(integ);
@@ -46,20 +48,20 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    NewUser *nv= new NewUser();
-    nv->set_integ(integ);
+//    NewUser *nv= new NewUser();
+//    nv->set_integ(integ);
 
-    nv->show();
-    this->hide();
+//    nv->show();
+//    this->hide();
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    ForgotPassword *fv= new ForgotPassword();
-    fv->set_integ(integ);
+//    ForgotPassword *fv= new ForgotPassword();
+//    fv->set_integ(integ);
 
-    fv->show();
-    this->hide();
+//    fv->show();
+//    this->hide();
 }
 
 

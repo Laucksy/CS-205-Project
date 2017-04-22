@@ -40,3 +40,9 @@ HEADERS += ../DataStructure/student.h
 
 SOURCES += ../DataStructure/category.cpp
 HEADERS += ../DataStructure/category.h
+
+HEADERS += ../git/git.h \
+           ../git/bash.h
+
+SOURCES += ../git/git.cpp \
+           ../git/bash.cpp

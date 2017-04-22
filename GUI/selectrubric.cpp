@@ -4,6 +4,7 @@
 #include "../DataStructure/rubric.h"
 #include "rubrictitle.h"
 #include "addcategory.h"
+#include "importrubric.h"
 
 selectRubric::selectRubric(QWidget *parent) :
     QWidget(parent),
@@ -92,4 +93,13 @@ void selectRubric::on_pushButton_2_clicked()
         integ->delete_rubric(grade);
         set_integ(integ);
     }
+}
+
+void selectRubric::on_pushButton_3_clicked()
+{
+    importRubric *sc= new importRubric();
+    sc->set_integ(integ);
+
+    sc->show();
+    this->hide();
 }

@@ -6,9 +6,73 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>434</width>
     <height>300</height>
    </rect>
+  </property>
+  <property name="palette">
+   <palette>
+    <active>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>136</red>
+        <green>138</green>
+        <blue>133</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>136</red>
+        <green>138</green>
+        <blue>133</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </active>
+    <inactive>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>136</red>
+        <green>138</green>
+        <blue>133</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>136</red>
+        <green>138</green>
+        <blue>133</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </inactive>
+    <disabled>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>136</red>
+        <green>138</green>
+        <blue>133</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>136</red>
+        <green>138</green>
+        <blue>133</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </disabled>
+   </palette>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -16,13 +80,6 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="2" column="0">
     <widget class="QComboBox" name="comboBox"/>
-   </item>
-   <item row="3" column="1">
-    <widget class="QPushButton" name="pushButton_5">
-     <property name="text">
-      <string>Import</string>
-     </property>
-    </widget>
    </item>
    <item row="3" column="0">
     <widget class="QPushButton" name="pushButton">
@@ -46,7 +103,45 @@
     </widget>
    </item>
    <item row="1" column="0" colspan="3">
-    <widget class="QTextBrowser" name="textBrowser"/>
+    <widget class="QTextBrowser" name="textBrowser">
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>238</red>
+           <green>238</green>
+           <blue>236</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>238</red>
+           <green>238</green>
+           <blue>236</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>136</red>
+           <green>138</green>
+           <blue>133</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+    </widget>
    </item>
    <item row="0" column="2">
     <widget class="QLabel" name="label_2">

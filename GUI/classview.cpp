@@ -3,6 +3,7 @@
 #include "newclass.h"
 #include "newstudent.h"
 #include "dataview.h"
+#include "importclass.h"
 
 classView::classView(QWidget *parent) :
     QWidget(parent),
@@ -123,4 +124,18 @@ void classView::on_pushButton_3_clicked()
             set_integ(integ);
         }
     }
+}
+
+void classView::on_pushButton_5_clicked()
+{
+    importClass *mv= new importClass();
+
+    if (edit) {
+        mv->set_integ(integ, sec);
+    } else {
+        mv->set_integ(integ);
+    }
+
+    mv->show();
+    this->hide();
 }
