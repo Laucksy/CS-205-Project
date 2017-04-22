@@ -3,11 +3,20 @@
 
 using namespace std;
 
+/*The Code class handles the student’s code submission.
+ * Code parses the text from the Java Files in the parse_code method
+ * and the comments are stored in a vector of Strings.
+ * Code also sets colors for the code for the user interface.
+ * Code then has two methods to add comments into the code,
+ * one for direct comment insertion and one associated to a grade.
+ * Code also has a method to autocomplete comments.
+ * */
 Code::Code() : Ident::Ident('o')
 {
 
 }
 
+//constructor sets up database information
 Code::Code(DBTool* db, string n, int aid) : Ident::Ident('o'), DBTable::DBTable(db, code_table)
 {
     // Load SQL specific to child class.
@@ -27,6 +36,7 @@ Code::Code(DBTool* db, string n, int aid) : Ident::Ident('o'), DBTable::DBTable(
     assignId = aid;
 }
 
+//deconstructor deletes code objects in database
 Code::~Code() {
     // deletes the objectfrom the db if slated for delete
     if (toDelete) {
@@ -47,6 +57,7 @@ Code::~Code() {
     }
 }
 
+//sets the name of the name of file for the student's code files
 void Code::set_file(string name)
 {
     fileName = name;
@@ -87,8 +98,9 @@ string Code::file_path(string file)
 }
 
 
-
-
+//the parse method parses out the lines of code from the student's file.
+//placing into unique vectors depending on the type of code it is
+//(comment or otherwise)
 vector<string> Code::parse()
 {
     if(fullCode.size() == 0) {
@@ -204,6 +216,8 @@ vector<string> Code::tokenize(string line)
     }
 }*/
 
+//a supplementary method for tokenize to help color the split up the unique
+//objects by any delimiter
 vector<string> Code::delimiters(string line)
 {
     vector<string> delims;
@@ -225,6 +239,7 @@ vector<string> Code::delimiters(string line)
     return delims;
 }
 
+//inssert feedback into the student's file
 void Code::insert(int position,string feed)
 {
     //iterating through code to insert text at a given position inside the vector
@@ -246,12 +261,15 @@ void Code::delete_space_for_feedback(int position)
     fullCode.erase(itDelete);
 }
 
+//add new feedback object into vector of feedback
 void Code::add_feedback(Feedback* newComment)
 {
     profFeedback.push_back(newComment);
 }
 
-
+/*categorize returns an int corresponding with the category the word falls in,
+ * which can be used in coloring each word via cascade of if statements.
+ */
 int Code::categorize(string word)
 {
     /*here, maybe should traverse through each word in each string of the vector,
@@ -261,9 +279,6 @@ int Code::categorize(string word)
      * are comments don't have to be parsed because they should fall into one specific color.
      * only contents of vector linesOfCode should be categorized.
      * NOTE: needs to be parsed by spaces, periods, parentheses. not only spaces!
-     */
-    /*categorize returns an int corresponding with the category the word falls in,
-     * which can be used in coloring each word via cascade of if statements.
      */
     if(word=="float" || word=="string" || word=="int" || word=="char" || word=="long" || word=="short" || word=="double" || word=="boolean" || word=="byte" || word=="void"||word=="String")
     {
