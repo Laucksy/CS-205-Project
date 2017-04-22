@@ -455,6 +455,63 @@ void Integration::delete_feedback(Feedback* f)
     delete f;
 }
 
+// imports a rubric from an absolute file address
+void Integration::import_rubric(string fileName)
+{
+    string line;
+    //getline(str,line);
+    ifstream file;
+    file.open(fileName, ifstream::in);
+
+    getline(file,line, ',');
+    string name = line;
+    getline(file,line, ',');
+    bool deduct = (line == "true");
+    Rubric* r = add_new_rubric(deduct, name);
+
+    while(getline(file,line, ','))
+    {
+        string catName = line;
+        getline(file,line, ',');
+        double pointNum = atof(line.c_str());
+        getline(file,line, ',');
+        bool m = false;
+        vector<double> d;
+        vector<string> s;
+        add_new_category(r,catName,pointNum, d, s, m);
+    }
+
+    file.close();
+}
+
+// imports students from an absolute file address
+void Integration::import_students(string fileName)
+{
+    vector<string> nameList;
+    string line;
+    ifstream file;
+    file.open(fileName, ifstream::in);
+    while(getline(file,line, ','))
+    {
+        nameList.push_back(line);
+    }
+    file.close();
+
+    for (string k : nameList) {
+        add_new_student(k);
+    }
+}
+
+// imports arubric from an absolute file address
+void Integration::add_directory(Assignment* a, string path)
+{
+    vector<string> f = Git::find_all_files(path);
+
+    for (string k : f) {
+        add_new_file(a, path + "/" + k);
+    }
+}
+
 // pulls a random submission out of the assignemnt to grade
 void Integration::select_random_submission()
 {

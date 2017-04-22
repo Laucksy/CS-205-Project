@@ -18,9 +18,18 @@ void importRubric::set_integ(Integration *i)
 {
     integ = i;
 }
+
+void importRubric::import_rubric()
+{
+    integ->import_rubric(path);
+}
+
 void importRubric::on_pushButton_2_clicked()
 {
     selectRubric *sc= new selectRubric();
+
+    import_rubric();
+
     sc->set_integ(integ);
 
     sc->show();
@@ -34,4 +43,9 @@ void importRubric::on_pushButton_clicked()
 
     sc->show();
     this->hide();
+}
+
+void importRubric::on_lineEdit_textChanged(const QString &arg1)
+{
+    path = arg1.toStdString();
 }

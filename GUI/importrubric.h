@@ -16,14 +16,19 @@ public:
     ~importRubric();
     void set_integ(Integration* integ);
 
+    void import_rubric();
+
 private slots:
     void on_pushButton_2_clicked();
 
     void on_pushButton_clicked();
 
+    void on_lineEdit_textChanged(const QString &arg1);
+
 private:
     Ui::importRubric *ui;
     Integration* integ;
+    string path;
 };
 
 #endif // IMPORTRUBRIC_H

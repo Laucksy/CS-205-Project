@@ -1,6 +1,10 @@
 #ifndef INTEGRATION_H
 #define INTEGRATION_H
 
+#include <iterator>
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #include <vector>
 #include <string>
 #include <queue>
@@ -40,6 +44,10 @@ public:
     void delete_rubric(Rubric* r); // delete rubric class instance
     void delete_category(Category* c); // delete category class instance
     void delete_feedback(Feedback* f); // delete feedback class instance
+
+    void import_rubric(string fileName); // imports a rubric from an absolute file address
+    void import_students(string fileName); // imports students from an absolute file address
+    void add_directory(Assignment* a, string path); // imports arubric from an absolute file address
 
     void select_random_submission(); // selects student from pool
     void select_assignment_rubric(Rubric* rubric); // sets the rubric for all assignment instances in an assignments instance

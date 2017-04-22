@@ -129,7 +129,12 @@ void classView::on_pushButton_3_clicked()
 void classView::on_pushButton_5_clicked()
 {
     importClass *mv= new importClass();
-    mv->set_integ(integ);
+
+    if (edit) {
+        mv->set_integ(integ, sec);
+    } else {
+        mv->set_integ(integ);
+    }
 
     mv->show();
     this->hide();

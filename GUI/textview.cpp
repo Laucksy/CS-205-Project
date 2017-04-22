@@ -542,6 +542,14 @@ void textView::on_lineEdit_2_textChanged(const QString &arg1)
 void textView::on_lineEdit_textEdited(const QString &arg1)
 {
    newFeedback= arg1.toStdString();
+
+   ui->comboBox_4->clear();
+
+   vector<string> r = integ->get_similar_feedback(newFeedback);
+
+   for (string k : r) {
+       ui->comboBox_4->addItem(QString::fromStdString(k));
+   }
 }
 
 void textView::on_pushButton_2_clicked()
@@ -685,4 +693,11 @@ void textView::on_pushButton_4_clicked()
 {
     myCode->delete_space_for_feedback(commentLoc);
      this->updateCode(myCode);
+}
+
+void textView::on_comboBox_4_activated(const QString &arg1)
+{
+    ui->lineEdit->clear();
+    ui->lineEdit->insert(arg1);
+    ui->lineEdit->textEdited(arg1);
 }

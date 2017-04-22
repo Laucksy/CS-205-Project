@@ -129,7 +129,11 @@ void submissionView::on_pushButton_3_clicked()
 void submissionView::on_pushButton_5_clicked()
 {
     sudentSubDirectory *dv= new sudentSubDirectory();
-    dv->set_integ(integ);
+    if (assignEdit) {
+        dv->set_integ(integ, assign,assignment);
+    } else {
+        dv->set_integ(integ, assign);
+    }
 
     dv->show();
     this->hide();
