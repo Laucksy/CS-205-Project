@@ -20,8 +20,11 @@ void gitManager::set_integ(Integration *i)
 
 void gitManager::on_local_clicked()
 {
-   Git::push();
-   Git::pull();
+    Git::push();
+    Git::pull();
+
+    Integration* i = new Integration(".", "TestDB");
+    set_integ(i);
 
     DataView *dv= new DataView();
     dv->set_integ(integ);
@@ -33,6 +36,9 @@ void gitManager::on_local_clicked()
 void gitManager::on_pushButton_2_clicked()
 {
     Git::reset();
+
+    Integration* i = new Integration(".", "TestDB");
+    set_integ(i);
 
     DataView *dv= new DataView();
     dv->set_integ(integ);
