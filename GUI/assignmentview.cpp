@@ -5,6 +5,9 @@
 #include "submissionview.h"
 #include "selectassignment.h"
 
+/*AssignmentView is a ciew of the submission being graded.
+ * */
+
 assignmentView::assignmentView(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::assignmentView)

@@ -1,5 +1,9 @@
 #include "integration.h"
 
+/* Integration acts as a main class to integrate all different
+ * types of objects, unifying the GUI and functionality.
+ * */
+
 Integration::Integration(string path, string name)
 {
     db = new DBTool(path, name);
@@ -18,6 +22,7 @@ Integration::Integration(string path, string name)
     }
 }
 
+//destructors deletes all created objects
 Integration::~Integration()
 {
     for (Students* k : students) {

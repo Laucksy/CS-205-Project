@@ -1,3 +1,7 @@
+/*Ident is a class that handles the objects belonging to a specific id.
+ * It is used to create id's for new objects created.
+ * */
+
 #include "ident.h"
 
 int Ident::id_student = 0;

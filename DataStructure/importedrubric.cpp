@@ -1,3 +1,9 @@
+/*ImportedRubric is used to create a Rubric via csv.
+ * ImportedRubric parses a file organized in the specified
+ * fashion by commas and then uses them to make a Rubric
+ * with the specified Category objects.
+ * */
+
 #include "importedrubric.h"
 
 using namespace std;
@@ -7,6 +13,7 @@ ImportedRubric::ImportedRubric()
 
 }
 
+//parse the csv into Rubric and Category objects
 Rubric* ImportedRubric::parse_rubric(string fileName)
 {
     DBTool* db = new DBTool();

@@ -1,5 +1,8 @@
 #include "students.h"
 
+/*	Students is the collection all of the Student objects.
+*/
+
 // basic constructor
 Students::Students() : Ident::Ident('g')
 {
