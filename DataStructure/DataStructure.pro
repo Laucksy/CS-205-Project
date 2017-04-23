@@ -3,7 +3,8 @@ CONFIG += console c++11
 CONFIG -= app_bundle
 CONFIG -= qt
 
-LIBS += -l sqlite3
+LIBS += -l sqlite3 \
+        -pthread
 
 SOURCES += main.cpp \
     student.cpp \
@@ -44,3 +45,10 @@ HEADERS += dbtool.h \
 
 SOURCES += dbtool.cpp \
     dbtable.cpp
+
+SOURCES += ../gtest/googletest/src/gtest-all.cc
+
+INCLUDEPATH +=  ../gtest                                   \
+                ../gtest/googletest                        \
+                ../gtest/googletest/include                \
+                ../gtest/googletest/include/gtest
