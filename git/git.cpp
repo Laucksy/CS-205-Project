@@ -7,6 +7,7 @@
  * convert files, and merge.
  * */
 
+//setting git repo backup to current repo
 string Git::repo = "ssh://spr2017_l1g3@139.147.9.185/home/spr2017_l1g3/backup.git";
 bool Git::initialized = false;
 vector<string> Git::files;
@@ -19,6 +20,8 @@ Git::~Git() {
 
 }
 
+/*initialize git by cloning repo and entering into backup such
+that the backup exists within the path*/
 bool Git::init() {
     string result = Bash::exec("git clone " + repo);
     if(result.find("done") == string::npos && result.find("fatal") != string::npos) {
@@ -34,22 +37,26 @@ bool Git::init() {
     return true;
 }
 
+//return repo if initialized
 string Git::get_repo() {
     if(!initialized)
         init();
     return repo;
 }
 
+//set repo to specified file path (as string)
 void Git::set_repo(string r) {
     if(!initialized)
         init();
     repo = r;
 }
 
+//add new file via file path to vector of files
 void Git::add_file(string path) {
     files.push_back(path);
 }
 
+//return specified file within contained vector of files
 string Git::get_file(int index) {
     if((unsigned int)index < files.size())
         return files.at(index);
@@ -57,6 +64,7 @@ string Git::get_file(int index) {
         return "";
 }
 
+//return initialization status
 string Git::status() {
     if(!initialized)
         init();
@@ -64,7 +72,7 @@ string Git::status() {
     return result;
 }
 
-//and in git, make method that makes vector of strings from -ls
+//method that makes vector of strings of all files within a directory via -ls
 vector<string> Git::find_all_files(string pathName) {
     string result = Bash::exec("cd " + pathName + " ; " +"ls");
     stringstream ss(result);
@@ -77,11 +85,13 @@ vector<string> Git::find_all_files(string pathName) {
     return retVector;
 }
 
+//find entire file path by inputting file name
 string Git::find_file_path(string fileName) {
     string result = Bash::exec("find . -name " + fileName);
     return result;
 }
 
+//push local changes
 bool Git::push() {
     cout << "push" << endl;
     if(!initialized)
@@ -101,6 +111,7 @@ bool Git::push() {
     return true;
 }
 
+//pull remote changes and merge into local
 bool Git::pull() {
     cout << "pull" << endl;
     if(!initialized)
@@ -126,6 +137,7 @@ bool Git::pull() {
     return true;
 }
 
+//do a hard reset
 bool Git::reset() {
     if(!initialized) {
         return init(); //"Did not reset because the repository was not initialized."

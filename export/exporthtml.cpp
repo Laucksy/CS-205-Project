@@ -1,13 +1,19 @@
 #include "exporthtml.h"
+/*ExportHTML class, which is used to export the feedback files.
+ * ExportHTML has a method to export the HTML for a given assignment.
+*/
 
+//constructor
 ExportHTML::ExportHTML() {
 
 }
 
+//destructor
 ExportHTML::~ExportHTML() {
 
 }
 
+//constructs an HTML file for a specified assignment
 string ExportHTML::export_assignment(Assignment* a) {
     string rawHTML = "";
     rawHTML += "<html><head><style>p {margin: 2px;} span {font-size:75%;}</style>";
@@ -268,6 +274,8 @@ string ExportHTML::export_assignment(Assignment* a) {
     return rawHTML;
 }
 
+//exports csv for professor of assignments
+//csv contains all information about assignments
 void ExportHTML::export_csv_assignment(Assignments* a) {
     ofstream file;
     string fileName = "assignment_" + a->name + ".csv";
