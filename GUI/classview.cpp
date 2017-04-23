@@ -5,6 +5,9 @@
 #include "dataview.h"
 #include "importclass.h"
 
+/*ClassView is a view of the all the classes.
+ * */
+
 classView::classView(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::classView)

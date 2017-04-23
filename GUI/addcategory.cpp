@@ -3,6 +3,10 @@
 #include "rubrics.h"
 #include "dataview.h"
 
+/*AddCategory adds a category to a Rubric within the GUI.
+ * */
+
+//constructor sets up UI
 AddCategory::AddCategory(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AddCategory)
@@ -11,6 +15,7 @@ AddCategory::AddCategory(QWidget *parent) :
 
 }
 
+//destructor deletes UI
 AddCategory::~AddCategory()
 {
     delete ui;
