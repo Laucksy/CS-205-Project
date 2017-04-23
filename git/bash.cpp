@@ -1,6 +1,7 @@
 #include "bash.h"
 
-//Bash is used to execute the functionality of the Git class
+/*Bash is used to execute the functionality of the Git class.
+ * */
 Bash::Bash() {
 
 }
