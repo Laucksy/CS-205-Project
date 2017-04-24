@@ -31,7 +31,7 @@ void importClass::set_integ(Integration* i, Students *s)
 
 void importClass::import_students()
 {
-    integ->import_students(path);
+    integ->import_students(path, section);
 }
 
 void importClass::on_pushButton_clicked()

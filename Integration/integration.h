@@ -46,7 +46,7 @@ public:
     void delete_feedback(Feedback* f); // delete feedback class instance
 
     void import_rubric(string fileName); // imports a rubric from an absolute file address
-    void import_students(string fileName); // imports students from an absolute file address
+    void import_students(string fileName, Students* s); // imports students from an absolute file address
     void add_directory(Assignment* a, string path); // imports arubric from an absolute file address
 
     void select_random_submission(); // selects student from pool

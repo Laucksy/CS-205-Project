@@ -30,6 +30,8 @@ protected:
         c1 = new Category(db, r1, 10, false);
         r1->add_category(c1, "c1");
         c2 = new Category(db, r2, 10, true);
+        c1->add_quality("0", 0);
+        c2->add_quality("5", 5);
         r2->add_category(c2, "c2");
         g = new Students(db, "g");
         s = new Student(db, "s");
@@ -110,6 +112,37 @@ TEST_F(DSTest, TESTTESTTEST) {
         ASSERT_TRUE(true);
     }
 }
+
+TEST_F(DSTest, RUBRICCALCGRADETEST) {
+
+    r1->calc_grade();
+    ASSERT_EQ(10, r1->get_grade());
+}
+
+TEST_F(DSTest, RUBRICFIND1TEST) {
+
+    ASSERT_EQ("0", r2->find_qual(0, "c2"));
+}
+
+TEST_F(DSTest, RUBRICFIND2TEST) {
+
+    ASSERT_EQ("0", r2->find_qual(3, "c2"));
+}
+
+TEST_F(DSTest, RUBRICFIND3TEST) {
+
+    ASSERT_EQ("5", r2->find_qual(5, "c2"));
+}
+
+TEST_F(DSTest, RUBRICFIND4TEST) {
+
+    ASSERT_EQ("5", r2->find_qual(10, "c2"));
+}
+
+//TEST_F(DSTest, ASSIGNMENTSSUBTEST) {
+
+
+//}
 
 int main(int argc, char *argv[])
 {

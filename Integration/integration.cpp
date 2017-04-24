@@ -490,7 +490,7 @@ void Integration::import_rubric(string fileName)
 }
 
 // imports students from an absolute file address
-void Integration::import_students(string fileName)
+void Integration::import_students(string fileName, Students* s)
 {
     vector<string> nameList;
     string line;
@@ -502,9 +502,12 @@ void Integration::import_students(string fileName)
     }
     file.close();
 
+    Students* temp = activeClass;
+    activeClass = s;
     for (string k : nameList) {
         add_new_student(k);
     }
+    activeClass = temp;
 }
 
 // imports arubric from an absolute file address
