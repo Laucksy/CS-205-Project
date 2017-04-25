@@ -90,13 +90,15 @@ string Git::status() {
 //method that makes vector of strings of all files within a directory via -ls
 vector<string> Git::find_all_files(string pathName) {
     string result = Bash::exec("cd " + pathName + " ; " +"ls");
-    //cerr << Bash::exec("pwd") << endl;
-    stringstream ss(result);
-    string final;
     vector<string> retVector;
-    while(getline(ss,final,'\n'))
-    {
-        retVector.push_back(final);
+    cout << Bash::exec("cd " + pathName + " ; pwd") << endl;
+    if(Bash::exec("cd " + pathName + " ; pwd").find(pathName) != string::npos) {
+        stringstream ss(result);
+        string final;
+        while(getline(ss,final,'\n'))
+        {
+            retVector.push_back(final);
+        }
     }
     return retVector;
 }
