@@ -18,9 +18,11 @@ public:
     static bool init();
     static string get_repo();
     static void set_repo(string r);
+    static string get_name();
+    static void set_name(string n);
     static void add_file(string path);
     static string get_file(int index);
-    string find_file_path(string fileName);
+    static string find_file_path(string fileName);
     static vector<string> find_all_files(string pathName);
 
     static string status();
@@ -36,6 +38,7 @@ private:
     //static void commit();
 
     static string repo;
+    static string name;
     static bool initialized;
     static vector<string> files;
 };

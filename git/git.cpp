@@ -9,6 +9,7 @@
 
 //setting git repo backup to current repo
 string Git::repo = "ssh://spr2017_l1g3@139.147.9.185/home/spr2017_l1g3/backup.git";
+string Git::name = "backup";
 bool Git::initialized = false;
 vector<string> Git::files;
 
@@ -28,7 +29,7 @@ bool Git::init() {
         initialized = false;
         return false;
     }
-    result = Bash::exec("cd backup ; pwd");
+    result = Bash::exec("cd " + name + " ; pwd");
     if(result.find("No such file or directory") != string::npos) {
         initialized = false;
         return false;
@@ -51,6 +52,20 @@ void Git::set_repo(string r) {
     repo = r;
 }
 
+//return repo if initialized
+string Git::get_name() {
+    if(!initialized)
+        init();
+    return name;
+}
+
+//set repo to specified file path (as string)
+void Git::set_name(string n) {
+    if(!initialized)
+        init();
+    name = n;
+}
+
 //add new file via file path to vector of files
 void Git::add_file(string path) {
     files.push_back(path);
@@ -68,14 +83,14 @@ string Git::get_file(int index) {
 string Git::status() {
     if(!initialized)
         init();
-    string result = Bash::exec("cd backup ; git status");
+    string result = Bash::exec("cd " + name + " ; git status");
     return result;
 }
 
 //method that makes vector of strings of all files within a directory via -ls
 vector<string> Git::find_all_files(string pathName) {
     string result = Bash::exec("cd " + pathName + " ; " +"ls");
-    cerr << Bash::exec("pwd") << endl;
+    //cerr << Bash::exec("pwd") << endl;
     stringstream ss(result);
     string final;
     vector<string> retVector;
@@ -94,18 +109,18 @@ string Git::find_file_path(string fileName) {
 
 //push local changes
 bool Git::push() {
-    cout << "push" << endl;
+    //cout << "push" << endl;
     if(!initialized)
         init();
     for(unsigned i = 0; i < files.size(); i++) {
-        string cmd = "cp -f " + files.at(i) + " backup/" ;
-        cout << Bash::exec(cmd) << endl;
-        cout << cmd << endl;
+        string cmd = "cp -f " + files.at(i) + " " + name + "/" ;
+        Bash::exec(cmd);
+        //cout << cmd << endl;
     }
-    string result = Bash::exec("cd backup ; git add .");
-    result += Bash::exec("cd backup ; git commit -m 'Committing'");
-    result += Bash::exec("cd backup ; git push");
-    cout << result << endl;
+    string result = Bash::exec("cd " + name + " ; git add .");
+    result += Bash::exec("cd " + name + " ; git commit -m 'Committing'");
+    result += Bash::exec("cd " + name + " ; git push");
+    //cout << result << endl;
     if(result.find("nothing to commit") != string::npos || result.find("fatal") != string::npos || result.find("error") != string::npos) {
         return false;
     }
@@ -114,15 +129,15 @@ bool Git::push() {
 
 //pull remote changes and merge into local
 bool Git::pull() {
-    cout << "pull" << endl;
+    //cout << "pull" << endl;
     if(!initialized)
         init();
-    string result = Bash::exec("cd backup ; git pull");
+    string result = Bash::exec("cd " + name + " ; git pull");
     if(result.find("fatal") != string::npos || result.find("error") != string::npos) {
         return false;
     }
 
-    string names = Bash::exec("cd backup ; ls");
+    string names = Bash::exec("cd " + name + " ; ls");
     //vector<string> files;
     string token;
     istringstream iss(names);
@@ -132,7 +147,7 @@ bool Git::pull() {
     }
 
     for(unsigned i = 0; i < files.size(); i++) {
-        string cmd = "cp -f backup/" + files.at(i) + " ./" ;
+        string cmd = "cp -f " + name + "/" + files.at(i) + " ./" ;
         Bash::exec(cmd);
     }
     return true;
@@ -143,7 +158,7 @@ bool Git::reset() {
     if(!initialized) {
         return init(); //"Did not reset because the repository was not initialized."
     } else {
-        string result = Bash::exec("cd backup ; git reset --hard origin/master");
+        string result = Bash::exec("cd " + name + " ; git reset --hard origin/master");
         if(result.find("done") == string::npos && result.find("fatal") != string::npos) {
             return false;
         }
