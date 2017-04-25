@@ -28,6 +28,7 @@ private:
     Integration* integ;
     Student* student;
     Assignments* assign;
+    Students* stu;
     bool assignEdit;
 };
 

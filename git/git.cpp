@@ -75,6 +75,7 @@ string Git::status() {
 //method that makes vector of strings of all files within a directory via -ls
 vector<string> Git::find_all_files(string pathName) {
     string result = Bash::exec("cd " + pathName + " ; " +"ls");
+    cerr << Bash::exec("pwd") << endl;
     stringstream ss(result);
     string final;
     vector<string> retVector;

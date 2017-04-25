@@ -30,7 +30,7 @@ protected:
         c1 = new Category(db, r1, 10, false);
         r1->add_category(c1, "c1");
         c2 = new Category(db, r2, 10, true);
-        c1->add_quality("0", 0);
+        c2->add_quality("0", 0);
         c2->add_quality("5", 5);
         r2->add_category(c2, "c2");
         g = new Students(db, "g");
@@ -139,10 +139,16 @@ TEST_F(DSTest, RUBRICFIND4TEST) {
     ASSERT_EQ("5", r2->find_qual(10, "c2"));
 }
 
-//TEST_F(DSTest, ASSIGNMENTSSUBTEST) {
+TEST_F(DSTest, ASSIGNMENTSSUBTEST) {
 
+    ASSERT_TRUE(l->did_submit(s));
+}
 
-//}
+TEST_F(DSTest, ASSIGNMENTCHANGETEST) {
+
+    a1->change_grade(5, "c1");
+    ASSERT_EQ(a1->get_grade(), 5);
+}
 
 int main(int argc, char *argv[])
 {

@@ -23,7 +23,19 @@ void newSubmission::set_integ(Integration *i)
     vector<Student*> add;
     bool has;
 
-    for (Student* k : integ->activeClass->list) {
+    stu = nullptr;
+
+    for (Students* k : integ->students) {
+        if (k->id = assign->classId) {
+            stu = k;
+        }
+    }
+
+    if (stu == nullptr) {
+        stu = integ->activeClass;
+    }
+
+    for (Student* k : stu->list) {
         has = false;
         for (Assignment* l : k->list) {
             if (l->assignNum == assign->id) {
@@ -51,7 +63,19 @@ void newSubmission::set_integ(Integration *i, Assignments* a)
     vector<Student*> add;
     bool has;
 
-    for (Student* k : integ->activeClass->list) {
+    stu = nullptr;
+
+    for (Students* k : integ->students) {
+        if (k->id = assign->classId) {
+            stu = k;
+        }
+    }
+
+    if (stu == nullptr) {
+        stu = integ->activeClass;
+    }
+
+    for (Student* k : stu->list) {
         has = false;
         for (Assignment* l : k->list) {
             if (l->assignNum == assign->id) {
@@ -105,7 +129,7 @@ void newSubmission::on_pushButton_2_clicked()
 
 void newSubmission::on_comboBox_activated(const QString &arg1)
 {
-    for (Student* k : integ->activeClass->list) {
+    for (Student* k : stu->list) {
         if (arg1.toStdString() == k->name) {
             student = k;
         }
