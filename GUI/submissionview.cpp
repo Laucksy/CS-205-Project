@@ -106,7 +106,11 @@ void submissionView::on_pushButton_3_clicked()
 {
     if (code != nullptr) {
         integ->delete_file(code);
-        set_integ(integ, assign);
+        if (!assignEdit) {
+            set_integ(integ, assign);
+        } else {
+            set_integ(integ, assign, assignment);
+        }
     }
 }
 
@@ -118,8 +122,13 @@ void submissionView::on_addDirectoryButton_clicked()
                                                  "C://",
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
+    cout << dir.toStdString() << endl;
     integ->add_directory(assign, dir.toStdString()); //Replace path with the file name you get from the file picker
-    this->set_integ(integ, assign);
+    if (!assignEdit) {
+        set_integ(integ, assign);
+    } else {
+        set_integ(integ, assign, assignment);
+    }
 
     //   sudentSubDirectory *dv= new sudentSubDirectory();
 //    if (assignEdit) {
@@ -136,8 +145,13 @@ void submissionView::on_addFileButton_clicked()
 {
     //Insert your code here
     QString fn = QFileDialog::getOpenFileName(this,tr("Select File to Add"),"C://",tr("Any files (*)"));
+    cout << fn.toStdString() << endl;
     integ->add_new_file(assign, fn.toStdString()); //Replace fn with the file name you get from the file picker
-    this->set_integ(integ, assign);
+    if (!assignEdit) {
+        set_integ(integ, assign);
+    } else {
+        set_integ(integ, assign, assignment);
+    }
     /*if (assignEdit) {
         newFile *dv= new newFile();
         dv->set_integ(integ, assign, assignment);
