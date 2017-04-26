@@ -5,6 +5,7 @@
 #include "rubrictitle.h"
 #include "addcategory.h"
 #include "importrubric.h"
+#include <QFileDialog>
 
 selectRubric::selectRubric(QWidget *parent) :
     QWidget(parent),
