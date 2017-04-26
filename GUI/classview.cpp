@@ -4,6 +4,7 @@
 #include "newstudent.h"
 #include "dataview.h"
 #include "importclass.h"
+#include <QFileDialog>
 
 /*ClassView is a view of the all the classes.
  * */
@@ -165,7 +166,7 @@ void classView::on_pushButton_3_clicked()
 
 void classView::on_pushButton_5_clicked()
 {
-    importClass *mv= new importClass();
+    /*importClass *mv= new importClass();
 
     if (edit) {
         mv->set_integ(integ, sec);
@@ -174,7 +175,16 @@ void classView::on_pushButton_5_clicked()
     }
 
     mv->show();
-    this->hide();
+    this->hide();*/
+
+    QString path = QFileDialog::getOpenFileName(this,tr("Open Rubric to Import"),"C://",tr("Csv (*.csv)"));
+    //cout << fn.toStdString() << endl;
+    integ->import_students(path.toStdString(), sec);
+    if (edit) {
+        this->set_integ(integ, sec);
+    } else {
+        this->set_integ(integ);
+    }
 }
 
 void classView::on_textBrowser_anchorClicked(const QUrl &arg1)
