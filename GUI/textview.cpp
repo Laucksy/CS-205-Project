@@ -388,10 +388,12 @@ void textView::update_rubric()
 
     string rubric;
     for (int i = 0; i < integ->activeSubmission->gradeCategory.size(); i++) {
+        string component = to_string(roundf(active->gradeComponent[i]*100)/100);
+        string total = to_string(roundf(active->rubric->cat[i]->pts*100)/100);
         if (active->gradeQuality[i] == "NULL" || active->gradeQuality[i] == "NULL2") {
-            rubric += active->gradeCategory[i] + ": " + to_string(active->gradeComponent[i]) + "/" + to_string(active->rubric->cat[i]->pts) + "\n";
+            rubric += active->gradeCategory[i] + ": " + component.substr(0,component.length()-5) + "/" + total.substr(0,total.length()-5) + "\n";
         } else {
-            rubric += active->gradeCategory[i] + ": " + to_string(active->gradeComponent[i]) + "/" + to_string(active->rubric->cat[i]->pts) + "; " + active->gradeQuality[i] + "\n";
+            rubric += active->gradeCategory[i] + ": " + component.substr(0,component.length()-5) + "/" + total.substr(0,total.length()-5) + "; " + active->gradeQuality[i] + "\n";
         }
 
         for (Feedback* k : comments) {
