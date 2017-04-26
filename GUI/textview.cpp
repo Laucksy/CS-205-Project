@@ -491,6 +491,8 @@ bool textView::eventFilter(QObject *watched, QEvent *event){
 void textView::on_pushButton_4_clicked()
 {
     myCode->delete_space_for_feedback(commentLoc);
+    //iterate through the professorial feedback and delete one at coment location
+    myCode->delete_feedback(commentLoc);
     this->updateCode(myCode);
 }
 

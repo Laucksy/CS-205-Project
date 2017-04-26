@@ -50,6 +50,9 @@ public:
     void change_text(string txt);
     void update_tag(string t);
 
+    int get_position();
+
+
     //this is database stuff
     int codeId;
     int position;

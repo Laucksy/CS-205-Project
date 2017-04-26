@@ -45,6 +45,11 @@ void Feedback::update_tag(string t)
     store_in_db();
 }
 
+int Feedback::get_position()
+{
+    return position;
+}
+
 Feedback::~Feedback()
 {
     store_in_db();
