@@ -24,6 +24,7 @@ public:
     static string get_file(int index);
     static string find_file_path(string fileName);
     static vector<string> find_all_files(string pathName);
+    static string escape_spaces(string str);
 
     static string status();
     static bool push();

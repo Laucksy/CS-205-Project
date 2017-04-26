@@ -118,7 +118,8 @@ void submissionView::on_addDirectoryButton_clicked()
                                                  "C://",
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
-    integ->add_directory(assign, dir); //Replace path with the file name you get from the file picker
+    integ->add_directory(assign, dir.toStdString()); //Replace path with the file name you get from the file picker
+    this->set_integ(integ, assign);
 //   sudentSubDirectory *dv= new sudentSubDirectory();
 //    if (assignEdit) {
 //        dv->set_integ(integ, assign,assignment);
@@ -133,8 +134,9 @@ void submissionView::on_addDirectoryButton_clicked()
 void submissionView::on_addFileButton_clicked()
 {
     //Insert your code here
-    QString fn = QFileDialog::getOpenFileName(this,tr("Select File to Add"),"C://",tr("Any files (*)");
-    integ->add_new_file(assign, fn); //Replace fn with the file name you get from the file picker
+    QString fn = QFileDialog::getOpenFileName(this,tr("Select File to Add"),"C://",tr("Any files (*)"));
+    integ->add_new_file(assign, fn.toStdString()); //Replace fn with the file name you get from the file picker
+    this->set_integ(integ, assign);
     /*if (assignEdit) {
         newFile *dv= new newFile();
         dv->set_integ(integ, assign, assignment);

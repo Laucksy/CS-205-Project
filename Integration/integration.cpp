@@ -514,9 +514,13 @@ void Integration::import_students(string fileName, Students* s)
 void Integration::add_directory(Assignment* a, string path)
 {
     vector<string> f = Git::find_all_files(path);
-
+    //cout << "LENGTH" << f.size() << endl;
     for (string k : f) {
-        add_new_file(a, path + "/" + k);
+        string extension = k.substr(k.find_last_of("."));
+        //cout << "FILE" <<  << endl;
+        if(extension == ".java" || extension == ".pde" || extension == ".cpp") {
+            add_new_file(a, path + "/" + k);
+        }
     }
 }
 
