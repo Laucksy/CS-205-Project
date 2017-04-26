@@ -31,7 +31,8 @@ void textView::set_integ(Integration *i)
     ui->comboBox_3->clear();
 
     for (Code* k : integ->activeSubmission->files) {
-        ui->comboBox_2->addItem(QString::fromStdString(k->fileName));
+        string obfuscatedFileName = k->fileName.substr(k->fileName.find_last_of("/")+1);
+        ui->comboBox_2->addItem(QString::fromStdString(obfuscatedFileName));
     }
 
     ui->comboBox_3->addItem("None");

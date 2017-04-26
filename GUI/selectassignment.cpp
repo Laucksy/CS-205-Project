@@ -106,6 +106,7 @@ void selectAssignment::on_pushButton_3_clicked()
 void selectAssignment::on_pushButton_clicked()
 {
     if (assign != nullptr) {
+        integ->set_active_assignment(assign);
         assignmentView *dv= new assignmentView();
         dv->set_integ(integ);
 

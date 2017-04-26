@@ -88,6 +88,7 @@ void selectClass::on_comboBox_activated(const QString &arg1)
 void selectClass::on_pushButton_clicked()
 {
     if (section != nullptr) {
+        integ->set_active_class(section);
         classView *sc= new classView();
         sc->set_integ(integ, section);
 
