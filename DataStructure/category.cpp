@@ -465,6 +465,7 @@ int cb_select_id_category(void  *data,
 
     Category *obj = (Category *) data;
     obj->isNew = false; // object was generated from table
+    obj->called = true; // callback was reached, valid id used
 
     std::cout << "------------------------------\n";
     std::cout << obj->get_name()

@@ -109,7 +109,7 @@ void Assignment::change_grade(double g, string c)
 
     if (g >= 0 && g <= rubric->cat[ind]->pts){
         gradeComponent[ind] = g;
-        while (gradeQuality.size() <= ind) {
+        while (gradeQuality.size() < ind) {
             gradeQuality.push_back("");
         }
         gradeQuality[ind] = rubric->find_qual(gradeComponent[ind], gradeCategory[ind]);
@@ -524,6 +524,7 @@ int cb_select_id_assignment(void  *data,
 
     Assignment *obj = (Assignment *) data;
     obj->isNew = false; // object was generated from table
+    obj->called = true; // callback was reached, valid id used
 
     std::cout << "------------------------------\n";
     std::cout << obj->get_name()

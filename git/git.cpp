@@ -89,10 +89,13 @@ string Git::status() {
 
 //method that makes vector of strings of all files within a directory via -ls
 vector<string> Git::find_all_files(string pathName) {
+    pathName = escape_spaces(pathName);
+    //cout << "PATH" << pathName << endl;
+
     string result = Bash::exec("cd " + pathName + " ; " +"ls");
     vector<string> retVector;
-    cout << Bash::exec("cd " + pathName + " ; pwd") << endl;
-    if(Bash::exec("cd " + pathName + " ; pwd").find(pathName) != string::npos) {
+    //cout << Bash::exec("cd " + pathName + " ; pwd") << endl;
+    if(escape_spaces(Bash::exec("cd " + pathName + " ; pwd")).find(pathName) != string::npos) {
         stringstream ss(result);
         string final;
         while(getline(ss,final,'\n'))
@@ -107,6 +110,16 @@ vector<string> Git::find_all_files(string pathName) {
 string Git::find_file_path(string fileName) {
     string result = Bash::exec("find . -name " + fileName);
     return result;
+}
+
+//Remove spaces from path name
+string Git::escape_spaces(string str) {
+    size_t pos = str.find(" ");
+    while(pos != string::npos) {
+        str.insert(pos, "\\");
+        pos = str.find(" ", pos+2);
+    }
+    return str;
 }
 
 //push local changes

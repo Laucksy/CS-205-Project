@@ -721,6 +721,7 @@ int cb_select_id_code(void  *data,
 
     Code *obj = (Code *) data;
     obj->isNew = false; // object was generated from table
+    obj->called = true; // callback reached
 
     std::cout << "------------------------------\n";
     std::cout << obj->get_name()
