@@ -438,7 +438,11 @@ void textView::on_pushButton_3_clicked()
         this->hide();
     } else {
         set_integ(integ);
-        updateCode(integ->activeFile);
+        if (integ->activeSubmission->files.size() > 0) {
+            updateCode(integ->activeFile);
+        } else {
+            updateCode(nullptr);
+        }
         update_rubric();
     }
 }
