@@ -30,6 +30,8 @@ void textView::set_integ(Integration *i)
     ui->comboBox_2->clear();
     ui->comboBox_3->clear();
 
+    ui->assignmentLabel->setText(QString::fromStdString("Assignment: " + integ->activeAssignemnt->name));
+
     for (Code* k : integ->activeSubmission->files) {
         string obfuscatedFileName = k->fileName.substr(k->fileName.find_last_of("/")+1);
         ui->comboBox_2->addItem(QString::fromStdString(obfuscatedFileName));
