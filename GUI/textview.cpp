@@ -438,7 +438,11 @@ void textView::on_pushButton_3_clicked()
         this->hide();
     } else {
         set_integ(integ);
-        updateCode(integ->activeFile);
+        if (integ->activeSubmission->files.size() > 0) {
+            updateCode(integ->activeFile);
+        } else {
+            updateCode(nullptr);
+        }
         update_rubric();
     }
 }
@@ -447,12 +451,17 @@ void textView::on_pushButton_3_clicked()
 
 void textView::mousePressEvent(QMouseEvent *e)
 {
-
-
-
-    cerr<<"click";
-
-
+    if(e->button() == Qt::LeftButton)
+    {
+        int temp=ui->textBrowser->textCursor().blockNumber();
+        this->clickComment(temp,myCode);
+    }
+    else if(e->button() == Qt::RightButton)
+    {
+        //delete comment
+        on_pushButton_4_clicked();
+    }
+    //cerr<<"click";
 }
 
 
@@ -472,8 +481,6 @@ void textView::on_textBrowser_cursorPositionChanged()
         this->clickComment(temp,myCode);
     }
 
-
-
 }
 
 bool textView::eventFilter(QObject *watched, QEvent *event){
@@ -487,6 +494,8 @@ bool textView::eventFilter(QObject *watched, QEvent *event){
 void textView::on_pushButton_4_clicked()
 {
     myCode->delete_space_for_feedback(commentLoc);
+    //iterate through the professorial feedback and delete one at comment location
+    myCode->delete_feedback(commentLoc);
     this->updateCode(myCode);
 }
 

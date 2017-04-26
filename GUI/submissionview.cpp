@@ -120,7 +120,8 @@ void submissionView::on_addDirectoryButton_clicked()
                                                  | QFileDialog::DontResolveSymlinks);
     integ->add_directory(assign, dir.toStdString()); //Replace path with the file name you get from the file picker
     this->set_integ(integ, assign);
-//   sudentSubDirectory *dv= new sudentSubDirectory();
+
+    //   sudentSubDirectory *dv= new sudentSubDirectory();
 //    if (assignEdit) {
 //        dv->set_integ(integ, assign,assignment);
 //    } else {

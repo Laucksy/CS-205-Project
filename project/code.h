@@ -35,6 +35,9 @@ public:
     void insert(int position,string);
     void set_file(string name);
 
+
+    void delete_feedback(int x);
+
     string exec_sec(string cmd);
 
     string file_path(string file);
