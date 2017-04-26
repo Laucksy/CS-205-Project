@@ -470,16 +470,16 @@ void Integration::import_rubric(string fileName)
 
     getline(file,line, ',');
     string name = line;
-    getline(file,line, ',');
+    getline(file,line, '\n');
     bool deduct = (line == "true");
     Rubric* r = add_new_rubric(deduct, name);
 
     while(getline(file,line, ','))
     {
         string catName = line;
-        getline(file,line, ',');
+        getline(file,line, '\n');
         double pointNum = atof(line.c_str());
-        getline(file,line, ',');
+        //getline(file,line, ',');
         bool m = false;
         vector<double> d;
         vector<string> s;
