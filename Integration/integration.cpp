@@ -276,6 +276,15 @@ Assignment* Integration::add_new_submission(Rubric* rubric, Student* student)
 // add new code files to the provided assignemnt
 void Integration::add_new_file(Assignment* assign, string name)
 {
+    string pwd = Bash::exec("pwd");
+    pwd = pwd.substr(0, pwd.size()-1);
+    cout << pwd << "###" << endl;
+    if (name.size() <= pwd.size() || name.substr(0,pwd.size()-1) == pwd) {
+        return;
+    } else {
+        name = name.substr(pwd.size(), name.size()-1);
+        cout << name << endl;
+    }
     Code* f = new Code(db, name, assign->id);
     assign->files.push_back(f);
     Git::add_file(name.substr(1,name.size()-1));
