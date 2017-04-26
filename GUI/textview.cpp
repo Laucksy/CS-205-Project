@@ -78,7 +78,7 @@ void textView::clickComment(int pos, Code* myCode){
     this->update_rubric();
 }
 
-Code* textView::updateCode(Code* myCode)
+/*Code* textView::updateCode(Code* myCode)
 {
     if (myCode != nullptr) {
         writing=true;
@@ -99,8 +99,10 @@ Code* textView::updateCode(Code* myCode)
 
         vector<string> v = x->parse();
         cerr<<v.size();
-        ui->textBrowser->setText("");
+        ui->textBrowser->setHTML("<html><head><style>a {text-decoration: none; color: black;}</style></head><body>");
         for(int i=0; i<v.size(); i++){//lines
+            ext += "<a href='" + temp->name + "'>" + temp->name + "</a></span><br/>";
+            ui->textBrowser->insertHtml("<a href='" + i + "'>");
             vector<string> tokens = x->tokenize(v[i]);
             vector<string> delims = x->delimiters(v.at(i));
             if(1){
@@ -117,17 +119,17 @@ Code* textView::updateCode(Code* myCode)
                 ui->textBrowser->setTextColor("Orange");
                 QString temp= QString::fromStdString(s);
 
-                ui->textBrowser->insertPlainText(temp);
+                ui->textBrowser->insertHtml(temp);
             }
 
             if(v.at(i)[0] == '`' && v.at(i)[1] == '`' && v.at(i)[v.at(i).length()-1] == '`') {
                 ui->textBrowser->setTextColor("Yellow");
                 QString qstr = QString::fromStdString("FEEDBACK: ");
-                ui->textBrowser->insertPlainText(qstr);
+                ui->textBrowser->insertHtml(qstr);
                 qstr = QString::fromStdString(v.at(i).substr(2,v.at(i).length()-3));
-                ui->textBrowser->insertPlainText(qstr);
+                ui->textBrowser->insertHtml(qstr);
                 qstr = QString::fromStdString("\n");
-                ui->textBrowser->insertPlainText(qstr);
+                ui->textBrowser->insertHtml(qstr);
                 continue;
             }
 
@@ -186,7 +188,7 @@ Code* textView::updateCode(Code* myCode)
             if(type==10)
             {
                 comment=false;
-            }*/
+            }
                 switch(type)
                 {
                 case 1:
@@ -249,7 +251,7 @@ Code* textView::updateCode(Code* myCode)
                     if(bracket){
                         for(int tabs=0;tabs<tabCounter-1;tabs++)
                         {
-                            ui->textBrowser->insertPlainText("    ");
+                            ui->textBrowser->insertHtml("    ");
 
                         }
                         bracket=false;
@@ -324,6 +326,190 @@ Code* textView::updateCode(Code* myCode)
         return myCode;
     }
 
+}*/
+
+Code* textView::updateCode(Code* myCode) {
+    string rawHTML = "";
+    rawHTML += "<html><head><style>a {text-decoration: none; color: black;}</style></head><body style='background-color:#333333'>";
+
+    if(myCode != nullptr) {
+        Code* firstFile = myCode;
+
+        string fileName = firstFile->fileName.substr(firstFile->fileName.find_last_of("/")+1);
+
+        int tabCounter=0;
+        bool comment=false;
+        bool lineComment=false;
+        bool bracket=false;
+
+        vector<string> v = firstFile->parse();
+        for(unsigned i = 0; i < v.size(); i++){
+            rawHTML += "<a href='" + to_string(i) + "'>";
+            vector<string> tokens = firstFile->tokenize(v.at(i));
+            vector<string> delims = firstFile->delimiters(v.at(i));
+            string cumulativeLine = "";
+            //rawHTML += "<p>";
+
+            if(true) {
+                std::string s = std::to_string(i);
+                if(i<10){
+                    s=s+"  | ";
+                }
+                else if(i<100){
+                    s=s+" | ";
+                }
+                else if(i<1000){
+                    s=s+"| ";
+                }
+                rawHTML += "<span style='color:orange;'>" + s + "</span>";
+            }
+
+            if(v.at(i)[0] == '`' && v.at(i)[1] == '`' && v.at(i)[v.at(i).length()-1] == '`') {
+                rawHTML += "<span style='color:yellow;'>FEEDBACK: ";
+                rawHTML += v.at(i).substr(2,v.at(i).length()-3);
+                rawHTML += "\n";
+                rawHTML += "</span></a><br/>";
+                continue;
+            }
+
+            lineComment = false;
+            int j = 0;
+            while(tokens.size() > 0) {
+                int type = firstFile->categorize(tokens.at(j));
+
+                if(j == 0 && type == 11)
+                    lineComment=true;
+                else if(j == 0 && type != 11)
+                    lineComment=false;
+                if(type == 9)
+                    comment=true;
+                else if(type == 10)
+                    comment=false;
+
+                if(delims.size() > 0 && delims.at(0) == "/" && delims.at(1) == "*" && delims.at(2) == "*"
+                        && v.at(i)[cumulativeLine.length()] == '/' && v.at(i)[cumulativeLine.length()+1] == '*'
+                        && v.at(i)[cumulativeLine.length()+2] == '*') {
+                    comment = true;
+                    type = 9;
+                }
+                if(delims.size() > 0 && delims.at(0) == "*" && delims.at(1) == "/") {
+                    //cout << "TESTING COMMENT" << endl;
+                    //cout << v.at(i) << ",,,," << cumulativeLine << endl;
+                    if(v.at(i)[cumulativeLine.length()] == '*' && v.at(i)[cumulativeLine.length()+1] == '/') {
+                        comment = false;
+                        //cout << "AAAAAAAAAcoment" << endl;
+                        type = 10;
+                    }
+                }
+
+                if(comment)
+                    type = 9;
+
+                switch(type) {
+                case 1:
+                    rawHTML += "<span style='color:Deepskyblue;'>";
+                    break;
+                case 2:
+                    rawHTML += "<span style='color:Plum;'>";
+                    break;
+                case 3:
+                    rawHTML += "<span style='color:Plum;'>";
+                    break;
+                case 4:
+                    rawHTML += "<span style='color:Salmon;'>";
+                    break;
+                case 5:
+                    rawHTML += "<span style='color:Salmon;'>";
+                    break;
+                case 6:
+                    rawHTML += "<span style='color:Dodgerblue;'>";
+                    break;
+                case 7:
+                    rawHTML += "<span style='color:Plum;'>";
+                    break;
+                case 8:
+                    rawHTML += "<span style='color:Plum;'>";
+                    break;
+                case 9:
+                    rawHTML += "<span style='color:Lightgreen;'>";
+                    break;
+                case 10:
+                    rawHTML += "<span style='color:Lightgreen;'>";
+                    break;
+                case 11:
+                    rawHTML += "<span style='color:Lightgreen;'>";
+                    break;
+                case 12:
+                    tabCounter++;
+                    bracket=true;
+                    break;
+                case 13:
+                    tabCounter--;
+                    break;
+                case 0:
+                    rawHTML += "<span style='color:Cornsilk;'>";
+                    break;
+                default:
+                    rawHTML += "<span cstyle='color:Cornsilk;'>";
+                    break;
+                }
+
+                bool delimFound = delims.size() > 0 ? v.at(i).find(cumulativeLine + delims.at(0)) == 0 : false;
+                bool tokenFound = tokens.size() > 0 ? v.at(i).find(cumulativeLine + tokens.at(0)) == 0 : false;
+                if(delims.size() > 0 && delimFound && !tokenFound) {
+                    //cout << "delims" << endl;
+                    if(!comment && !lineComment)
+                        rawHTML += "<span style='color:Cornsilk;'>";
+                    if(delims.at(0) != " ")
+                        rawHTML += delims.at(0);
+                    else
+                        rawHTML += "&nbsp;";
+                    if(!comment && !lineComment)
+                        rawHTML += "</span>";
+                    cumulativeLine += delims.at(0);
+                    //cout << "ZZZZZZZZZZZ" << delims.at(0) << "ZZZZZZZZZZZZ" << endl;
+                    delims.erase(delims.begin());
+                }
+                else if(tokens.size() > 0 && tokenFound) {
+                    //cout << "token" << endl;
+                    rawHTML += tokens.at(0);
+                    cumulativeLine += tokens.at(0);
+                    tokens.erase(tokens.begin());
+                } else if(tokens.size() > 0 && delims.size() == 0) {
+                    //cout << "token" << endl;
+                    rawHTML += tokens.at(0);
+                    cumulativeLine += tokens.at(0);
+                    tokens.erase(tokens.begin());
+                }
+                rawHTML += "</span>";
+                //cout << "End of loop" << endl;
+            }
+            while(delims.size() > 0) {
+                if(delims.size() >= 3 && delims.at(0) == "/" && delims.at(1) == "*" && delims.at(2) == "*"
+                        && v.at(i)[cumulativeLine.length()] == '/' && v.at(i)[cumulativeLine.length()+1] == '*'
+                        && v.at(i)[cumulativeLine.length()+2] == '*') {
+                    comment = true;
+                }
+
+                if(comment)
+                    rawHTML += "<span style='color:Lightgreen;'>" + delims.front() + "</span>";
+                else
+                    rawHTML += "<span style='color:Cornsilk;'>" + delims.front() + "</span>";
+                if(delims.size() >= 1 && delims.at(0) == "/") {
+                    if(cumulativeLine.length() > 0 && v.at(i)[cumulativeLine.length()-1] == '*' && v.at(i)[cumulativeLine.length()] == '/') {
+                        comment = false;
+                    }
+                }
+                cumulativeLine += delims.at(0);
+                delims.erase(delims.begin());
+            }
+            rawHTML += "</a><br/>";
+        }
+        rawHTML += "</div>";
+    }
+    rawHTML += "</body></html>";
+    ui->textBrowser->setHtml(QString::fromStdString(rawHTML));
+    return myCode;
 }
 
 void textView::on_lineEdit_2_textChanged(const QString &arg1)
@@ -451,12 +637,13 @@ void textView::on_pushButton_3_clicked()
 
 void textView::mousePressEvent(QMouseEvent *e)
 {
+    cout << "mouse press" << endl;
     if(e->button() == Qt::LeftButton)
     {
         int temp=ui->textBrowser->textCursor().blockNumber();
         this->clickComment(temp,myCode);
     }
-    else if(e->button() == Qt::RightButton)
+    if(e->button() == Qt::RightButton)
     {
         //delete comment
         on_pushButton_4_clicked();
@@ -468,7 +655,9 @@ void textView::mousePressEvent(QMouseEvent *e)
 
 void textView::on_textBrowser_anchorClicked(const QUrl &arg1)
 {
-    cerr<<"click";
+    cout << "anchor" << endl;
+    string url = arg1.url().toStdString();
+    this->clickComment(atoi(url.c_str()), myCode);
 }
 
 
@@ -476,10 +665,10 @@ void textView::on_textBrowser_anchorClicked(const QUrl &arg1)
 void textView::on_textBrowser_cursorPositionChanged()
 {
     //  ui->textBrowser->cursor()
-    if(!writing){
+    /*if(!writing){
         int temp=ui->textBrowser->textCursor().blockNumber();
         this->clickComment(temp,myCode);
-    }
+    }*/
 
 }
 
