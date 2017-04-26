@@ -44,6 +44,8 @@ public:
     static string feedback_table;
 
     int id;
+
+    bool called; //callback was called for this object
 };
 
 #endif // IDENT_H

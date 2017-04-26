@@ -342,6 +342,7 @@ int cb_select_id_student(void  *data,
 
     Student *obj = (Student *) data;
     obj->isNew = false; // object was generated from table
+    obj->called = true; // callback was reached, valid id used
 
     std::cout << "------------------------------\n";
     std::cout << obj->get_name()

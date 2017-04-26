@@ -92,7 +92,11 @@ void Integration::populate()
     for (int i = 0; i < dgc; i++) {
         Students* g = new Students(db, "");
         g->select_id(i);
-        students.push_back(g);
+        if (g->called) {
+            students.push_back(g);
+        } else {
+            dgc++;
+        }
     }
     
     // student
@@ -100,33 +104,45 @@ void Integration::populate()
     for (int i = 0; i < dsc; i++) {
         Student* s = new Student(db, "");
         s->select_id(i);
-        int gid = s->classId;
-        for (Students* k : students) {
-            if (k->id == gid) {
-                k->list.push_back(s);
-                s->section = k;
+        if (s->called) {
+            int gid = s->classId;
+            for (Students* k : students) {
+                if (k->id == gid) {
+                    k->list.push_back(s);
+                    s->section = k;
+                }
             }
+            studentList.push_back(s);
+        } else {
+            dsc++;
         }
-        studentList.push_back(s);
     }
 
     // rubric
     for (int i = 0; i < drc; i++) {
         Rubric* r = new Rubric(db, true, "");
         r->select_id(i);
-        rubrics.push_back(r);
+        if (r->called) {
+            rubrics.push_back(r);
+        } else {
+            drc++;
+        }
     }
 
     // category
     for (int i = 0; i < dcc; i++) {
         Category* c = new Category(db, &dr, -1.0, false);
         c->select_id(i);
-        int rid = c->rubricId;
-        for (Rubric* k : rubrics) {
-            if (k->id == rid) {
-                k->cat.push_back(c);
-                c->rubric = k;
+        if (c->called) {
+            int rid = c->rubricId;
+            for (Rubric* k : rubrics) {
+                if (k->id == rid) {
+                    k->cat.push_back(c);
+                    c->rubric = k;
+                }
             }
+        } else {
+            dcc++;
         }
     }
 
@@ -134,19 +150,23 @@ void Integration::populate()
     for (int i = 0; i < dlc; i++) {
         Assignments* l = new Assignments(db, "");
         l->select_id(i);
-        assignments.push_back(l);
-        int rid = l->rubId;
-        int cid = l->classId;
-        for (Rubric* k : rubrics) {
-            if (k->id == rid) {
-                l->rubric = k;
+        if (l->called) {
+            assignments.push_back(l);
+            int rid = l->rubId;
+            int cid = l->classId;
+            for (Rubric* k : rubrics) {
+                if (k->id == rid) {
+                    l->rubric = k;
+                }
             }
-        }
 
-        for (Students* k : students) {
-            if (k->id == cid) {
-                k->assignList.push_back(l);
+            for (Students* k : students) {
+                if (k->id == cid) {
+                    k->assignList.push_back(l);
+                }
             }
+        } else {
+            dlc++;
         }
     }
 
@@ -155,27 +175,31 @@ void Integration::populate()
     for (int i = 0; i < dac; i++) {
         Assignment* a = new Assignment(db, &dr, &ds, -1);
         a->select_id(i);
-        assignList.push_back(a);
-        int rid = a->rubricId;
-        int lid = a->assignNum;
-        int sid = a->studentId;
-        for (Rubric* k : rubrics) {
-            if (k->id == rid) {
-                a->rubric = k;
+        if(a->called) {
+            assignList.push_back(a);
+            int rid = a->rubricId;
+            int lid = a->assignNum;
+            int sid = a->studentId;
+            for (Rubric* k : rubrics) {
+                if (k->id == rid) {
+                    a->rubric = k;
+                }
             }
-        }
 
-        for (Assignments* k : assignments) {
-            if (k->id == lid) {
-                k->list.push_back(a);
+            for (Assignments* k : assignments) {
+                if (k->id == lid) {
+                    k->list.push_back(a);
+                }
             }
-        }
 
-        for (Student* k : studentList) {
-            if (k->id == sid) {
-                k->list.push_back(a);
-                a->stu = k;
+            for (Student* k : studentList) {
+                if (k->id == sid) {
+                    k->list.push_back(a);
+                    a->stu = k;
+                }
             }
+        } else {
+            dac++;
         }
     }
 
@@ -184,12 +208,16 @@ void Integration::populate()
     for (int i = 0; i < duc; i++) {
         Code* u = new Code(db, "", -1);
         u->select_id(i);
-        codeList.push_back(u);
-        int aid = u->assignId;
-        for (Assignment* k : assignList) {
-            if (k->id == aid) {
-                k->files.push_back(u);
+        if (u->called) {
+            codeList.push_back(u);
+            int aid = u->assignId;
+            for (Assignment* k : assignList) {
+                if (k->id == aid) {
+                    k->files.push_back(u);
+                }
             }
+        } else {
+            duc++;
         }
     }
 
@@ -197,11 +225,15 @@ void Integration::populate()
     for (int i = 0; i < dfc; i++) {
         Feedback* f = new Feedback(db, "", "", -1, -1);
         f->select_id(i);
-        int uid = f->codeId;
-        for (Code* k : codeList) {
-            if (k->id == uid) {
-                k->profFeedback.push_back(f);
+        if (f->called) {
+            int uid = f->codeId;
+            for (Code* k : codeList) {
+                if (k->id == uid) {
+                    k->profFeedback.push_back(f);
+                }
             }
+        } else {
+            dfc++;
         }
     }
 }
