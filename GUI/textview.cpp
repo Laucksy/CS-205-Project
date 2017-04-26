@@ -646,6 +646,8 @@ void textView::mousePressEvent(QMouseEvent *e)
     if(e->button() == Qt::RightButton)
     {
         //delete comment
+        commentLoc = ui->textBrowser->textCursor().blockNumber();
+        cout << "CommentLOC" << commentLoc << endl;
         on_pushButton_4_clicked();
     }
     //cerr<<"click";
