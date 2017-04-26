@@ -23,17 +23,23 @@ void selectAssignment::set_integ(Integration *i)
     ui->comboBox->clear();
 
     QString qstra;
-    string text;
-   // ui->comboBox->addItem("None");
+    string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
+    // ui->comboBox->addItem("None");
     for (int i=0; i <integ->assignments.size(); i++) {
-      Assignments* temp = integ->assignments.at(i);
+        Assignments* temp = integ->assignments.at(i);
         // Rubric* temp = integ->rubrics.at(i);
-        text+= temp->name+ "\n";
-       // text += integ->activeClass->list[i]->name + "\n";
+        if(temp == integ->activeAssignemnt) {
+            text += "<span style='background-color:aqua;'>";
+        } else {
+            text += "<span>";
+        }
+        text += "<a href='" + temp->name + "'>" + temp->name + "</a></span><br/>";
+        // text += integ->activeClass->list[i]->name + "\n";
     }
+    text += "</body></html>";
     qstra = QString::fromStdString(text);
-
-    ui->textBrowser->setText(qstra);
+    ui->textBrowser->setHtml(qstra);
+    //ui->textBrowser->setText(qstra);
 
     assign = nullptr;
 
@@ -71,7 +77,7 @@ void selectAssignment::on_pushButton_5_clicked()
 void selectAssignment::on_export_2_clicked()
 {
     if(assign != nullptr){
-    ExportHTML::export_csv_assignment(assign);
+        ExportHTML::export_csv_assignment(assign);
     }
 }
 
@@ -114,4 +120,27 @@ void selectAssignment::on_pushButton_clicked()
         dv->show();
         this->hide();
     }
+}
+
+/*void selectAssignment::on_textBrowser_cursorPositionChanged()
+{
+    int line = ui->textBrowser->textCursor().blockNumber();
+}
+
+void selectAssignment::on_textBrowser_mousePressEvent(QMouseEvent* e) {
+    if (e->button() == Qt::LeftButton) {
+        cout << ui->textBrowser->textCursor().blockNumber() << "AAAA" << endl;
+    }
+}*/
+
+void selectAssignment::on_textBrowser_anchorClicked(const QUrl &arg1) {
+    string url = arg1.url().toStdString();
+    //cout << "URL" << url << endl;
+    for(unsigned i = 0; i < integ->assignments.size(); i++) {
+        Assignments* temp = integ->assignments.at(i);
+        if(temp->name == url) {
+            integ->set_active_assignment(temp);
+        }
+    }
+    this->set_integ(integ);
 }
