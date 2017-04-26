@@ -56,6 +56,6 @@ void importRubric::on_lineEdit_textChanged(const QString &arg1)
 void importRubric::on_importRubricButton_clicked()
 {
     QString importRubric = QFileDialog::getOpenFileName(this,tr("Open Rubric to Import"),"C://",tr("Txt (*.txt"));
-    integ->import_rubric(importRubric);
+    integ->import_rubric(importRubric.toStdString());
 
 }

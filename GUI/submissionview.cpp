@@ -88,23 +88,6 @@ void submissionView::on_pushButton_2_clicked()
     }
 }
 
-void submissionView::on_pushButton_clicked()
-{
-   if (assignEdit) {
-       newFile *dv= new newFile();
-       dv->set_integ(integ, assign, assignment);
-
-       dv->show();
-       this->hide();
-   } else {
-       newFile *dv= new newFile();
-       dv->set_integ(integ, assign);
-
-       dv->show();
-       this->hide();
-   }
-}
-
 void submissionView::on_comboBox_activated(const QString &arg1)
 {
     for (Code* k : assign->files) {
@@ -126,9 +109,11 @@ void submissionView::on_pushButton_3_clicked()
     }
 }
 
-void submissionView::on_pushButton_5_clicked()
+void submissionView::on_addDirectoryButton_clicked()
 {
-    sudentSubDirectory *dv= new sudentSubDirectory();
+    //Insert your code here
+    //integ->add_directory(assign, path); //Replace path with the file name you get from the file picker
+    /*sudentSubDirectory *dv= new sudentSubDirectory();
     if (assignEdit) {
         dv->set_integ(integ, assign,assignment);
     } else {
@@ -136,5 +121,24 @@ void submissionView::on_pushButton_5_clicked()
     }
 
     dv->show();
-    this->hide();
+    this->hide();*/
+}
+
+void submissionView::on_addFileButton_clicked()
+{
+    //Insert your code here
+    //integ->add_new_file(assign, fn); //Replace fn with the file name you get from the file picker
+    /*if (assignEdit) {
+        newFile *dv= new newFile();
+        dv->set_integ(integ, assign, assignment);
+
+        dv->show();
+        this->hide();
+    } else {
+        newFile *dv= new newFile();
+        dv->set_integ(integ, assign);
+
+        dv->show();
+        this->hide();
+    }*/
 }
