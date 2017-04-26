@@ -28,13 +28,30 @@ void submissionView::set_integ(Integration *i, Assignment* a)
     ui->comboBox->clear();
 
     QString qstra;
-    string text;
+    /*string text;
     for (int i=0; i <assign->files.size(); i++) {
         text += assign->files[i]->fileName + "\n";
     }
-    qstra = QString::fromStdString(text);
+    qstra = QString::fromStdString(text);*/
 
-    ui->textBrowser->setText(qstra);
+    string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
+    // ui->comboBox->addItem("None");
+    for (int i=0; i < assign->files.size(); i++) {
+        Code* temp = assign->files.at(i);
+        // Rubric* temp = integ->rubrics.at(i);
+        if(temp == code) {
+            text += "<span style='background-color:aqua;'>";
+        } else {
+            text += "<span>";
+        }
+        text += "<a href='" + temp->fileName + "'>" + temp->fileName + "</a></span><br/>";
+        // text += integ->activeClass->list[i]->name + "\n";
+    }
+    text += "</body></html>";
+    qstra = QString::fromStdString(text);
+    ui->textBrowser->setHtml(qstra);
+
+    //ui->textBrowser->setText(qstra);
 
     code = nullptr;
 
@@ -55,13 +72,30 @@ void submissionView::set_integ(Integration *i, Assignment* a, Assignments* as)
     ui->comboBox->clear();
 
     QString qstra;
-    string text;
+    /*string text;
     for (int i=0; i <assign->files.size(); i++) {
         text += assign->files[i]->fileName + "\n";
     }
     qstra = QString::fromStdString(text);
 
-    ui->textBrowser->setText(qstra);
+    ui->textBrowser->setText(qstra);*/
+
+    string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
+    // ui->comboBox->addItem("None");
+    for (int i=0; i < assign->files.size(); i++) {
+        Code* temp = assign->files.at(i);
+        // Rubric* temp = integ->rubrics.at(i);
+        if(temp == code) {
+            text += "<span style='background-color:aqua;'>";
+        } else {
+            text += "<span>";
+        }
+        text += "<a href='" + temp->fileName + "'>" + temp->fileName + "</a></span><br/>";
+        // text += integ->activeClass->list[i]->name + "\n";
+    }
+    text += "</body></html>";
+    qstra = QString::fromStdString(text);
+    ui->textBrowser->setHtml(qstra);
 
     code = nullptr;
 
@@ -151,4 +185,17 @@ void submissionView::on_addFileButton_clicked()
         dv->show();
         this->hide();
     }*/
+}
+
+void submissionView::on_textBrowser_anchorClicked(const QUrl &arg1)
+{
+    string url = arg1.url().toStdString();
+    //cout << "URL" << url << endl;
+    for(unsigned i = 0; i < assign->files.size(); i++) {
+        Code* temp = assign->files.at(i);
+        if(temp->fileName == url) {
+            code = temp;
+        }
+    }
+    this->set_integ(integ, assign);
 }

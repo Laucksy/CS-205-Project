@@ -28,14 +28,31 @@ void AddCategory::set_integ(Integration *i, Rubric* r)
 
     ui->comboBox->clear();
 
-    QString qstr;
-    string text;
+    QString qstra;
+    /*string text;
     for (int i=0; i <rubric->name.size(); i++) {
         text += rubric->name[i] + " | " + to_string(rubric->cat[i]->pts) + "\n";
     }
     qstr = QString::fromStdString(text);
 
-    ui->textBrowser->setText(qstr);
+    ui->textBrowser->setText(qstr);*/
+
+    string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
+    // ui->comboBox->addItem("None");
+    for (int i=0; i < rubric->cat.size(); i++) {
+        Category* temp = rubric->cat.at(i);
+        // Rubric* temp = integ->rubrics.at(i);
+        if(temp == cat) {
+            text += "<span style='background-color:aqua;'>";
+        } else {
+            text += "<span>";
+        }
+        text += "<a href='" + rubric->name.at(i) + "'>" + rubric->name[i] + " | " + to_string(rubric->cat[i]->pts) + "</a></span><br/>";
+        // text += integ->activeClass->list[i]->name + "\n";
+    }
+    text += "</body></html>";
+    qstra = QString::fromStdString(text);
+    ui->textBrowser->setHtml(qstra);
 
     cat = nullptr;
 
@@ -88,4 +105,17 @@ void AddCategory::on_pushButton_4_clicked()
         integ->delete_category(cat);
         set_integ(integ, rubric);
     }
+}
+
+void AddCategory::on_textBrowser_anchorClicked(const QUrl &arg1)
+{
+    string url = arg1.url().toStdString();
+    //cout << "URL" << url << endl;
+    for(unsigned i = 0; i < rubric->cat.size(); i++) {
+        Category* temp = rubric->cat.at(i);
+        if(rubric->name.at(i) == url) {
+            cat = temp;
+        }
+    }
+    this->set_integ(integ, rubric);
 }

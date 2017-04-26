@@ -256,7 +256,7 @@ void Code::insert(int position,string feed)
 //remove blank space (slot for feedback) from given position
 void Code::delete_space_for_feedback(int position)
 {
-    cout << "TESTINGFEED" << fullCode.at(position).substr(0,9) << endl;
+    //cout << "TESTINGFEED" << fullCode.at(position).substr(0,9) << endl;
     if(fullCode.at(position)[0] == '`' && fullCode.at(position)[1] == '`' && fullCode.at(position)[fullCode.at(position).length()-1] == '`') {
         vector<string>::iterator itDelete = fullCode.begin();
         advance(itDelete, position);
