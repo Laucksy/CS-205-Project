@@ -1,6 +1,7 @@
 #include "importrubric.h"
 #include "ui_importrubric.h"
 #include "selectrubric.h"
+#include <QFileDialog>
 
 importRubric::importRubric(QWidget *parent) :
     QWidget(parent),
@@ -23,6 +24,8 @@ void importRubric::import_rubric()
 {
     integ->import_rubric(path);
 }
+
+
 
 void importRubric::on_pushButton_2_clicked()
 {
@@ -48,4 +51,11 @@ void importRubric::on_pushButton_clicked()
 void importRubric::on_lineEdit_textChanged(const QString &arg1)
 {
     path = arg1.toStdString();
+}
+
+void importRubric::on_importRubricButton_clicked()
+{
+    QString importRubric = QFileDialog::getOpenFileName(this,tr("Open Rubric to Import"),"C://",tr("Txt (*.txt"));
+    integ->import_rubric(importRubric);
+
 }

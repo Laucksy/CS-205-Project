@@ -25,6 +25,8 @@ private slots:
 
     void on_lineEdit_textChanged(const QString &arg1);
 
+    void on_importRubricButton_clicked();
+
 private:
     Ui::importRubric *ui;
     Integration* integ;

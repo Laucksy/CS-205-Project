@@ -281,9 +281,10 @@ void ExportHTML::export_csv_assignment(Assignments* a) {
     string fileName = "assignment_" + a->name + ".csv";
     file.open(fileName.c_str());
     file << a->name << "\n";
+    file << "Student Name,Grade" << "\n";
     for(unsigned i = 0; i < a->list.size(); i++) {
         Assignment* temp = a->list.at(i);
-        file << temp->stu->name << "," << temp->grade;
+        file << temp->stu->name << "," << temp->grade << "\n";
         file.flush();
     }
     file.close();
@@ -296,17 +297,19 @@ void ExportHTML::export_csv_section(Students* s) {
     string fileName = "section_" + s->name + ".csv";
     file.open(fileName.c_str());
     file << s->name << "\n";
+    file << "Student Name,List of Grades" << "\n";
     for(unsigned i = 0; i < s->list.size(); i++) {
         Student* stu = s->list.at(i);
         file << stu->name << ",";
         for(unsigned j = 0; j < s->assignList.size(); j++) {
             Assignments* assign = s->assignList.at(j);
             if(assign->did_submit(stu)) {
-                file << assign->get_assignment(stu) << ",";
+                file << assign->get_assignment(stu)->get_grade() << ",";
             } else {
                 file << "0" << ",";
             }
         }
+        file << "\n";
         file.flush();
     }
     file.close();
