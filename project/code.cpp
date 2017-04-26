@@ -270,6 +270,15 @@ void Code::add_feedback(Feedback* newComment)
     profFeedback.push_back(newComment);
 }
 
+void Code::delete_feedback(int commentLoc)
+{
+    for(unsigned int i = 0; i < profFeedback.size(); i++)
+    {
+        if(profFeedback.at(i)->get_position()==commentLoc)
+            delete profFeedback.at(i);
+    }
+}
+
 /*categorize returns an int corresponding with the category the word falls in,
  * which can be used in coloring each word via cascade of if statements.
  */
