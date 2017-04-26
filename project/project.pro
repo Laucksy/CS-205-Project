@@ -32,3 +32,10 @@ LIBS += -l sqlite3
 
 DISTFILES += \
     ../../../Desktop/Wheel.java
+
+SOURCES += ../gtest/googletest/src/gtest-all.cc
+
+INCLUDEPATH +=  ../gtest                                   \
+                ../gtest/googletest                        \
+                ../gtest/googletest/include                \
+                ../gtest/googletest/include/gtest
