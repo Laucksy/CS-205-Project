@@ -4,6 +4,7 @@
 #include "newfile.h"
 #include "assignmentview.h"
 #include "sudentsubdirectory.h"
+#include <QFileDialog>
 
 submissionView::submissionView(QWidget *parent) :
     QWidget(parent),
@@ -112,22 +113,28 @@ void submissionView::on_pushButton_3_clicked()
 void submissionView::on_addDirectoryButton_clicked()
 {
     //Insert your code here
-    //integ->add_directory(assign, path); //Replace path with the file name you get from the file picker
-    /*sudentSubDirectory *dv= new sudentSubDirectory();
-    if (assignEdit) {
-        dv->set_integ(integ, assign,assignment);
-    } else {
-        dv->set_integ(integ, assign);
-    }
+    //QString path = QFileDialog::getOpenFileName(this,tr("Open Rubric to Import"),"C://",tr("Txt (*.txt)");
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+                                                 "C://",
+                                                 QFileDialog::ShowDirsOnly
+                                                 | QFileDialog::DontResolveSymlinks);
+    integ->add_directory(assign, dir); //Replace path with the file name you get from the file picker
+//   sudentSubDirectory *dv= new sudentSubDirectory();
+//    if (assignEdit) {
+//        dv->set_integ(integ, assign,assignment);
+//    } else {
+//        dv->set_integ(integ, assign);
+//    }
 
-    dv->show();
-    this->hide();*/
+//    dv->show();
+//    this->hide();
 }
 
 void submissionView::on_addFileButton_clicked()
 {
     //Insert your code here
-    //integ->add_new_file(assign, fn); //Replace fn with the file name you get from the file picker
+    QString fn = QFileDialog::getOpenFileName(this,tr("Select File to Add"),"C://",tr("Any files (*)");
+    integ->add_new_file(assign, fn); //Replace fn with the file name you get from the file picker
     /*if (assignEdit) {
         newFile *dv= new newFile();
         dv->set_integ(integ, assign, assignment);
