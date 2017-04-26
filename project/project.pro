@@ -1,8 +1,11 @@
 TEMPLATE = app
 CONFIG += console c++11
 CONFIG -= app_bundle
-#CONFIG -= qt
+CONFIG -= qt
 QT+= core
+
+LIBS += -l sqlite3 \
+        -pthread
 
 SOURCES += main.cpp \
     code.cpp
@@ -27,8 +30,6 @@ HEADERS += ../git/git.h \
 
 SOURCES += ../git/git.cpp \
            ../git/bash.cpp
-
-LIBS += -l sqlite3
 
 DISTFILES += \
     ../../../Desktop/Wheel.java

@@ -1,6 +1,8 @@
 #include <iostream>
 #include "code.h"
-#include <QDir>
+#include "gtest/gtest.h"
+
+//#include <QDir>
 
 using namespace std;
 
@@ -36,7 +38,7 @@ using namespace std;
 //}
 
 // The fixture for testing class Foo.
-class ProjectTest : public ::testing::Test {
+class ProjectTest : public::testing::Test {
 protected:
 
     // You can remove any or all of the following functions if its body
