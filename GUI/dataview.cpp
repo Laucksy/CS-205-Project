@@ -28,6 +28,9 @@ void DataView::set_integ(Integration *i)
 
 void DataView::on_pushButton_clicked()
 {
+    if(integ->activeSubmission == nullptr) {
+        integ->select_random_submission();
+    }
     if (integ->activeSubmission == nullptr) {
         ui->label->setText("Please create an assignment and submissions");
         return;
