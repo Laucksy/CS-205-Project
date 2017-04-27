@@ -27,6 +27,8 @@ private slots:
 
     void on_pushButton_4_clicked();
 
+    void on_textBrowser_anchorClicked(const QUrl &arg1);
+
 private:
     Ui::assignmentView *ui;
     Integration* integ;

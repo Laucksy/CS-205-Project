@@ -45,9 +45,9 @@ Code::~Code() {
     }
     //if valid object, adds or updates it in table
     if (isNew && id >= 0) {
-        add_row(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+        add_row(id, fileName, "", "", "", assignId);
     } else if (!isNew && id >= 0){
-        update_id(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+        update_id(id, fileName, "", "", "", assignId);
     } else {
 
     }
@@ -256,7 +256,7 @@ void Code::insert(int position,string feed)
 //remove blank space (slot for feedback) from given position
 void Code::delete_space_for_feedback(int position)
 {
-    cout << "TESTINGFEED" << fullCode.at(position).substr(0,9) << endl;
+    //cout << "TESTINGFEED" << fullCode.at(position).substr(0,9) << endl;
     if(fullCode.at(position)[0] == '`' && fullCode.at(position)[1] == '`' && fullCode.at(position)[fullCode.at(position).length()-1] == '`') {
         vector<string>::iterator itDelete = fullCode.begin();
         advance(itDelete, position);
@@ -729,9 +729,9 @@ int cb_select_id_code(void  *data,
 
     // assign object members from table data
     obj->fileName = argv[1];
-    obj->parse_full(argv[2]);
-    obj->parse_comments(argv[3]);
-    obj->parse_lines(argv[4]);
+    //obj->parse_full(argv[2]);
+    //obj->parse_comments(argv[3]);
+    //obj->parse_lines(argv[4]);
     obj->assignId = atoi(argv[5]);
 
     return 0;

@@ -16,6 +16,8 @@ submissionView::submissionView(QWidget *parent) :
 submissionView::~submissionView()
 {
     delete ui;
+
+    code = nullptr;
 }
 
 void submissionView::set_integ(Integration *i, Assignment* a)
@@ -28,15 +30,30 @@ void submissionView::set_integ(Integration *i, Assignment* a)
     ui->comboBox->clear();
 
     QString qstra;
-    string text;
+    /*string text;
     for (int i=0; i <assign->files.size(); i++) {
         text += assign->files[i]->fileName + "\n";
     }
+    qstra = QString::fromStdString(text);*/
+
+    string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
+    // ui->comboBox->addItem("None");
+    for (int i=0; i < assign->files.size(); i++) {
+        Code* temp = assign->files.at(i);
+        // Rubric* temp = integ->rubrics.at(i);
+        if(temp == code) {
+            text += "<span style='background-color:aqua;'>";
+        } else {
+            text += "<span>";
+        }
+        text += "<a href='" + temp->fileName + "'>" + temp->fileName + "</a></span><br/>";
+        // text += integ->activeClass->list[i]->name + "\n";
+    }
+    text += "</body></html>";
     qstra = QString::fromStdString(text);
+    ui->textBrowser->setHtml(qstra);
 
-    ui->textBrowser->setText(qstra);
-
-    code = nullptr;
+    //ui->textBrowser->setText(qstra);
 
     ui->comboBox->addItem("None");
 
@@ -55,15 +72,30 @@ void submissionView::set_integ(Integration *i, Assignment* a, Assignments* as)
     ui->comboBox->clear();
 
     QString qstra;
-    string text;
+    /*string text;
     for (int i=0; i <assign->files.size(); i++) {
         text += assign->files[i]->fileName + "\n";
     }
     qstra = QString::fromStdString(text);
 
-    ui->textBrowser->setText(qstra);
+    ui->textBrowser->setText(qstra);*/
 
-    code = nullptr;
+    string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
+    // ui->comboBox->addItem("None");
+    for (int i=0; i < assign->files.size(); i++) {
+        Code* temp = assign->files.at(i);
+        // Rubric* temp = integ->rubrics.at(i);
+        if(temp == code) {
+            text += "<span style='background-color:aqua;'>";
+        } else {
+            text += "<span>";
+        }
+        text += "<a href='" + temp->fileName + "'>" + temp->fileName + "</a></span><br/>";
+        // text += integ->activeClass->list[i]->name + "\n";
+    }
+    text += "</body></html>";
+    qstra = QString::fromStdString(text);
+    ui->textBrowser->setHtml(qstra);
 
     ui->comboBox->addItem("None");
 
@@ -100,13 +132,23 @@ void submissionView::on_comboBox_activated(const QString &arg1)
     if (arg1.toStdString() == "None") {
         code = nullptr;
     }
+
+    if (!assignEdit) {
+        set_integ(integ, assign);
+    } else {
+        set_integ(integ, assign, assignment);
+    }
 }
 
 void submissionView::on_pushButton_3_clicked()
 {
     if (code != nullptr) {
         integ->delete_file(code);
-        set_integ(integ, assign);
+        if (!assignEdit) {
+            set_integ(integ, assign);
+        } else {
+            set_integ(integ, assign, assignment);
+        }
     }
 }
 
@@ -118,8 +160,13 @@ void submissionView::on_addDirectoryButton_clicked()
                                                  "C://",
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
+    cout << dir.toStdString() << endl;
     integ->add_directory(assign, dir.toStdString()); //Replace path with the file name you get from the file picker
-    this->set_integ(integ, assign);
+    if (!assignEdit) {
+        set_integ(integ, assign);
+    } else {
+        set_integ(integ, assign, assignment);
+    }
 
     //   sudentSubDirectory *dv= new sudentSubDirectory();
 //    if (assignEdit) {
@@ -136,8 +183,13 @@ void submissionView::on_addFileButton_clicked()
 {
     //Insert your code here
     QString fn = QFileDialog::getOpenFileName(this,tr("Select File to Add"),"C://",tr("Any files (*)"));
+    cout << fn.toStdString() << endl;
     integ->add_new_file(assign, fn.toStdString()); //Replace fn with the file name you get from the file picker
-    this->set_integ(integ, assign);
+    if (!assignEdit) {
+        set_integ(integ, assign);
+    } else {
+        set_integ(integ, assign, assignment);
+    }
     /*if (assignEdit) {
         newFile *dv= new newFile();
         dv->set_integ(integ, assign, assignment);
@@ -151,4 +203,21 @@ void submissionView::on_addFileButton_clicked()
         dv->show();
         this->hide();
     }*/
+}
+
+void submissionView::on_textBrowser_anchorClicked(const QUrl &arg1)
+{
+    string url = arg1.url().toStdString();
+    //cout << "URL" << url << endl;
+    for(unsigned i = 0; i < assign->files.size(); i++) {
+        Code* temp = assign->files.at(i);
+        if(temp->fileName == url) {
+            code = temp;
+        }
+    }
+    if (!assignEdit) {
+        set_integ(integ, assign);
+    } else {
+        set_integ(integ, assign, assignment);
+    }
 }

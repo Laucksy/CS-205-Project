@@ -28,6 +28,8 @@ private slots:
 
     void on_addFileButton_clicked();
 
+    void on_textBrowser_anchorClicked(const QUrl &arg1);
+
 private:
     Ui::submissionView *ui;
     Integration* integ;

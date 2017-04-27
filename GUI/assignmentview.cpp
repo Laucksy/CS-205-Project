@@ -18,6 +18,8 @@ assignmentView::assignmentView(QWidget *parent) :
 assignmentView::~assignmentView()
 {
     delete ui;
+
+    submit = nullptr;
 }
 
 void assignmentView::set_integ(Integration *i)
@@ -29,19 +31,34 @@ void assignmentView::set_integ(Integration *i)
     ui->comboBox->clear();
 
     QString qstra;
-    string text;
+    /*string text;
     for (int i=0; i <assign->list.size(); i++) {
         text += assign->list[i]->stu->name + "\n";
     }
     qstra = QString::fromStdString(text);
 
-    ui->textBrowser->setText(qstra);
+    ui->textBrowser->setText(qstra);*/
+
+    string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
+    // ui->comboBox->addItem("None");
+    for (int i=0; i < assign->list.size(); i++) {
+        Assignment* temp = assign->list.at(i);
+        // Rubric* temp = integ->rubrics.at(i);
+        if(temp == submit) {
+            text += "<span style='background-color:aqua;'>";
+        } else {
+            text += "<span>";
+        }
+        text += "<a href='" + temp->stu->name + "'>" + temp->stu->name + "</a></span><br/>";
+        // text += integ->activeClass->list[i]->name + "\n";
+    }
+    text += "</body></html>";
+    qstra = QString::fromStdString(text);
+    ui->textBrowser->setHtml(qstra);
 
     QString qstrb =  QString::fromStdString(assign->name);
 
     ui->label_2->setText(qstrb);
-
-    submit = nullptr;
 
     ui->comboBox->addItem("None");
 
@@ -59,19 +76,34 @@ void assignmentView::set_integ(Integration *i, Assignments* a)
     ui->comboBox->clear();
 
     QString qstra;
-    string text;
+    /*string text;
     for (int i=0; i <assign->list.size(); i++) {
         text += assign->list[i]->stu->name + "\n";
     }
     qstra = QString::fromStdString(text);
 
-    ui->textBrowser->setText(qstra);
+    ui->textBrowser->setText(qstra);*/
+
+    string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
+    // ui->comboBox->addItem("None");
+    for (int i=0; i < assign->list.size(); i++) {
+        Assignment* temp = assign->list.at(i);
+        // Rubric* temp = integ->rubrics.at(i);
+        if(temp == submit) {
+            text += "<span style='background-color:aqua;'>";
+        } else {
+            text += "<span>";
+        }
+        text += "<a href='" + temp->stu->name + "'>" + temp->stu->name + "</a></span><br/>";
+        // text += integ->activeClass->list[i]->name + "\n";
+    }
+    text += "</body></html>";
+    qstra = QString::fromStdString(text);
+    ui->textBrowser->setHtml(qstra);
 
     QString qstrb =  QString::fromStdString(assign->name);
 
     ui->label_2->setText(qstrb);
-
-    submit = nullptr;
 
     ui->comboBox->addItem("None");
 
@@ -117,6 +149,12 @@ void assignmentView::on_comboBox_activated(const QString &arg1)
     if (arg1.toStdString() == "None") {
         submit = nullptr;
     }
+
+    if (edit) {
+        this->set_integ(integ, assign);
+    } else {
+        this->set_integ(integ);
+    }
 }
 
 void assignmentView::on_pushButton_3_clicked()
@@ -143,5 +181,22 @@ void assignmentView::on_pushButton_4_clicked()
             dv->show();
             this->hide();
         }
+    }
+}
+
+void assignmentView::on_textBrowser_anchorClicked(const QUrl &arg1)
+{
+    string url = arg1.url().toStdString();
+    //cout << "URL" << url << endl;
+    for(unsigned i = 0; i < assign->list.size(); i++) {
+        Assignment* temp = assign->list.at(i);
+        if(temp->stu->name == url) {
+            submit = temp;
+        }
+    }
+    if (edit) {
+        this->set_integ(integ, assign);
+    } else {
+        this->set_integ(integ);
     }
 }
