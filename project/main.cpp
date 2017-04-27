@@ -96,9 +96,12 @@ TEST_F(ProjectTest, TESTONE) {
 }
 
 TEST_F(ProjectTest, TESTTWO) {
+    DBTool* t = new DBTool("BaseDrop");
+   Code* c = new Code(t,"n",1);
+   string namer = "name";
+   c->set_file(namer);
+   ASSERT_TRUE(c->get_name()==namer);
 
-   // r1->calc_grade();
-   // ASSERT_EQ(10, r1->get_grade());
 }
 
 
