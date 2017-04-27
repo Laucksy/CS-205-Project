@@ -45,9 +45,9 @@ Code::~Code() {
     }
     //if valid object, adds or updates it in table
     if (isNew && id >= 0) {
-        add_row(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+        add_row(id, fileName, "", "", "", assignId);
     } else if (!isNew && id >= 0){
-        update_id(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+        update_id(id, fileName, "", "", "", assignId);
     } else {
 
     }
@@ -729,9 +729,9 @@ int cb_select_id_code(void  *data,
 
     // assign object members from table data
     obj->fileName = argv[1];
-    obj->parse_full(argv[2]);
-    obj->parse_comments(argv[3]);
-    obj->parse_lines(argv[4]);
+    //obj->parse_full(argv[2]);
+    //obj->parse_comments(argv[3]);
+    //obj->parse_lines(argv[4]);
     obj->assignId = atoi(argv[5]);
 
     return 0;

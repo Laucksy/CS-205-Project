@@ -15,6 +15,8 @@ classView::classView(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    stu = nullptr;
+
 }
 
 classView::~classView()
@@ -59,8 +61,6 @@ void classView::set_integ(Integration *i)
     QString qstrb =  QString::fromStdString(integ->activeClass->name);
 
     ui->classTitle->setText(qstrb);
-
-    stu = nullptr;
 
     ui->comboBox->addItem("None");
 
@@ -107,8 +107,6 @@ void classView::set_integ(Integration *i, Students* s)
 
     ui->classTitle->setText(qstrb);
 
-    stu = nullptr;
-
     ui->comboBox->addItem("None");
 
     for (Student* k : sec->list) {
@@ -149,6 +147,12 @@ void classView::on_comboBox_activated(const QString &arg1)
 
     if (arg1.toStdString() == "None") {
         stu = nullptr;
+    }
+
+    if (edit) {
+        set_integ(integ, sec);
+    } else {
+        set_integ(integ);
     }
 }
 
@@ -197,5 +201,9 @@ void classView::on_textBrowser_anchorClicked(const QUrl &arg1)
             stu = temp;
         }
     }
-    this->set_integ(integ, sec);
+    if (edit) {
+        set_integ(integ, sec);
+    } else {
+        set_integ(integ);
+    }
 }

@@ -16,6 +16,8 @@ submissionView::submissionView(QWidget *parent) :
 submissionView::~submissionView()
 {
     delete ui;
+
+    code = nullptr;
 }
 
 void submissionView::set_integ(Integration *i, Assignment* a)
@@ -52,8 +54,6 @@ void submissionView::set_integ(Integration *i, Assignment* a)
     ui->textBrowser->setHtml(qstra);
 
     //ui->textBrowser->setText(qstra);
-
-    code = nullptr;
 
     ui->comboBox->addItem("None");
 
@@ -97,8 +97,6 @@ void submissionView::set_integ(Integration *i, Assignment* a, Assignments* as)
     qstra = QString::fromStdString(text);
     ui->textBrowser->setHtml(qstra);
 
-    code = nullptr;
-
     ui->comboBox->addItem("None");
 
     for (Code* k : a->files) {
@@ -133,6 +131,12 @@ void submissionView::on_comboBox_activated(const QString &arg1)
 
     if (arg1.toStdString() == "None") {
         code = nullptr;
+    }
+
+    if (!assignEdit) {
+        set_integ(integ, assign);
+    } else {
+        set_integ(integ, assign, assignment);
     }
 }
 
@@ -211,5 +215,9 @@ void submissionView::on_textBrowser_anchorClicked(const QUrl &arg1)
             code = temp;
         }
     }
-    this->set_integ(integ, assign);
+    if (!assignEdit) {
+        set_integ(integ, assign);
+    } else {
+        set_integ(integ, assign, assignment);
+    }
 }

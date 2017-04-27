@@ -18,6 +18,8 @@ assignmentView::assignmentView(QWidget *parent) :
 assignmentView::~assignmentView()
 {
     delete ui;
+
+    submit = nullptr;
 }
 
 void assignmentView::set_integ(Integration *i)
@@ -57,8 +59,6 @@ void assignmentView::set_integ(Integration *i)
     QString qstrb =  QString::fromStdString(assign->name);
 
     ui->label_2->setText(qstrb);
-
-    submit = nullptr;
 
     ui->comboBox->addItem("None");
 
@@ -105,8 +105,6 @@ void assignmentView::set_integ(Integration *i, Assignments* a)
 
     ui->label_2->setText(qstrb);
 
-    submit = nullptr;
-
     ui->comboBox->addItem("None");
 
     for (Assignment* k : assign->list) {
@@ -151,6 +149,12 @@ void assignmentView::on_comboBox_activated(const QString &arg1)
     if (arg1.toStdString() == "None") {
         submit = nullptr;
     }
+
+    if (edit) {
+        this->set_integ(integ, assign);
+    } else {
+        this->set_integ(integ);
+    }
 }
 
 void assignmentView::on_pushButton_3_clicked()
@@ -190,5 +194,9 @@ void assignmentView::on_textBrowser_anchorClicked(const QUrl &arg1)
             submit = temp;
         }
     }
-    this->set_integ(integ, assign);
+    if (edit) {
+        this->set_integ(integ, assign);
+    } else {
+        this->set_integ(integ);
+    }
 }

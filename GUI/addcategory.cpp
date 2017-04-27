@@ -12,6 +12,7 @@ AddCategory::AddCategory(QWidget *parent) :
     ui(new Ui::AddCategory)
 {
     ui->setupUi(this);
+    cat = nullptr;
 
 }
 
@@ -54,7 +55,7 @@ void AddCategory::set_integ(Integration *i, Rubric* r)
     qstra = QString::fromStdString(text);
     ui->textBrowser->setHtml(qstra);
 
-    cat = nullptr;
+    //cat = nullptr;
 
     ui->comboBox->addItem("None");
 
@@ -97,6 +98,8 @@ void AddCategory::on_comboBox_activated(const QString &arg1)
     } else {
         cat = nullptr;
     }
+
+    set_integ(integ, rubric);
 }
 
 void AddCategory::on_pushButton_4_clicked()

@@ -14,6 +14,8 @@ selectAssignment::selectAssignment(QWidget *parent) :
 selectAssignment::~selectAssignment()
 {
     delete ui;
+
+    assign = nullptr;
 }
 
 void selectAssignment::set_integ(Integration *i)
@@ -40,8 +42,6 @@ void selectAssignment::set_integ(Integration *i)
     qstra = QString::fromStdString(text);
     ui->textBrowser->setHtml(qstra);
     //ui->textBrowser->setText(qstra);
-
-    assign = nullptr;
 
     ui->comboBox->addItem("None");
 
@@ -86,12 +86,15 @@ void selectAssignment::on_comboBox_activated(const QString &arg1)
     for (Assignments* k : integ->assignments) {
         if (arg1.toStdString() == k->name) {
             assign = k;
+            integ->set_active_assignment(k);
         }
     }
 
     if (arg1.toStdString() == "None") {
         assign = nullptr;
     }
+
+    set_integ(integ);
 }
 
 void selectAssignment::on_pushButton_2_clicked()
@@ -140,6 +143,7 @@ void selectAssignment::on_textBrowser_anchorClicked(const QUrl &arg1) {
         Assignments* temp = integ->assignments.at(i);
         if(temp->name == url) {
             integ->set_active_assignment(temp);
+            assign = temp;
         }
     }
     this->set_integ(integ);

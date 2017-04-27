@@ -14,6 +14,7 @@ selectClass::selectClass(QWidget *parent) :
 selectClass::~selectClass()
 {
     delete ui;
+    section = nullptr;
 }
 
 void selectClass::set_integ(Integration *i)
@@ -64,8 +65,6 @@ void selectClass::set_integ(Integration *i)
     ui->textBrowser->setHtml(qstra);
     //ui->textBrowser->setText(qstra);
 
-    section = nullptr;
-
     ui->comboBox->addItem("None");
 
     for (Students* k : integ->students) {
@@ -114,6 +113,8 @@ void selectClass::on_comboBox_activated(const QString &arg1)
     if (arg1.toStdString() == "None") {
         section = nullptr;
     }
+
+    set_integ(integ);
 }
 
 void selectClass::on_pushButton_clicked()
@@ -152,6 +153,7 @@ void selectClass::on_textBrowser_anchorClicked(const QUrl &arg1)
         Students* temp = integ->students.at(i);
         if(temp->name == url) {
             integ->set_active_class(temp);
+            section = temp;
         }
     }
     this->set_integ(integ);
