@@ -71,8 +71,8 @@ void selectRubric::set_integ(Integration *i)
 
     ui->comboBox->addItem("None");
 
-    for (Students* k : integ->students) {
-        ui->comboBox->addItem(QString::fromStdString(k->name));
+    for (Rubric* k : integ->rubrics) {
+        ui->comboBox->addItem(QString::fromStdString(k->title));
     }
 
 }
@@ -106,6 +106,8 @@ void selectRubric::on_comboBox_activated(const QString &arg1)
     if (arg1.toStdString() == "None") {
         grade = nullptr;
     }
+
+    set_integ(integ);
 }
 
 void selectRubric::on_pushButton_clicked()
