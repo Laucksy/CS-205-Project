@@ -81,6 +81,7 @@ void textView::clickComment(int pos, Code* myCode){
 /*Code* textView::updateCode(Code* myCode)
 {
     if (myCode != nullptr) {
+        cout << myCode->get_name() << endl;
         writing=true;
 
         ui->textBrowser->clear();
@@ -99,10 +100,8 @@ void textView::clickComment(int pos, Code* myCode){
 
         vector<string> v = x->parse();
         cerr<<v.size();
-        ui->textBrowser->setHTML("<html><head><style>a {text-decoration: none; color: black;}</style></head><body>");
         for(int i=0; i<v.size(); i++){//lines
-            ext += "<a href='" + temp->name + "'>" + temp->name + "</a></span><br/>";
-            ui->textBrowser->insertHtml("<a href='" + i + "'>");
+            //ext += "<a href='" + temp->name + "'>" + temp->name + "</a></span><br/>";
             vector<string> tokens = x->tokenize(v[i]);
             vector<string> delims = x->delimiters(v.at(i));
             if(1){
@@ -119,17 +118,17 @@ void textView::clickComment(int pos, Code* myCode){
                 ui->textBrowser->setTextColor("Orange");
                 QString temp= QString::fromStdString(s);
 
-                ui->textBrowser->insertHtml(temp);
+                ui->textBrowser->insertPlainText(temp);
             }
 
             if(v.at(i)[0] == '`' && v.at(i)[1] == '`' && v.at(i)[v.at(i).length()-1] == '`') {
                 ui->textBrowser->setTextColor("Yellow");
                 QString qstr = QString::fromStdString("FEEDBACK: ");
-                ui->textBrowser->insertHtml(qstr);
+                ui->textBrowser->insertPlainText(qstr);
                 qstr = QString::fromStdString(v.at(i).substr(2,v.at(i).length()-3));
-                ui->textBrowser->insertHtml(qstr);
+                ui->textBrowser->insertPlainText(qstr);
                 qstr = QString::fromStdString("\n");
-                ui->textBrowser->insertHtml(qstr);
+                ui->textBrowser->insertPlainText(qstr);
                 continue;
             }
 
@@ -328,12 +327,14 @@ void textView::clickComment(int pos, Code* myCode){
 
 }*/
 
-Code* textView::updateCode(Code* myCode) {
+Code* textView::updateCode(Code* mc) {
+    cout << "Update code" << endl;
     string rawHTML = "";
     rawHTML += "<html><head><style>a {text-decoration: none; color: black;}</style></head><body style='background-color:#333333'>";
 
-    if(myCode != nullptr) {
-        Code* firstFile = myCode;
+    if(mc != nullptr) {
+        writing = true;
+        Code* firstFile = mc;
 
         string fileName = firstFile->fileName.substr(firstFile->fileName.find_last_of("/")+1);
 
@@ -509,8 +510,10 @@ Code* textView::updateCode(Code* myCode) {
     }
     rawHTML += "</body></html>";
     ui->textBrowser->setHtml(QString::fromStdString(rawHTML));
+    writing = false;
     return myCode;
 }
+
 
 void textView::on_lineEdit_2_textChanged(const QString &arg1)
 {
@@ -545,7 +548,8 @@ void textView::on_pushButton_2_clicked()
 void textView::on_comboBox_2_activated(const QString &arg1)
 {
     for (Code* k : integ->activeSubmission->files) {
-        if (arg1 == QString::fromStdString(k->fileName)) {
+        string obfuscatedFileName = k->fileName.substr(k->fileName.find_last_of("/")+1);
+        if (arg1 == QString::fromStdString(obfuscatedFileName)) {
             integ->activeFile = k;
             myCode = integ->activeFile;
         }
