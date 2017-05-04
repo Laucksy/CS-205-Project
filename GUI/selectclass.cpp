@@ -54,6 +54,7 @@ void selectClass::set_integ(Integration *i)
         // Rubric* temp = integ->rubrics.at(i);
         if(temp == integ->activeClass) {
             text += "<span style='background-color:aqua;'>";
+            section = integ->activeClass;
         } else {
             text += "<span>";
         }
@@ -70,7 +71,7 @@ void selectClass::set_integ(Integration *i)
     for (Students* k : integ->students) {
         ui->comboBox->addItem(QString::fromStdString(k->name));
     }
-
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(QString::fromStdString(integ->activeClass->name)));
 }
 
 
@@ -115,6 +116,7 @@ void selectClass::on_comboBox_activated(const QString &arg1)
     }
 
     set_integ(integ);
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(arg1));
 }
 
 void selectClass::on_pushButton_clicked()
@@ -157,4 +159,5 @@ void selectClass::on_textBrowser_anchorClicked(const QUrl &arg1)
         }
     }
     this->set_integ(integ);
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(QString::fromStdString(url)));
 }

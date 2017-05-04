@@ -32,6 +32,7 @@ void selectAssignment::set_integ(Integration *i)
         // Rubric* temp = integ->rubrics.at(i);
         if(temp == integ->activeAssignemnt) {
             text += "<span style='background-color:aqua;'>";
+            assign = integ->activeAssignemnt;
         } else {
             text += "<span>";
         }
@@ -49,7 +50,7 @@ void selectAssignment::set_integ(Integration *i)
         ui->comboBox->addItem(QString::fromStdString(k->name));
     }
 
-
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(QString::fromStdString(integ->activeAssignemnt->name)));
 
 
 }
@@ -95,6 +96,7 @@ void selectAssignment::on_comboBox_activated(const QString &arg1)
     }
 
     set_integ(integ);
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(arg1));
 }
 
 void selectAssignment::on_pushButton_2_clicked()
@@ -115,11 +117,16 @@ void selectAssignment::on_pushButton_3_clicked()
 void selectAssignment::on_pushButton_clicked()
 {
     if (assign != nullptr) {
+        cout << "Crash edit" << endl;
         integ->set_active_assignment(assign);
+        cout << "Here 1" << endl;
         assignmentView *dv= new assignmentView();
+        cout << "Here 2" << endl;
         dv->set_integ(integ, assign);
+        cout << "Here 3" << endl;
         integ->set_active_assignment(assign);
 
+        cout << "Didn't crash edit" << endl;
         dv->show();
         this->hide();
     }
@@ -147,4 +154,5 @@ void selectAssignment::on_textBrowser_anchorClicked(const QUrl &arg1) {
         }
     }
     this->set_integ(integ);
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(QString::fromStdString(url)));
 }
