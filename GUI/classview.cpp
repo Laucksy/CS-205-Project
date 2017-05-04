@@ -154,6 +154,7 @@ void classView::on_comboBox_activated(const QString &arg1)
     } else {
         set_integ(integ);
     }
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(arg1));
 }
 
 void classView::on_pushButton_3_clicked()
@@ -206,4 +207,5 @@ void classView::on_textBrowser_anchorClicked(const QUrl &arg1)
     } else {
         set_integ(integ);
     }
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(QString::fromStdString(url)));
 }

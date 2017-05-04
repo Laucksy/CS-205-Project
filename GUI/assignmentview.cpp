@@ -24,6 +24,7 @@ assignmentView::~assignmentView()
 
 void assignmentView::set_integ(Integration *i)
 {
+    cout << "set integ 1" << endl;
     edit = false;
     integ = i;
     assign = integ->activeAssignemnt;
@@ -69,11 +70,14 @@ void assignmentView::set_integ(Integration *i)
 
 void assignmentView::set_integ(Integration *i, Assignments* a)
 {
+    cout << "Start set integ" << endl;
     edit = true;
     integ = i;
     assign = a;
 
     ui->comboBox->clear();
+
+    if(assign ==nullptr) {return;}
 
     QString qstra;
     /*string text;
@@ -110,6 +114,7 @@ void assignmentView::set_integ(Integration *i, Assignments* a)
     for (Assignment* k : assign->list) {
         ui->comboBox->addItem(QString::fromStdString(k->stu->name));
     }
+    cout << "finished set integ" << endl;
 }
 void assignmentView::on_pushButton_2_clicked()
 {
@@ -155,6 +160,7 @@ void assignmentView::on_comboBox_activated(const QString &arg1)
     } else {
         this->set_integ(integ);
     }
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(arg1));
 }
 
 void assignmentView::on_pushButton_3_clicked()
@@ -199,4 +205,5 @@ void assignmentView::on_textBrowser_anchorClicked(const QUrl &arg1)
     } else {
         this->set_integ(integ);
     }
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(QString::fromStdString(url)));
 }
