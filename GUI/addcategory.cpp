@@ -100,6 +100,7 @@ void AddCategory::on_comboBox_activated(const QString &arg1)
     }
 
     set_integ(integ, rubric);
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(arg1));
 }
 
 void AddCategory::on_pushButton_4_clicked()
@@ -114,11 +115,12 @@ void AddCategory::on_textBrowser_anchorClicked(const QUrl &arg1)
 {
     string url = arg1.url().toStdString();
     //cout << "URL" << url << endl;
-    for(unsigned i = 0; i < rubric->cat.size(); i++) {
+    for(unsigned i = 0; i < rubric->name.size(); i++) {
         Category* temp = rubric->cat.at(i);
         if(rubric->name.at(i) == url) {
             cat = temp;
         }
     }
     this->set_integ(integ, rubric);
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(QString::fromStdString(url)));
 }
