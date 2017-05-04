@@ -59,10 +59,13 @@ void textView::set_integ(Integration *i)
         myCode = integ->activeFile;
     }
 
+    cout << "Before update rubric" << endl;
     update_rubric();
+    cout << "After update rubric" << endl;
 }
 
 void textView::makeComment(Code* myCode){
+    if(myCode == nullptr) {return;}
     myCode->insert(commentLoc,newFeedback + ":: " + tag);
     integ->add_new_feedback(newFeedback, tag, commentLoc);
     //ui->textBrowser->clear();
@@ -71,6 +74,7 @@ void textView::makeComment(Code* myCode){
 }
 
 void textView::clickComment(int pos, Code* myCode){
+    if(myCode == nullptr) {return;}
     myCode->insert(pos,newFeedback + ":: " + tag);
     integ->add_new_feedback(newFeedback, tag, pos);
     //ui->textBrowser->clear();
@@ -508,6 +512,7 @@ Code* textView::updateCode(Code* mc) {
         }
         rawHTML += "</div>";
     }
+    //cout << "Got past if statement" << endl;
     rawHTML += "</body></html>";
     ui->textBrowser->setHtml(QString::fromStdString(rawHTML));
     writing = false;
@@ -565,10 +570,17 @@ void textView::update_rubric()
 {
     Assignment* active = integ->activeSubmission;
 
-    for (int i = 0; i < active->gradeCategory.size(); i++) {
-        active->change_grade(active->gradeComponent[i], active->gradeCategory[i]);
+    if(active == nullptr) {return;}
+
+    for (int i = 0;i < active->gradeCategory.size(); i++) {
+        if(/*active->gradeComponent[i] != NULL && */active->gradeCategory[i] != "") {
+            //active->change_grade(active->gradeComponent[i], active->gradeCategory[i]);
+        }
     }
 
+    cout << "Got here in update rubric" << endl;
+
+    if(integ->activeSubmission == nullptr) {return;}
     vector<Feedback*> comments;
     for (Code* k : integ->activeSubmission->files) {
         for (Feedback* j : k->profFeedback) {
@@ -576,8 +588,11 @@ void textView::update_rubric()
         }
     }
 
+    cout << "Made it to this point in update rubric" << endl;
+
     string rubric;
     for (int i = 0; i < integ->activeSubmission->gradeCategory.size(); i++) {
+        if(active->rubric->cat[i] == nullptr) {return;}
         string component = to_string(roundf(active->gradeComponent[i]*100)/100);
         string total = to_string(roundf(active->rubric->cat[i]->pts*100)/100);
         if (active->gradeQuality[i] == "NULL" || active->gradeQuality[i] == "NULL2") {
@@ -703,4 +718,10 @@ void textView::on_comboBox_4_activated(const QString &arg1)
     ui->lineEdit->clear();
     ui->lineEdit->insert(arg1);
     ui->lineEdit->textEdited(arg1);
+}
+
+void textView::on_saveButton_clicked()
+{
+    delete integ;
+    set_integ(new Integration(".", "TestDB"));
 }
