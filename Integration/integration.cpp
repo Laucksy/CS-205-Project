@@ -276,6 +276,7 @@ Assignment* Integration::add_new_submission(Rubric* rubric, Student* student)
 // add new code files to the provided assignemnt
 void Integration::add_new_file(Assignment* assign, string name)
 {
+    /*
     cout << "Start new file" << endl;
     string pwd = Bash::exec("pwd");
     //cout << pwd.length() << "," << pwd.length()-1 << endl;
@@ -294,10 +295,12 @@ void Integration::add_new_file(Assignment* assign, string name)
     //}
     //Bash::exec("cp " + Git::escape_spaces(name) + " " + Git::escape_spaces(pwd));
     //string simpleFileName = name.substr(name.find_last_of("/"));
-    cout << "Here new file" << endl;
-    Code* f = new Code(db, name, assign->id);
+    */
+    string newPath = Bash::copy(assign, name);
+    cout << "Here new file " << newPath << endl;
+    Code* f = new Code(db, newPath, assign->id);
     assign->files.push_back(f);
-    Git::add_file(name.substr(1,name.length()-1));
+    Git::add_file(newPath.substr(1,newPath.length()-1));
     cout << "Finishing method" << endl;
 }
 
@@ -315,7 +318,7 @@ void Integration::add_new_category(Rubric* rubric, string name, double points, v
 {
     Category* c = new Category(db, rubric, points, matrix);
 
-    for (int i = 0; i < markers.size(); i++) {
+    for (unsigned i = 0; i < markers.size(); i++) {
         c->add_quality(quality[i], markers[i]);
     }
 
@@ -339,7 +342,7 @@ void Integration::delete_class(Students* g)
 {
     g->set_to_delete();
 
-    for (int i = 0; i < students.size(); i++) {
+    for (unsigned i = 0; i < students.size(); i++) {
         if (g == students[i]) {
             for (Student* k : g->list) {
                 delete_student(k);
@@ -358,7 +361,7 @@ void Integration::delete_student(Student* s)
 
     for (Students* k : students) {
         if (k->id == classId) {
-            for (int i = 0; i < k->list.size(); i++) {
+            for (unsigned i = 0; i < k->list.size(); i++) {
                 if (s == k->list[i]) {
                     for (Assignment* k : s->list) {
                         delete_submission(k);
@@ -376,7 +379,7 @@ void Integration::delete_assignment(Assignments* l)
 {
     l->set_to_delete();
 
-    for (int i = 0; i < assignments.size(); i++) {
+    for (unsigned i = 0; i < assignments.size(); i++) {
         if (l == assignments[i]) {
             for (Assignment* k : l->list) {
                 delete_submission(k);
@@ -395,7 +398,7 @@ void Integration::delete_submission(Assignment* a)
 
     for (Assignments* k : assignments) {
         if (k->id == assignId) {
-            for (int i = 0; i < k->list.size(); i++) {
+            for (unsigned i = 0; i < k->list.size(); i++) {
                 if (a == k->list[i]) {
                     for (Code* k : a->files) {
                         delete_file(k);
@@ -425,7 +428,7 @@ void Integration::delete_file(Code* o)
     }
 
     if (assign != nullptr) {
-        for (int i = 0; i < assign->files.size(); i++) {
+        for (unsigned i = 0; i < assign->files.size(); i++) {
             if (o == assign->files[i]) {
                 assign->files.erase(assign->files.begin() + i);
                 for (Feedback* k : o->profFeedback) {
@@ -442,7 +445,7 @@ void Integration::delete_rubric(Rubric* r)
 {
     r->set_to_delete();
 
-    for (int i = 0; i < rubrics.size(); i++) {
+    for (unsigned i = 0; i < rubrics.size(); i++) {
         if (r == rubrics[i]) {
             for (Category* k : r->cat) {
                 delete_category(k);
@@ -461,7 +464,7 @@ void Integration::delete_category(Category* c)
 
     for (Rubric* k : rubrics) {
         if (k->id == rubId) {
-            for (int i = 0; i < k->cat.size(); i++) {
+            for (unsigned i = 0; i < k->cat.size(); i++) {
                 if (c == k->cat[i]) {
                     delete c;
                     k->cat.erase(k->cat.begin() + i);
@@ -490,7 +493,7 @@ void Integration::delete_feedback(Feedback* f)
     }
 
     if (code != nullptr) {
-        for (int i = 0; i < code->profFeedback.size(); i++) {
+        for (unsigned i = 0; i < code->profFeedback.size(); i++) {
             if (f == code->profFeedback[i]) {
                 delete f;
                 code->profFeedback.erase(code->profFeedback.begin() + i);
