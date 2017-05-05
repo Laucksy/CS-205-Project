@@ -28,6 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <sys/types.h>
 
 #include "dbtool.h"
+#include "../project/macros.h"
 
 /**
  * @brief The DBTable class
@@ -47,6 +48,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * A called to sqlite_exec is detailed in the exist method, which
  * is how these classes interfaces to the SQLite tool.
  */
+
+class DBTool;
 
 class DBTable {
 

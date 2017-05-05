@@ -96,8 +96,8 @@ string Category::find_qual(double p)
     string ret;
     int ind = -1;
 
-    for (int i = 0; i < points.size(); i++) {
-        if ((p >= points[i] && ind != -1 && points[ind] < points[i]) || (p >= points[i] && ind == -1)) {
+    for (unsigned i = 0; i < points.size(); i++) {
+        if ((p >= points.at(i) && ind != -1 && points.at(ind) < points.at(i)) || (p >= points.at(i) && ind == -1)) {
           ret = quality[i];
           ind = i;
         }
@@ -450,7 +450,7 @@ int cb_select_id_category(void  *data,
                         char **argv,
                         char **azColName)
 {
-
+    Q_UNUSED(azColName);
 
 
     std::cerr << "cb_select_all being called\n";
@@ -460,8 +460,6 @@ int cb_select_id_category(void  *data,
                   << "argc = " << argc
                   << std::endl;
     }
-
-    int i;
 
     Category *obj = (Category *) data;
     obj->isNew = false; // object was generated from table

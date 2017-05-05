@@ -8,6 +8,7 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include "../project/macros.h"
 
 
 class ImportedRubric

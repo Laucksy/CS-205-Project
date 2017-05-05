@@ -327,7 +327,7 @@ int cb_select_id_student(void  *data,
                         char **argv,
                         char **azColName)
 {
-
+    Q_UNUSED(azColName);
 
 
     std::cerr << "cb_select_all being called\n";
@@ -337,8 +337,6 @@ int cb_select_id_student(void  *data,
                   << "argc = " << argc
                   << std::endl;
     }
-
-    int i;
 
     Student *obj = (Student *) data;
     obj->isNew = false; // object was generated from table

@@ -52,8 +52,8 @@ Assignment::Assignment(DBTool* db, Rubric* r, Student* s, int n) : Ident::Ident(
         }
     }
 
-    for (int i = 0; i < gradeCategory.size(); i ++) {
-        gradeQuality.push_back(r->find_qual(gradeComponent[i], gradeCategory[i]));
+    for (unsigned i = 0; i < gradeCategory.size(); i ++) {
+        gradeQuality.push_back(r->find_qual(gradeComponent.at(i), gradeCategory.at(i)));
     }
 }
 
@@ -88,8 +88,8 @@ void Assignment::change_grade(double g, string c)
     //cout << "Start change grade" << endl;
     int ind = -1;
 
-    for (int i = 0; i < gradeCategory.size(); i++) {
-        if (gradeCategory[i] == c) {
+    for (unsigned i = 0; i < gradeCategory.size(); i++) {
+        if (gradeCategory.at(i) == c) {
             ind = i;
         }
     }
@@ -111,7 +111,7 @@ void Assignment::change_grade(double g, string c)
     //cout << "Partway through" << endl;
     if (g >= 0 && rubric->cat[ind] != nullptr && g <= rubric->cat[ind]->pts){
         gradeComponent[ind] = g;
-        while (gradeQuality.size() < ind) {
+        while (gradeQuality.size() < (unsigned)ind) {
             gradeQuality.push_back("");
         }
         gradeQuality[ind] = rubric->find_qual(gradeComponent[ind], gradeCategory[ind]);
@@ -481,7 +481,6 @@ int cb_add_row_assignment(void  *data,
 {
 
 
-
     std::cerr << "cb_add_row being called\n";
 
     if(argc < 1) {
@@ -514,7 +513,7 @@ int cb_select_id_assignment(void  *data,
                         char **argv,
                         char **azColName)
 {
-
+    Q_UNUSED(azColName);
 
 
     std::cerr << "cb_select_all being called\n";
@@ -524,8 +523,6 @@ int cb_select_id_assignment(void  *data,
                   << "argc = " << argc
                   << std::endl;
     }
-
-    int i;
 
     Assignment *obj = (Assignment *) data;
     obj->isNew = false; // object was generated from table

@@ -14,6 +14,7 @@
 #include "assignment.h"
 #include "rubric.h"
 #include "student.h"
+#include "../project/macros.h"
 
 class Student;
 

@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *********************************************************************/
 
 #include "dbtool.h"
+#include "../git/git.h"
 
 DBTool::DBTool() {
     std::cerr << "Name must be provided to DBTool Class "

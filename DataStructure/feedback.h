@@ -11,6 +11,9 @@
 #include <stdlib.h>
 #include "dbtable.h"
 #include "ident.h"
+#include "../project/macros.h"
+
+class DBTool;
 
 class Feedback : public Ident, public DBTable
 {

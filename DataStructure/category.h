@@ -13,6 +13,7 @@
 #include "dbtable.h"
 #include "rubric.h"
 #include "ident.h"
+#include "../project/macros.h"
 
 class Rubric; // forward declaration
 

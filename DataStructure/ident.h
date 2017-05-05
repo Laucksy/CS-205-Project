@@ -2,6 +2,7 @@
 #define IDENT_H
 
 #include <string>
+#include "../project/macros.h"
 
 using namespace std;
 

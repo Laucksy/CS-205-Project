@@ -46,6 +46,10 @@ HEADERS += dbtool.h \
 SOURCES += dbtool.cpp \
     dbtable.cpp
 
+SOURCES += ../Integration/integration.cpp
+
+HEADERS += ../Integration/integration.h
+
 SOURCES += ../gtest/googletest/src/gtest-all.cc
 
 INCLUDEPATH +=  ../gtest                                   \

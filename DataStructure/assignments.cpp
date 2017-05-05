@@ -337,7 +337,7 @@ int cb_select_id_assignments(void  *data,
                         char **argv,
                         char **azColName)
 {
-
+    Q_UNUSED(azColName);
 
 
     std::cerr << "cb_select_all being called\n";
@@ -347,8 +347,6 @@ int cb_select_id_assignments(void  *data,
                   << "argc = " << argc
                   << std::endl;
     }
-
-    int i;
 
     Assignments *obj = (Assignments *) data;
     obj->isNew = false; // object was generated from table
