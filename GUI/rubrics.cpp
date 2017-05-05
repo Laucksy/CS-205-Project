@@ -29,7 +29,7 @@ void Rubrics::on_pushButton_2_clicked()
 
     vector<string> qual;
     vector<double> mark;
-    for (int i = 0; i < rubricData.size(); i = i+2) {
+    for (unsigned i = 0; i < rubricData.size(); i = i+2) {
         qual.push_back(rubricData[i]);
         mark.push_back(atof(rubricData[i+1].c_str()));
     }

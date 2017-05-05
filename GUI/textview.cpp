@@ -59,9 +59,9 @@ void textView::set_integ(Integration *i)
         myCode = integ->activeFile;
     }
 
-    cout << "Before update rubric" << endl;
+    //cout << "Before update rubric" << endl;
     update_rubric();
-    cout << "After update rubric" << endl;
+    //cout << "After update rubric" << endl;
 }
 
 void textView::makeComment(Code* myCode){
@@ -176,7 +176,7 @@ void textView::clickComment(int pos, Code* myCode){
 
                 //  int dtype = x->categorize()
                 // int delimType= x->categorize(delims[a]);
-                /*if(a==0&&type==11)
+                if(a==0&&type==11)
             {
                 lineComment=true;
             }
@@ -332,7 +332,7 @@ void textView::clickComment(int pos, Code* myCode){
 }*/
 
 Code* textView::updateCode(Code* mc) {
-    cout << "Update code" << endl;
+    //cout << "Update code" << endl;
     string rawHTML = "";
     rawHTML += "<html><head><style>a {text-decoration: none; color: black;}</style></head><body style='background-color:#333333'>";
 
@@ -572,7 +572,7 @@ void textView::update_rubric()
 
     if(active == nullptr) {return;}
 
-    for (int i = 0;i < active->gradeCategory.size(); i++) {
+    for (unsigned i = 0;i < active->gradeCategory.size(); i++) {
         if(/*active->gradeComponent[i] != NULL && */active->gradeCategory[i] != "") {
             //active->change_grade(active->gradeComponent[i], active->gradeCategory[i]);
         }
@@ -591,7 +591,7 @@ void textView::update_rubric()
     cout << "Made it to this point in update rubric" << endl;
 
     string rubric;
-    for (int i = 0; i < integ->activeSubmission->gradeCategory.size(); i++) {
+    for (unsigned i = 0; i < integ->activeSubmission->gradeCategory.size(); i++) {
         if(active->rubric->cat[i] == nullptr) {return;}
         string component = to_string(roundf(active->gradeComponent[i]*100)/100);
         string total = to_string(roundf(active->rubric->cat[i]->pts*100)/100);
@@ -618,7 +618,7 @@ void textView::on_comboBox_3_activated(const QString &arg1)
 
 void textView::on_comboBox_activated(const QString &arg1)
 {
-    for (int i = 0; i <integ->activeSubmission->gradeCategory.size(); i++) {
+    for (unsigned i = 0; i <integ->activeSubmission->gradeCategory.size(); i++) {
         if (arg1.toStdString() == integ->activeSubmission->gradeCategory[i]) {
             categoryIndex = i;
         }
@@ -698,10 +698,12 @@ void textView::on_textBrowser_cursorPositionChanged()
 }
 
 bool textView::eventFilter(QObject *watched, QEvent *event){
+    Q_UNUSED(watched);
     if(event->type()==QMouseEvent::MouseButtonDblClick)
     {
         cerr<<"double";
     }
+    return false;
 }
 
 

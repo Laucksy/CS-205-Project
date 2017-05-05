@@ -39,7 +39,7 @@ void submissionView::set_integ(Integration *i, Assignment* a)
 
     string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
     // ui->comboBox->addItem("None");
-    for (int i=0; i < assign->files.size(); i++) {
+    for (unsigned i=0; i < assign->files.size(); i++) {
         Code* temp = assign->files.at(i);
         // Rubric* temp = integ->rubrics.at(i);
         if(temp == code) {
@@ -84,7 +84,7 @@ void submissionView::set_integ(Integration *i, Assignment* a, Assignments* as)
 
     string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
     // ui->comboBox->addItem("None");
-    for (int i=0; i < assign->files.size(); i++) {
+    for (unsigned i=0; i < assign->files.size(); i++) {
         Code* temp = assign->files.at(i);
         // Rubric* temp = integ->rubrics.at(i);
         if(temp == code) {

@@ -51,10 +51,10 @@ void selectRubric::set_integ(Integration *i)
     QString qstra;
     string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
     // ui->comboBox->addItem("None");
-    for (int i=0; i <integ->rubrics.size(); i++) {
+    for (unsigned i=0; i <integ->rubrics.size(); i++) {
         Rubric* temp = integ->rubrics.at(i);
         // Rubric* temp = integ->rubrics.at(i);
-        if(temp == grade) {
+        if(grade != nullptr && temp == grade) {
             text += "<span style='background-color:aqua;'>";
             grade = temp;
 

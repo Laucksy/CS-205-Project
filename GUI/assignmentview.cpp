@@ -42,7 +42,7 @@ void assignmentView::set_integ(Integration *i)
 
     string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
     // ui->comboBox->addItem("None");
-    for (int i=0; i < assign->list.size(); i++) {
+    for (unsigned i=0; i < assign->list.size(); i++) {
         Assignment* temp = assign->list.at(i);
         // Rubric* temp = integ->rubrics.at(i);
         if(temp == submit) {
@@ -90,7 +90,7 @@ void assignmentView::set_integ(Integration *i, Assignments* a)
 
     string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
     // ui->comboBox->addItem("None");
-    for (int i=0; i < assign->list.size(); i++) {
+    for (unsigned i=0; i < assign->list.size(); i++) {
         Assignment* temp = assign->list.at(i);
         // Rubric* temp = integ->rubrics.at(i);
         if(temp == submit) {

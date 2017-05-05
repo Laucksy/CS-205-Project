@@ -40,7 +40,7 @@ void AddCategory::set_integ(Integration *i, Rubric* r)
 
     string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
     // ui->comboBox->addItem("None");
-    for (int i=0; i < rubric->cat.size(); i++) {
+    for (unsigned i=0; i < rubric->cat.size(); i++) {
         Category* temp = rubric->cat.at(i);
         // Rubric* temp = integ->rubrics.at(i);
         if(temp == cat) {
@@ -87,7 +87,7 @@ void AddCategory::on_pushButton_2_clicked()
 void AddCategory::on_comboBox_activated(const QString &arg1)
 {
     int ind = -1;
-    for (int i = 0; i < rubric->name.size(); i++) {
+    for (unsigned i = 0; i < rubric->name.size(); i++) {
         if (arg1.toStdString() == rubric->name[i]) {
             ind = i;
         }

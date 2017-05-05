@@ -27,10 +27,10 @@ void selectAssignment::set_integ(Integration *i)
     QString qstra;
     string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
     // ui->comboBox->addItem("None");
-    for (int i=0; i <integ->assignments.size(); i++) {
+    for (unsigned i=0; i <integ->assignments.size(); i++) {
         Assignments* temp = integ->assignments.at(i);
         // Rubric* temp = integ->rubrics.at(i);
-        if(temp == integ->activeAssignemnt) {
+        if(integ->activeAssignemnt != nullptr && temp == integ->activeAssignemnt) {
             text += "<span style='background-color:aqua;'>";
             assign = integ->activeAssignemnt;
         } else {
@@ -50,7 +50,10 @@ void selectAssignment::set_integ(Integration *i)
         ui->comboBox->addItem(QString::fromStdString(k->name));
     }
 
-    ui->comboBox->setCurrentIndex(ui->comboBox->findText(QString::fromStdString(integ->activeAssignemnt->name)));
+    cout << "here in assignment" << endl;
+    if(integ->activeAssignemnt != nullptr) {
+        ui->comboBox->setCurrentIndex(ui->comboBox->findText(QString::fromStdString(integ->activeAssignemnt->name)));
+    }
 
 
 }

@@ -49,10 +49,10 @@ void selectClass::set_integ(Integration *i)
     QString qstra;
     string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
     // ui->comboBox->addItem("None");
-    for (int i=0; i <integ->students.size(); i++) {
+    for (unsigned i=0; i <integ->students.size(); i++) {
         Students* temp = integ->students.at(i);
         // Rubric* temp = integ->rubrics.at(i);
-        if(temp == integ->activeClass) {
+        if(integ->activeClass != nullptr && temp == integ->activeClass) {
             text += "<span style='background-color:aqua;'>";
             section = integ->activeClass;
         } else {
@@ -71,7 +71,9 @@ void selectClass::set_integ(Integration *i)
     for (Students* k : integ->students) {
         ui->comboBox->addItem(QString::fromStdString(k->name));
     }
-    ui->comboBox->setCurrentIndex(ui->comboBox->findText(QString::fromStdString(integ->activeClass->name)));
+    if(integ->activeClass != nullptr) {
+        ui->comboBox->setCurrentIndex(ui->comboBox->findText(QString::fromStdString(integ->activeClass->name)));
+    }
 }
 
 
