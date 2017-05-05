@@ -4,21 +4,25 @@
 #include <vector>
 #include <sstream>
 #include <deque>
-#include "../DataStructure/feedback.h"
 #include "../DataStructure/ident.h"
 #include "../DataStructure/dbtool.h"
 #include "../DataStructure/dbtable.h"
+#include "../DataStructure/feedback.h"
 #include "stdexcept"
 #include "cstdio"
 #include "memory"
 #include "string"
 #include "array"
 #include <sstream>
+#include "macros.h"
 
 #ifndef CODE_H
 #define CODE_H
 
 using namespace std;
+
+class Feedback;
+class DBTool;
 
 class Code : public Ident, public DBTable
 {
