@@ -115,7 +115,7 @@ string Git::find_file_path(string fileName) {
 //Remove spaces from path name
 string Git::escape_spaces(string str) {
     size_t pos = str.find(" ");
-    while(pos != string::npos) {
+    while(pos != string::npos && str.at(pos-1) != '\\') {
         str.insert(pos, "\\");
         pos = str.find(" ", pos+2);
     }

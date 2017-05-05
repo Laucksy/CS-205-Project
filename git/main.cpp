@@ -41,7 +41,7 @@ TEST_F(GitTest, INITTEST) {
 TEST_F(GitTest, FINDFILEPATHTEST) {
     string filepath = Git::find_file_path("test.txt");
     //cout << filepath << endl;
-    ASSERT_GT(filepath.length(), 8);
+    ASSERT_GT((int)filepath.length(), 8);
 }
 
 TEST_F(GitTest, FINDALLFILESTEST) {
@@ -49,7 +49,7 @@ TEST_F(GitTest, FINDALLFILESTEST) {
     for(unsigned i = 0; i < files.size(); i++) {
         //cout << "FILE " << files.at(i) << endl;
     }
-    ASSERT_EQ(files.size(), 1);
+    ASSERT_EQ((int)files.size(), 1);
 }
 
 TEST_F(GitTest, STATUSTEST) {

@@ -10,6 +10,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include "../project/macros.h"
 using namespace std;
 
 class Git
