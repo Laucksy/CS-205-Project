@@ -11,6 +11,10 @@
 Category::Category() : Ident::Ident('c')
 {
     isMatrix = true;
+    pts = 0;
+    isNew = true;
+    rubricId = 0;
+    toDelete = false;
 }
 
 // full constructor

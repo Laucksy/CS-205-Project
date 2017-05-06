@@ -37,12 +37,12 @@ string Bash::copy(Assignment *assignment, string fn) {
     } else {
         path = "files/" + assignment->stu->section->name + "/" + assignmentName + "/" + assignment->stu->name;
     }
-    path = Git::escape_spaces(path);
+    //path = Git::escape_spaces(path);
     make_dirs(path);
     //cout << "Done with make dirs" << endl;
     exec("cp " + Git::escape_spaces(fn) + " " + Git::escape_spaces(path));
     //return exec("pwd") + "/" + path + "/" + fn.substr(fn.find_last_of("/")+1);
-    return path + "/" + fn.substr(fn.find_last_of("/")+1);
+    return "/" + path + "/" + fn.substr(fn.find_last_of("/")+1);
 }
 
 /* Creates directories for the files if they don't exist already

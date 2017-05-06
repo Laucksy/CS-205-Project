@@ -128,10 +128,11 @@ bool Git::push() {
     if(!initialized)
         init();
     for(unsigned i = 0; i < files.size(); i++) {
-        string cmd = "cp -f " + files.at(i) + " " + name + "/" ;
+        string cmd = "cp -f " + escape_spaces(files.at(i)) + " " + name + "/" ;
         Bash::exec(cmd);
         //cout << cmd << endl;
     }
+    Bash::exec("cp -rf files " + name + "/");
     string result = Bash::exec("cd " + name + " ; git add .");
     result += Bash::exec("cd " + name + " ; git commit -m 'Committing'");
     result += Bash::exec("cd " + name + " ; git push");
@@ -158,13 +159,16 @@ bool Git::pull() {
     istringstream iss(names);
     while(getline(iss, token, '\n')) {
         //cout << "AAA" << token << "AAA" << endl;
-        files.push_back(token);
+        if(token.find("java") == string::npos && token.find("pde") == string::npos && token.find("cpp") == string::npos) {
+            files.push_back(token);
+        }
     }
 
     for(unsigned i = 0; i < files.size(); i++) {
         string cmd = "cp -f " + name + "/" + files.at(i) + " ./" ;
         Bash::exec(cmd);
     }
+    Bash::exec("cp -rf " + name + "/files ./");
     return true;
 }
 
