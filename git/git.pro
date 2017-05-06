@@ -53,6 +53,14 @@ HEADERS += ../DataStructure/dbtool.h \
 SOURCES += ../DataStructure/dbtool.cpp \
     ../DataStructure/dbtable.cpp
 
+HEADERS += ../tools/baseclass.h \
+        ../tools/configuration.h \
+        ../tools/log.h
+
+SOURCES += ../tools/baseclass.cpp \
+        ../tools/configuration.cpp \
+        ../tools/log.cpp
+
 SOURCES += ../gtest/googletest/src/gtest-all.cc
 
 INCLUDEPATH +=  ../gtest                                   \

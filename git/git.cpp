@@ -24,6 +24,10 @@ Git::~Git() {
 /*initialize git by cloning repo and entering into backup such
 that the backup exists within the path*/
 bool Git::init() {
+    Configuration* config = new Configuration();
+    repo = config->get_config("repo");
+    name = config->get_config("name");
+    delete config;
     string result = Bash::exec("git clone " + repo);
     if(result.find("done") == string::npos && result.find("fatal") != string::npos) {
         initialized = false;
@@ -47,9 +51,17 @@ string Git::get_repo() {
 
 //set repo to specified file path (as string)
 void Git::set_repo(string r) {
-    if(!initialized)
-        init();
+    //if(!initialized)
+        //init();
+    initialized = false;
     repo = r;
+    string n = r.substr(r.find_last_of("/")+1,r.find_last_of(".") - r.find_last_of("/") - 1);
+    name = n;
+    cout << "Name" << name << endl;
+    Configuration* config = new Configuration();
+    config->set_config("repo", repo);
+    config->set_config("name", name);
+    delete config;
 }
 
 //return repo if initialized
@@ -61,8 +73,8 @@ string Git::get_name() {
 
 //set repo to specified file path (as string)
 void Git::set_name(string n) {
-    if(!initialized)
-        init();
+    //if(!initialized)
+        //init();
     name = n;
 }
 
