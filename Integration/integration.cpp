@@ -300,7 +300,7 @@ void Integration::add_new_file(Assignment* assign, string name)
     cout << "Here new file " << newPath << endl;
     Code* f = new Code(db, newPath, assign->id);
     assign->files.push_back(f);
-    Git::add_file(newPath.substr(1,newPath.length()-1));
+    //Git::add_file(newPath.substr(1,newPath.length()-1));
     cout << "Finishing method" << endl;
 }
 

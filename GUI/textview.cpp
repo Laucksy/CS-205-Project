@@ -59,9 +59,9 @@ void textView::set_integ(Integration *i)
         myCode = integ->activeFile;
     }
 
-    //cout << "Before update rubric" << endl;
+    cout << "Before update rubric" << endl;
     update_rubric();
-    //cout << "After update rubric" << endl;
+    cout << "After update rubric" << endl;
 }
 
 void textView::makeComment(Code* myCode){
@@ -593,21 +593,24 @@ void textView::update_rubric()
     string rubric;
     for (unsigned i = 0; i < integ->activeSubmission->gradeCategory.size(); i++) {
         if(active->rubric->cat[i] == nullptr) {return;}
-        string component = to_string(roundf(active->gradeComponent[i]*100)/100);
-        string total = to_string(roundf(active->rubric->cat[i]->pts*100)/100);
-        if (active->gradeQuality[i] == "NULL" || active->gradeQuality[i] == "NULL2") {
-            rubric += active->gradeCategory[i] + ": " + component.substr(0,component.length()-5) + "/" + total.substr(0,total.length()-5) + "\n";
-        } else {
-            rubric += active->gradeCategory[i] + ": " + component.substr(0,component.length()-5) + "/" + total.substr(0,total.length()-5) + "; " + active->gradeQuality[i] + "\n";
-        }
-
-        for (Feedback* k : comments) {
-            if (k->tag == active->gradeCategory[i]) {
-                rubric += "       " + k->text + "\n";
+        if(active->gradeCategory[i] == "") {return;}
+        try {
+            string component = to_string(roundf(active->gradeComponent[i]*100)/100);
+            string total = to_string(roundf(active->rubric->cat[i]->pts*100)/100);
+            if (active->gradeQuality[i] == "NULL" || active->gradeQuality[i] == "NULL2") {
+                rubric += active->gradeCategory[i] + ": " + component.substr(0,component.length()-5) + "/" + total.substr(0,total.length()-5) + "\n";
+            } else {
+                rubric += active->gradeCategory[i] + ": " + component.substr(0,component.length()-5) + "/" + total.substr(0,total.length()-5) + "; " + active->gradeQuality[i] + "\n";
             }
-        }
 
-        ui->textBrowser_2->setText(QString::fromStdString(rubric));
+            for (Feedback* k : comments) {
+                if (k->tag == active->gradeCategory[i]) {
+                    rubric += "       " + k->text + "\n";
+                }
+            }
+
+            ui->textBrowser_2->setText(QString::fromStdString(rubric));
+        } catch(...) {cout << "Catch" << endl;}
     }
 }
 

@@ -34,6 +34,7 @@ void Rubrics::on_pushButton_2_clicked()
         mark.push_back(atof(rubricData[i+1].c_str()));
     }
 
+    //cout << "CAT NAME " << name << endl;
     integ->add_new_category(rubric, name, pts, mark, qual, matrix);
 
     AddCategory *dv= new AddCategory();
