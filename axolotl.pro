@@ -6,4 +6,5 @@ SUBDIRS += \
     DataStructure \
     GUI \
     export \
-    Integration
+    Integration \
+    tools

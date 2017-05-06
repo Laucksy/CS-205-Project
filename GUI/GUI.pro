@@ -46,7 +46,8 @@ SOURCES += main.cpp\
     gitmanager.cpp \
     sudentsubdirectory.cpp \
     importclass.cpp \
-    importrubric.cpp
+    importrubric.cpp \
+    options.cpp
 
 
 
@@ -72,7 +73,8 @@ HEADERS  += mainwindow.h \
     gitmanager.h \
     sudentsubdirectory.h \
     importclass.h \
-    importrubric.h
+    importrubric.h \
+    options.h
 
 
 FORMS    += mainwindow.ui \
@@ -97,7 +99,8 @@ FORMS    += mainwindow.ui \
     gitmanager.ui \
     sudentsubdirectory.ui \
     importclass.ui \
-    importrubric.ui
+    importrubric.ui \
+    options.ui
 
 RESOURCES += \
     logo.qrc
@@ -143,6 +146,14 @@ SOURCES += ../git/bash.cpp
 
 HEADERS += ../export/exporthtml.h
 SOURCES += ../export/exporthtml.cpp
+
+HEADERS += ../tools/baseclass.h \
+        ../tools/configuration.h \
+        ../tools/log.h
+
+SOURCES += ../tools/baseclass.cpp \
+        ../tools/configuration.cpp \
+        ../tools/log.cpp
 
 HEADERS += ../git/git.h
 SOURCES += ../git/git.cpp
