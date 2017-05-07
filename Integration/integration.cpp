@@ -15,10 +15,14 @@ Integration::Integration(string path, string name)
     populate();
     if (assignments.size() > 0) {
         set_active_assignment(assignments[0]);
+    } else {
+        activeAssignemnt = nullptr;
     }
 
     if (students.size() > 0) {
         set_active_class(students[0]);
+    } else {
+        activeClass = nullptr;
     }
 }
 
@@ -36,7 +40,6 @@ Integration::~Integration()
     for (Assignments* k : assignments) {
         delete k;
     }
-
     delete db;
     delete autoComplete;
     Git::push();

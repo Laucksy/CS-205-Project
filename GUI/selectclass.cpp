@@ -42,6 +42,7 @@ void selectClass::set_integ(Integration *i)
         ui->comboBox->addItem(QString::fromStdString(k->name));
     }*/
 
+    cout << "begin class set integ" << endl;
     integ = i;
 
     ui->comboBox->clear();
@@ -68,12 +69,21 @@ void selectClass::set_integ(Integration *i)
 
     ui->comboBox->addItem("None");
 
+    cout << "here in class set integ" << endl;
     for (Students* k : integ->students) {
+        cout << k << endl;
         ui->comboBox->addItem(QString::fromStdString(k->name));
     }
+    cout << "here" << integ->activeClass << endl;
+    if(integ->activeClass == nullptr) {
+        //cout << "nullptr" << sizeof(integ->activeClass) << endl;
+        cout << "test" << endl;
+    }
+
     if(integ->activeClass != nullptr) {
         ui->comboBox->setCurrentIndex(ui->comboBox->findText(QString::fromStdString(integ->activeClass->name)));
     }
+    cout << "end class set integ" << endl;
 }
 
 
