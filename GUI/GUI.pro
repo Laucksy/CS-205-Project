@@ -28,8 +28,6 @@ SOURCES += main.cpp\
     textview.cpp \
     dataview.cpp \
     rubrics.cpp \
-    newuser.cpp \
-    forgotpassword.cpp \
     rubrictitle.cpp \
     addcategory.cpp \
     newclass.cpp \
@@ -54,8 +52,6 @@ HEADERS  += mainwindow.h \
     textview.h \
     dataview.h \
     rubrics.h \
-    newuser.h \
-    forgotpassword.h \
     rubrictitle.h \
     addcategory.h \
     newclass.h \
@@ -79,8 +75,6 @@ FORMS    += mainwindow.ui \
     textview.ui \
     dataview.ui \
     rubrics.ui \
-    newuser.ui \
-    forgotpassword.ui \
     rubrictitle.ui \
     addcategory.ui \
     newclass.ui \
