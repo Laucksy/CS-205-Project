@@ -33,7 +33,7 @@ string ExportHTML::export_assignment(Assignment* a) {
         }
         rawHTML += "<p style='color:Yellow;'>Total Grade: " + to_string(a->grade) + "</p>";
         ofstream file;
-        string fileName = "assignment_" + a->stu->name + "_" + to_string(a->assignNum) + ".html";
+        string fileName = "export/assignment_" + a->stu->name + "_" + to_string(a->assignNum) + ".html";
         file.open(fileName.c_str());
         rawHTML += "<div class='tab'></div>";
 
@@ -60,16 +60,16 @@ string ExportHTML::export_assignment(Assignment* a) {
                 vector<string> tokens = firstFile->tokenize(v.at(i));
                 vector<string> delims = firstFile->delimiters(v.at(i));
                 //if(true || i == 6)
-                    //cout << v.at(i) << endl;
+                //cout << v.at(i) << endl;
                 for(unsigned j = 0; j < delims.size(); j++) {
                     //cout << "DELIMS" << delims.at(j) << endl;
                 }
                 //if(i == 6)
-                    //cout << endl << endl << endl;
+                //cout << endl << endl << endl;
                 //cout << endl;
                 string cumulativeLine = "";
                 //if(i > 0 && v.at(i-1) == "    public Student()")
-                    //cout << "AAAA" << delims.size() << "AAAA" << endl;
+                //cout << "AAAA" << delims.size() << "AAAA" << endl;
                 rawHTML += "<p>";
                 //for(unsigned j = 0; j < delims.size() && j < tokens.size(); j++)
                 //cout << tokens.at(j) + ".........." + delims.at(j) << endl;
@@ -186,13 +186,13 @@ string ExportHTML::export_assignment(Assignment* a) {
                     //cout << cumulativeLine << "BBBBBB" << v.at(i) << endl;
 
                     //if(delims.size() > 0)
-                        //cout << delims.front();
+                    //cout << delims.front();
                     //cout << "CCCCCC";
                     //if(tokens.size() > 0)
-                        //cout << tokens.front();
+                    //cout << tokens.front();
                     //cout << endl;
                     //if(delims.size() > 0)
-                        //cout << v.at(i).length() << "AAAA" << v.at(i).find(cumulativeLine + delims.at(0)) < v.at(i).length() << "BBBB:" << v.at(i).find(cumulativeLine + delims.at(0)) << endl;
+                    //cout << v.at(i).length() << "AAAA" << v.at(i).find(cumulativeLine + delims.at(0)) < v.at(i).length() << "BBBB:" << v.at(i).find(cumulativeLine + delims.at(0)) << endl;
                     bool delimFound = delims.size() > 0 ? v.at(i).find(cumulativeLine + delims.at(0)) == 0 : false;
                     bool tokenFound = tokens.size() > 0 ? v.at(i).find(cumulativeLine + tokens.at(0)) == 0 : false;
                     if(delims.size() > 0 && delimFound && !tokenFound) {
@@ -278,12 +278,15 @@ string ExportHTML::export_assignment(Assignment* a) {
 //csv contains all information about assignments
 void ExportHTML::export_csv_assignment(Assignments* a) {
     ofstream file;
-    string fileName = "assignment_" + a->name + ".csv";
+    if(Bash::exec("cd export ; pwd").find("export") == string::npos)
+        Bash::exec("mkdir export");
+    string fileName = "export/assignment_" + a->name + ".csv";
     file.open(fileName.c_str());
     file << a->name << "\n";
     file << "Student Name,Grade" << "\n";
     for(unsigned i = 0; i < a->list.size(); i++) {
         Assignment* temp = a->list.at(i);
+        export_assignment(temp);
         file << temp->stu->name << "," << temp->grade << "\n";
         file.flush();
     }
@@ -292,9 +295,11 @@ void ExportHTML::export_csv_assignment(Assignments* a) {
 
 /*Changing csv to loop through students in section, print name, loop
  * through assignments in section, if submitted print grade, else 0, print get_score()*/
-void ExportHTML::export_csv_section(Students* s) {
+/*void ExportHTML::export_csv_section(Students* s) {
     ofstream file;
-    string fileName = "section_" + s->name + ".csv";
+    if(Bash::exec("cd export ; pwd").find("export") == string::npos)
+        Bash::exec("mkdir export");
+    string fileName = "export/section_" + s->name + ".csv";
     file.open(fileName.c_str());
     file << s->name << "\n";
     file << "Student Name,List of Grades" << "\n";
@@ -312,5 +317,66 @@ void ExportHTML::export_csv_section(Students* s) {
         file << "\n";
         file.flush();
     }
+    file.close();
+}*/
+
+
+/*Changing csv to loop through students in section, print name, loop
+ * through assignments in section, if submitted print grade, else 0, print get_score()*/
+void ExportHTML::export_csv_section(Students* s) {
+    ofstream file;
+    if(Bash::exec("cd export ; pwd").find("export") == string::npos)
+        Bash::exec("mkdir export");
+    string fileName = "export/section_" + s->name + ".csv";
+    file.open(fileName.c_str());
+    file << s->name << "\n";
+    file << "Student Name,";
+    for (Assignments* k : s->assignList) {
+        file << k->name << ",";
+    }
+    file << "\n";
+    for(unsigned i = 0; i < s->list.size(); i++) {
+        Student* stu = s->list.at(i);
+        file << stu->name << ",";
+        for(unsigned j = 0; j < s->assignList.size(); j++) {
+            Assignments* assign = s->assignList.at(j);
+            if(assign->did_submit(stu)) {
+                file << assign->get_assignment(stu)->get_grade() << ",";
+            } else {
+                file << "0" << ",";
+            }
+        }
+        file << "Average Student Grade: " << stu->get_score() << ",";
+        file << "\n";
+        file.flush();
+    }
+    double tot = 0;
+    int cnt = 0;
+    double avg = 0;
+    file << "Average Assignment Grades,";
+    for(unsigned j = 0; j < s->assignList.size(); j++) {
+        Assignments* assign = s->assignList.at(j);
+        tot = 0;
+        cnt = 0;
+        for (Assignment* k : assign->list) {
+            tot += k->get_grade();
+            cnt++;
+        }
+        //cout << tot << "," << cnt << endl;
+        avg = (cnt != 0) ? tot/cnt : 0;
+        file << avg << ",";
+    }
+    tot = 0;
+    cnt = 0;
+    avg = 0;
+    for (Student* k : s->list) {
+        tot += k->get_score();
+        cnt++;
+    }
+    //cout << tot << "," << cnt << endl;
+    avg = (cnt != 0) ? tot/cnt : 0;
+    file << "Average Section Grade: " << avg << ",";
+    file << "\n";
+    file.flush();
     file.close();
 }

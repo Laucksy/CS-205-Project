@@ -4,10 +4,12 @@
 #include "../DataStructure/assignment.h"
 #include "../DataStructure/students.h"
 #include "../project/code.h"
+#include "../git/bash.h"
 #include "iostream"
 #include "fstream"
 #include "string"
 #include "vector"
+#include "../project/macros.h"
 using namespace std;
 
 class ExportHTML

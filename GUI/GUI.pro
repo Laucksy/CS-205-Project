@@ -28,8 +28,6 @@ SOURCES += main.cpp\
     textview.cpp \
     dataview.cpp \
     rubrics.cpp \
-    newuser.cpp \
-    forgotpassword.cpp \
     rubrictitle.cpp \
     addcategory.cpp \
     newclass.cpp \
@@ -46,7 +44,8 @@ SOURCES += main.cpp\
     gitmanager.cpp \
     sudentsubdirectory.cpp \
     importclass.cpp \
-    importrubric.cpp
+    importrubric.cpp \
+    options.cpp
 
 
 
@@ -54,8 +53,6 @@ HEADERS  += mainwindow.h \
     textview.h \
     dataview.h \
     rubrics.h \
-    newuser.h \
-    forgotpassword.h \
     rubrictitle.h \
     addcategory.h \
     newclass.h \
@@ -72,15 +69,14 @@ HEADERS  += mainwindow.h \
     gitmanager.h \
     sudentsubdirectory.h \
     importclass.h \
-    importrubric.h
+    importrubric.h \
+    options.h
 
 
 FORMS    += mainwindow.ui \
     textview.ui \
     dataview.ui \
     rubrics.ui \
-    newuser.ui \
-    forgotpassword.ui \
     rubrictitle.ui \
     addcategory.ui \
     newclass.ui \
@@ -97,7 +93,8 @@ FORMS    += mainwindow.ui \
     gitmanager.ui \
     sudentsubdirectory.ui \
     importclass.ui \
-    importrubric.ui
+    importrubric.ui \
+    options.ui
 
 RESOURCES += \
     logo.qrc
@@ -143,6 +140,14 @@ SOURCES += ../git/bash.cpp
 
 HEADERS += ../export/exporthtml.h
 SOURCES += ../export/exporthtml.cpp
+
+HEADERS += ../tools/baseclass.h \
+        ../tools/configuration.h \
+        ../tools/log.h
+
+SOURCES += ../tools/baseclass.cpp \
+        ../tools/configuration.cpp \
+        ../tools/log.cpp
 
 HEADERS += ../git/git.h
 SOURCES += ../git/git.cpp

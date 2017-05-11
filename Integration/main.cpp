@@ -141,75 +141,75 @@ TEST_F(IntegTest, ADDTEST) {
     integ->set_active_file(integ->activeSubmission->files[1]);
     integ->add_new_feedback("clog", "", 0);
 
-    ASSERT_EQ(integ->students.size(), 1);
+    ASSERT_EQ((int)integ->students.size(), 1);
     ASSERT_EQ(integ->students[0]->name, "testClass1");
-    ASSERT_EQ(integ->students[0]->list.size(), 4);
+    ASSERT_EQ((int)integ->students[0]->list.size(), 4);
 
     ASSERT_EQ(integ->students[0]->list[0]->name, "test0");
     ASSERT_EQ(integ->students[0]->list[1]->name, "test1");
     ASSERT_EQ(integ->students[0]->list[2]->name, "test2");
     ASSERT_EQ(integ->students[0]->list[3]->name, "test3");
 
-    ASSERT_EQ(integ->rubrics.size(), 1);
+    ASSERT_EQ((int)integ->rubrics.size(), 1);
     ASSERT_EQ(integ->rubrics[0]->title, "test_lab_0_rubric");
-    ASSERT_EQ(integ->rubrics[0]->name.size(), 1);
+    ASSERT_EQ((int)integ->rubrics[0]->name.size(), 1);
     ASSERT_EQ(integ->rubrics[0]->name.size(), integ->rubrics[0]->cat.size());
 
     ASSERT_EQ(integ->rubrics[0]->name[0], "test_cat_0");
-    ASSERT_EQ(integ->rubrics[0]->cat[0]->pts, 5);
-    ASSERT_EQ(integ->rubrics[0]->cat[0]->get_qual().size(), 6);
-    ASSERT_EQ(integ->rubrics[0]->cat[0]->get_points().size(), 6);
+    ASSERT_EQ((int)integ->rubrics[0]->cat[0]->pts, 5);
+    ASSERT_EQ((int)integ->rubrics[0]->cat[0]->get_qual().size(), 6);
+    ASSERT_EQ((int)integ->rubrics[0]->cat[0]->get_points().size(), 6);
 
-    ASSERT_EQ(integ->assignments.size(), 1);
+    ASSERT_EQ((int)integ->assignments.size(), 1);
     ASSERT_EQ(integ->assignments[0]->name, "test_lab_0");
-    ASSERT_EQ(integ->assignments[0]->list.size(), 4);
+    ASSERT_EQ((int)integ->assignments[0]->list.size(), 4);
 
     ASSERT_EQ(integ->assignments[0]->list[0]->stu->name, "test0");
     ASSERT_EQ(integ->assignments[0]->list[0]->rubric->title, "test_lab_0_rubric");
-    ASSERT_EQ(integ->assignments[0]->list[0]->files.size(), 2);
+    ASSERT_EQ((int)integ->assignments[0]->list[0]->files.size(), 2);
 
     ASSERT_EQ(integ->assignments[0]->list[0]->files[0]->fileName, "class1.java");
-    ASSERT_EQ(integ->assignments[0]->list[0]->files[0]->profFeedback.size(), 1);
+    ASSERT_EQ((int)integ->assignments[0]->list[0]->files[0]->profFeedback.size(), 1);
     ASSERT_EQ(integ->assignments[0]->list[0]->files[0]->profFeedback[0]->text, "cat");
 
     ASSERT_EQ(integ->assignments[0]->list[0]->files[1]->fileName, "class2.java");
-    ASSERT_EQ(integ->assignments[0]->list[0]->files[1]->profFeedback.size(), 1);
+    ASSERT_EQ((int)integ->assignments[0]->list[0]->files[1]->profFeedback.size(), 1);
     ASSERT_EQ(integ->assignments[0]->list[0]->files[1]->profFeedback[0]->text, "dog");
 
     ASSERT_EQ(integ->assignments[0]->list[1]->stu->name, "test1");
     ASSERT_EQ(integ->assignments[0]->list[1]->rubric->title, "test_lab_0_rubric");
-    ASSERT_EQ(integ->assignments[0]->list[1]->files.size(), 2);
+    ASSERT_EQ((int)integ->assignments[0]->list[1]->files.size(), 2);
 
     ASSERT_EQ(integ->assignments[0]->list[1]->files[0]->fileName, "class1.java");
-    ASSERT_EQ(integ->assignments[0]->list[1]->files[0]->profFeedback.size(), 1);
+    ASSERT_EQ((int)integ->assignments[0]->list[1]->files[0]->profFeedback.size(), 1);
     ASSERT_EQ(integ->assignments[0]->list[1]->files[0]->profFeedback[0]->text, "bat");
 
     ASSERT_EQ(integ->assignments[0]->list[1]->files[1]->fileName, "class2.java");
-    ASSERT_EQ(integ->assignments[0]->list[1]->files[1]->profFeedback.size(), 1);
+    ASSERT_EQ((int)integ->assignments[0]->list[1]->files[1]->profFeedback.size(), 1);
     ASSERT_EQ(integ->assignments[0]->list[1]->files[1]->profFeedback[0]->text, "bog");
 
     ASSERT_EQ(integ->assignments[0]->list[2]->stu->name, "test2");
     ASSERT_EQ(integ->assignments[0]->list[2]->rubric->title, "test_lab_0_rubric");
-    ASSERT_EQ(integ->assignments[0]->list[2]->files.size(), 2);
+    ASSERT_EQ((int)integ->assignments[0]->list[2]->files.size(), 2);
 
     ASSERT_EQ(integ->assignments[0]->list[2]->files[0]->fileName, "class1.java");
-    ASSERT_EQ(integ->assignments[0]->list[2]->files[0]->profFeedback.size(), 1);
+    ASSERT_EQ((int)integ->assignments[0]->list[2]->files[0]->profFeedback.size(), 1);
     ASSERT_EQ(integ->assignments[0]->list[2]->files[0]->profFeedback[0]->text, "hat");
 
     ASSERT_EQ(integ->assignments[0]->list[2]->files[1]->fileName, "class2.java");
-    ASSERT_EQ(integ->assignments[0]->list[2]->files[1]->profFeedback.size(), 1);
+    ASSERT_EQ((int)integ->assignments[0]->list[2]->files[1]->profFeedback.size(), 1);
     ASSERT_EQ(integ->assignments[0]->list[2]->files[1]->profFeedback[0]->text, "cog");
 
     ASSERT_EQ(integ->assignments[0]->list[3]->stu->name, "test3");
     ASSERT_EQ(integ->assignments[0]->list[3]->rubric->title, "test_lab_0_rubric");
-    ASSERT_EQ(integ->assignments[0]->list[3]->files.size(), 2);
+    ASSERT_EQ((int)integ->assignments[0]->list[3]->files.size(), 2);
 
     ASSERT_EQ(integ->assignments[0]->list[3]->files[0]->fileName, "class1.java");
-    ASSERT_EQ(integ->assignments[0]->list[3]->files[0]->profFeedback.size(), 1);
+    ASSERT_EQ((int)integ->assignments[0]->list[3]->files[0]->profFeedback.size(), 1);
     ASSERT_EQ(integ->assignments[0]->list[3]->files[0]->profFeedback[0]->text, "mat");
 
     ASSERT_EQ(integ->assignments[0]->list[3]->files[1]->fileName, "class2.java");
-    ASSERT_EQ(integ->assignments[0]->list[3]->files[1]->profFeedback.size(), 1);
+    ASSERT_EQ((int)integ->assignments[0]->list[3]->files[1]->profFeedback.size(), 1);
     ASSERT_EQ(integ->assignments[0]->list[3]->files[1]->profFeedback[0]->text, "clog");
 
 }
@@ -217,75 +217,75 @@ TEST_F(IntegTest, ADDTEST) {
 //Test if populating from the database works
 TEST_F(IntegTest, POPULATETEST) {
 
-    ASSERT_EQ(integ->students.size(), 1);
+    ASSERT_EQ((int)integ->students.size(), 1);
     ASSERT_EQ(integ->students[0]->name, "testClass1");
-    ASSERT_EQ(integ->students[0]->list.size(), 4);
+    ASSERT_EQ((int)integ->students[0]->list.size(), 4);
 
     ASSERT_EQ(integ->students[0]->list[0]->name, "test0");
     ASSERT_EQ(integ->students[0]->list[1]->name, "test1");
     ASSERT_EQ(integ->students[0]->list[2]->name, "test2");
     ASSERT_EQ(integ->students[0]->list[3]->name, "test3");
 
-    ASSERT_EQ(integ->rubrics.size(), 1);
+    ASSERT_EQ((int)integ->rubrics.size(), 1);
     ASSERT_EQ(integ->rubrics[0]->title, "test_lab_0_rubric");
-    ASSERT_EQ(integ->rubrics[0]->name.size(), 1);
+    ASSERT_EQ((int)integ->rubrics[0]->name.size(), 1);
     ASSERT_EQ(integ->rubrics[0]->name.size(), integ->rubrics[0]->cat.size());
 
     ASSERT_EQ(integ->rubrics[0]->name[0], "test_cat_0");
-    ASSERT_EQ(integ->rubrics[0]->cat[0]->pts, 5);
-    ASSERT_EQ(integ->rubrics[0]->cat[0]->get_qual().size(), 6);
-    ASSERT_EQ(integ->rubrics[0]->cat[0]->get_points().size(), 6);
+    ASSERT_EQ((int)integ->rubrics[0]->cat[0]->pts, 5);
+    ASSERT_EQ((int)integ->rubrics[0]->cat[0]->get_qual().size(), 6);
+    ASSERT_EQ((int)integ->rubrics[0]->cat[0]->get_points().size(), 6);
 
-    ASSERT_EQ(integ->assignments.size(), 1);
+    ASSERT_EQ((int)integ->assignments.size(), 1);
     ASSERT_EQ(integ->assignments[0]->name, "test_lab_0");
-    ASSERT_EQ(integ->assignments[0]->list.size(), 4);
+    ASSERT_EQ((int)integ->assignments[0]->list.size(), 4);
 
     ASSERT_EQ(integ->assignments[0]->list[0]->stu->name, "test0");
     ASSERT_EQ(integ->assignments[0]->list[0]->rubric->title, "test_lab_0_rubric");
-    ASSERT_EQ(integ->assignments[0]->list[0]->files.size(), 2);
+    ASSERT_EQ((int)integ->assignments[0]->list[0]->files.size(), 2);
 
     ASSERT_EQ(integ->assignments[0]->list[0]->files[0]->fileName, "class1.java");
-    ASSERT_EQ(integ->assignments[0]->list[0]->files[0]->profFeedback.size(), 1);
+    ASSERT_EQ((int)integ->assignments[0]->list[0]->files[0]->profFeedback.size(), 1);
     ASSERT_EQ(integ->assignments[0]->list[0]->files[0]->profFeedback[0]->text, "cat");
 
     ASSERT_EQ(integ->assignments[0]->list[0]->files[1]->fileName, "class2.java");
-    ASSERT_EQ(integ->assignments[0]->list[0]->files[1]->profFeedback.size(), 1);
+    ASSERT_EQ((int)integ->assignments[0]->list[0]->files[1]->profFeedback.size(), 1);
     ASSERT_EQ(integ->assignments[0]->list[0]->files[1]->profFeedback[0]->text, "dog");
 
     ASSERT_EQ(integ->assignments[0]->list[1]->stu->name, "test1");
     ASSERT_EQ(integ->assignments[0]->list[1]->rubric->title, "test_lab_0_rubric");
-    ASSERT_EQ(integ->assignments[0]->list[1]->files.size(), 2);
+    ASSERT_EQ((int)integ->assignments[0]->list[1]->files.size(), 2);
 
     ASSERT_EQ(integ->assignments[0]->list[1]->files[0]->fileName, "class1.java");
-    ASSERT_EQ(integ->assignments[0]->list[1]->files[0]->profFeedback.size(), 1);
+    ASSERT_EQ((int)integ->assignments[0]->list[1]->files[0]->profFeedback.size(), 1);
     ASSERT_EQ(integ->assignments[0]->list[1]->files[0]->profFeedback[0]->text, "bat");
 
     ASSERT_EQ(integ->assignments[0]->list[1]->files[1]->fileName, "class2.java");
-    ASSERT_EQ(integ->assignments[0]->list[1]->files[1]->profFeedback.size(), 1);
+    ASSERT_EQ((int)integ->assignments[0]->list[1]->files[1]->profFeedback.size(), 1);
     ASSERT_EQ(integ->assignments[0]->list[1]->files[1]->profFeedback[0]->text, "bog");
 
     ASSERT_EQ(integ->assignments[0]->list[2]->stu->name, "test2");
     ASSERT_EQ(integ->assignments[0]->list[2]->rubric->title, "test_lab_0_rubric");
-    ASSERT_EQ(integ->assignments[0]->list[2]->files.size(), 2);
+    ASSERT_EQ((int)integ->assignments[0]->list[2]->files.size(), 2);
 
     ASSERT_EQ(integ->assignments[0]->list[2]->files[0]->fileName, "class1.java");
-    ASSERT_EQ(integ->assignments[0]->list[2]->files[0]->profFeedback.size(), 1);
+    ASSERT_EQ((int)integ->assignments[0]->list[2]->files[0]->profFeedback.size(), 1);
     ASSERT_EQ(integ->assignments[0]->list[2]->files[0]->profFeedback[0]->text, "hat");
 
     ASSERT_EQ(integ->assignments[0]->list[2]->files[1]->fileName, "class2.java");
-    ASSERT_EQ(integ->assignments[0]->list[2]->files[1]->profFeedback.size(), 1);
+    ASSERT_EQ((int)integ->assignments[0]->list[2]->files[1]->profFeedback.size(), 1);
     ASSERT_EQ(integ->assignments[0]->list[2]->files[1]->profFeedback[0]->text, "cog");
 
     ASSERT_EQ(integ->assignments[0]->list[3]->stu->name, "test3");
     ASSERT_EQ(integ->assignments[0]->list[3]->rubric->title, "test_lab_0_rubric");
-    ASSERT_EQ(integ->assignments[0]->list[3]->files.size(), 2);
+    ASSERT_EQ((int)integ->assignments[0]->list[3]->files.size(), 2);
 
     ASSERT_EQ(integ->assignments[0]->list[3]->files[0]->fileName, "class1.java");
-    ASSERT_EQ(integ->assignments[0]->list[3]->files[0]->profFeedback.size(), 1);
+    ASSERT_EQ((int)integ->assignments[0]->list[3]->files[0]->profFeedback.size(), 1);
     ASSERT_EQ(integ->assignments[0]->list[3]->files[0]->profFeedback[0]->text, "mat");
 
     ASSERT_EQ(integ->assignments[0]->list[3]->files[1]->fileName, "class2.java");
-    ASSERT_EQ(integ->assignments[0]->list[3]->files[1]->profFeedback.size(), 1);
+    ASSERT_EQ((int)integ->assignments[0]->list[3]->files[1]->profFeedback.size(), 1);
     ASSERT_EQ(integ->assignments[0]->list[3]->files[1]->profFeedback[0]->text, "clog");
 
 }
@@ -296,10 +296,10 @@ TEST_F(IntegTest, RANDOMTEST) {
     int id1, id2, sub1, sub2;
     integ->set_active_assignment(integ->assignments[0]);
     id1 = integ->activeSubmission->id;
-    sub1 = integ->submissionQueue.size();
+    sub1 = (int)integ->submissionQueue.size();
     integ->finish_grading_submission();
     id2 = integ->activeSubmission->id;
-    sub2 = integ->submissionQueue.size();
+    sub2 = (int)integ->submissionQueue.size();
 
     ASSERT_FALSE (id1 == id2);
     ASSERT_EQ(sub1, 3);
@@ -355,17 +355,17 @@ TEST_F(IntegTest, DELETETEST0) {
         integ->delete_rubric(k);
     }
 
-    ASSERT_EQ(integ->students.size(), 0);
-    ASSERT_EQ(integ->rubrics.size(), 0);
-    ASSERT_EQ(integ->assignments.size(), 0);
+    ASSERT_EQ((int)integ->students.size(), 0);
+    ASSERT_EQ((int)integ->rubrics.size(), 0);
+    ASSERT_EQ((int)integ->assignments.size(), 0);
 }
 
 //Test if deltion occurred in the db
 TEST_F(IntegTest, DELETETEST1) {
 
-    ASSERT_EQ(integ->students.size(), 0);
-    ASSERT_EQ(integ->rubrics.size(), 0);
-    ASSERT_EQ(integ->assignments.size(), 0);
+    ASSERT_EQ((int)integ->students.size(), 0);
+    ASSERT_EQ((int)integ->rubrics.size(), 0);
+    ASSERT_EQ((int)integ->assignments.size(), 0);
 }
 
 int main(int argc, char *argv[])

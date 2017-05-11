@@ -86,6 +86,8 @@ private slots:
 
     void on_comboBox_4_activated(const QString &arg1);
 
+    void on_saveButton_clicked();
+
 private:
     Ui::textView *ui;
     Integration* integ;

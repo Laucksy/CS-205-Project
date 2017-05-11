@@ -42,6 +42,7 @@ void selectClass::set_integ(Integration *i)
         ui->comboBox->addItem(QString::fromStdString(k->name));
     }*/
 
+    cout << "begin class set integ" << endl;
     integ = i;
 
     ui->comboBox->clear();
@@ -49,11 +50,12 @@ void selectClass::set_integ(Integration *i)
     QString qstra;
     string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
     // ui->comboBox->addItem("None");
-    for (int i=0; i <integ->students.size(); i++) {
+    for (unsigned i=0; i <integ->students.size(); i++) {
         Students* temp = integ->students.at(i);
         // Rubric* temp = integ->rubrics.at(i);
-        if(temp == integ->activeClass) {
+        if(integ->activeClass != nullptr && temp == integ->activeClass) {
             text += "<span style='background-color:aqua;'>";
+            section = integ->activeClass;
         } else {
             text += "<span>";
         }
@@ -67,10 +69,21 @@ void selectClass::set_integ(Integration *i)
 
     ui->comboBox->addItem("None");
 
+    cout << "here in class set integ" << endl;
     for (Students* k : integ->students) {
+        cout << k << endl;
         ui->comboBox->addItem(QString::fromStdString(k->name));
     }
+    cout << "here" << integ->activeClass << endl;
+    if(integ->activeClass == nullptr) {
+        //cout << "nullptr" << sizeof(integ->activeClass) << endl;
+        cout << "test" << endl;
+    }
 
+    if(integ->activeClass != nullptr) {
+        ui->comboBox->setCurrentIndex(ui->comboBox->findText(QString::fromStdString(integ->activeClass->name)));
+    }
+    cout << "end class set integ" << endl;
 }
 
 
@@ -115,6 +128,7 @@ void selectClass::on_comboBox_activated(const QString &arg1)
     }
 
     set_integ(integ);
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(arg1));
 }
 
 void selectClass::on_pushButton_clicked()
@@ -157,4 +171,5 @@ void selectClass::on_textBrowser_anchorClicked(const QUrl &arg1)
         }
     }
     this->set_integ(integ);
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(QString::fromStdString(url)));
 }

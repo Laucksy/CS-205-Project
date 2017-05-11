@@ -26,7 +26,7 @@ void newSubmission::set_integ(Integration *i)
     stu = nullptr;
 
     for (Students* k : integ->students) {
-        if (k->id = assign->classId) {
+        if (k->id == assign->classId) {
             stu = k;
         }
     }
@@ -66,7 +66,7 @@ void newSubmission::set_integ(Integration *i, Assignments* a)
     stu = nullptr;
 
     for (Students* k : integ->students) {
-        if (k->id = assign->classId) {
+        if (k->id == assign->classId) {
             stu = k;
         }
     }

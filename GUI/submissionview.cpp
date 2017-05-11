@@ -22,6 +22,7 @@ submissionView::~submissionView()
 
 void submissionView::set_integ(Integration *i, Assignment* a)
 {
+    cout << "assign edit false" << endl;
     integ = i;
     assign = a;
     assignment= nullptr;
@@ -38,11 +39,12 @@ void submissionView::set_integ(Integration *i, Assignment* a)
 
     string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
     // ui->comboBox->addItem("None");
-    for (int i=0; i < assign->files.size(); i++) {
+    for (unsigned i=0; i < assign->files.size(); i++) {
         Code* temp = assign->files.at(i);
         // Rubric* temp = integ->rubrics.at(i);
         if(temp == code) {
             text += "<span style='background-color:aqua;'>";
+
         } else {
             text += "<span>";
         }
@@ -82,7 +84,7 @@ void submissionView::set_integ(Integration *i, Assignment* a, Assignments* as)
 
     string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
     // ui->comboBox->addItem("None");
-    for (int i=0; i < assign->files.size(); i++) {
+    for (unsigned i=0; i < assign->files.size(); i++) {
         Code* temp = assign->files.at(i);
         // Rubric* temp = integ->rubrics.at(i);
         if(temp == code) {
@@ -107,12 +109,14 @@ void submissionView::set_integ(Integration *i, Assignment* a, Assignments* as)
 void submissionView::on_pushButton_2_clicked()
 {
     if (assignEdit) {
+        cout << "1" << endl;
         assignmentView *dv= new assignmentView();
         dv->set_integ(integ, assignment);
 
         dv->show();
         this->hide();
     } else {
+        cout << "2" << endl;
         assignmentView *dv= new assignmentView();
         dv->set_integ(integ);
 
@@ -162,10 +166,11 @@ void submissionView::on_addDirectoryButton_clicked()
                                                  | QFileDialog::DontResolveSymlinks);
     cout << dir.toStdString() << endl;
     integ->add_directory(assign, dir.toStdString()); //Replace path with the file name you get from the file picker
-    if (!assignEdit) {
-        set_integ(integ, assign);
-    } else {
+    cout << "Finsihed add directory" << endl;
+    if (assignEdit) {
         set_integ(integ, assign, assignment);
+    } else {
+        set_integ(integ, assign);
     }
 
     //   sudentSubDirectory *dv= new sudentSubDirectory();
@@ -185,7 +190,7 @@ void submissionView::on_addFileButton_clicked()
     QString fn = QFileDialog::getOpenFileName(this,tr("Select File to Add"),"C://",tr("Any files (*)"));
     cout << fn.toStdString() << endl;
     integ->add_new_file(assign, fn.toStdString()); //Replace fn with the file name you get from the file picker
-    if (!assignEdit) {
+    if (assignEdit) {
         set_integ(integ, assign);
     } else {
         set_integ(integ, assign, assignment);
@@ -215,7 +220,7 @@ void submissionView::on_textBrowser_anchorClicked(const QUrl &arg1)
             code = temp;
         }
     }
-    if (!assignEdit) {
+    if (assignEdit) {
         set_integ(integ, assign);
     } else {
         set_integ(integ, assign, assignment);

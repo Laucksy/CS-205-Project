@@ -24,6 +24,10 @@ Git::~Git() {
 /*initialize git by cloning repo and entering into backup such
 that the backup exists within the path*/
 bool Git::init() {
+    Configuration* config = new Configuration();
+    repo = config->get_config("repo");
+    name = config->get_config("name");
+    delete config;
     string result = Bash::exec("git clone " + repo);
     if(result.find("done") == string::npos && result.find("fatal") != string::npos) {
         initialized = false;
@@ -47,9 +51,17 @@ string Git::get_repo() {
 
 //set repo to specified file path (as string)
 void Git::set_repo(string r) {
-    if(!initialized)
-        init();
+    //if(!initialized)
+        //init();
+    initialized = false;
     repo = r;
+    string n = r.substr(r.find_last_of("/")+1,r.find_last_of(".") - r.find_last_of("/") - 1);
+    name = n;
+    cout << "Name" << name << endl;
+    Configuration* config = new Configuration();
+    config->set_config("repo", repo);
+    config->set_config("name", name);
+    delete config;
 }
 
 //return repo if initialized
@@ -61,8 +73,8 @@ string Git::get_name() {
 
 //set repo to specified file path (as string)
 void Git::set_name(string n) {
-    if(!initialized)
-        init();
+    //if(!initialized)
+        //init();
     name = n;
 }
 
@@ -115,7 +127,7 @@ string Git::find_file_path(string fileName) {
 //Remove spaces from path name
 string Git::escape_spaces(string str) {
     size_t pos = str.find(" ");
-    while(pos != string::npos) {
+    while(pos != string::npos && str.at(pos-1) != '\\') {
         str.insert(pos, "\\");
         pos = str.find(" ", pos+2);
     }
@@ -128,10 +140,11 @@ bool Git::push() {
     if(!initialized)
         init();
     for(unsigned i = 0; i < files.size(); i++) {
-        string cmd = "cp -f " + files.at(i) + " " + name + "/" ;
+        string cmd = "cp -f " + escape_spaces(files.at(i)) + " " + name + "/" ;
         Bash::exec(cmd);
         //cout << cmd << endl;
     }
+    Bash::exec("cp -rf files " + name + "/");
     string result = Bash::exec("cd " + name + " ; git add .");
     result += Bash::exec("cd " + name + " ; git commit -m 'Committing'");
     result += Bash::exec("cd " + name + " ; git push");
@@ -158,13 +171,16 @@ bool Git::pull() {
     istringstream iss(names);
     while(getline(iss, token, '\n')) {
         //cout << "AAA" << token << "AAA" << endl;
-        files.push_back(token);
+        if(token.find("java") == string::npos && token.find("pde") == string::npos && token.find("cpp") == string::npos) {
+            files.push_back(token);
+        }
     }
 
     for(unsigned i = 0; i < files.size(); i++) {
         string cmd = "cp -f " + name + "/" + files.at(i) + " ./" ;
         Bash::exec(cmd);
     }
+    Bash::exec("cp -rf " + name + "/files ./");
     return true;
 }
 

@@ -47,6 +47,14 @@ SOURCES += ../git/bash.cpp
 HEADERS += ../git/git.h
 SOURCES += ../git/git.cpp
 
+HEADERS += ../tools/baseclass.h \
+        ../tools/configuration.h \
+        ../tools/log.h
+
+SOURCES += ../tools/baseclass.cpp \
+        ../tools/configuration.cpp \
+        ../tools/log.cpp
+
 LIBS += -l sqlite3 \
         -pthread
 

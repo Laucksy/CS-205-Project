@@ -46,3 +46,11 @@ HEADERS += ../git/git.h \
 
 SOURCES += ../git/git.cpp \
            ../git/bash.cpp
+
+HEADERS += ../tools/baseclass.h \
+        ../tools/configuration.h \
+        ../tools/log.h
+
+SOURCES += ../tools/baseclass.cpp \
+        ../tools/configuration.cpp \
+        ../tools/log.cpp

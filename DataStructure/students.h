@@ -13,6 +13,7 @@
 #include "ident.h"
 #include "student.h"
 #include "assignments.h"
+#include "../project/macros.h"
 
 class Student;
 class Assignments;

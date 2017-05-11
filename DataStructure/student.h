@@ -13,11 +13,13 @@
 #include "ident.h"
 #include "assignment.h"
 #include "students.h"
+#include "../project/macros.h"
 
 using namespace std;
 
 class Assignment;
 class Students;
+class DBTool;
 
 // holds the grade and information for a student
 class Student : public Ident, public DBTable

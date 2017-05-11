@@ -93,7 +93,7 @@ string Code::file_path(string file)
     string r = exec_sec(use);
     string ret = r.substr(0, r.size()-1);
     ret += file;
-    cout << ret << endl;
+    //cout << ret << endl;
     return ret;
 }
 
@@ -708,7 +708,7 @@ int cb_select_id_code(void  *data,
                       char **argv,
                       char **azColName)
 {
-
+    Q_UNUSED(azColName);
 
 
     std::cerr << "cb_select_all being called\n";

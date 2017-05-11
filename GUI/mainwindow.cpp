@@ -16,7 +16,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    cout << "before integ delete" << endl;
     delete integ;
+    cout << "after integ delete" << endl;
     delete ui;
 }
 
@@ -66,3 +68,10 @@ void MainWindow::on_pushButton_3_clicked()
 }
 
 
+
+void MainWindow::on_optionsButton_clicked()
+{
+    Options* dv = new Options();
+    dv->show();
+    this->hide();
+}

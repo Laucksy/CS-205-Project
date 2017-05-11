@@ -14,10 +14,15 @@
 #include "student.h"
 #include "rubric.h"
 #include "ident.h"
+#include "../project/macros.h"
 
 using namespace std;
 
 class Student; // forward declaration
+class DBTool;
+class Rubric;
+class Code;
+class Feedback;
 
 // holds a grade, ref to a rubric, ref to a student
 class Assignment : public Ident, public DBTable

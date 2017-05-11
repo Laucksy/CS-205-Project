@@ -59,10 +59,13 @@ void textView::set_integ(Integration *i)
         myCode = integ->activeFile;
     }
 
+    cout << "Before update rubric" << endl;
     update_rubric();
+    cout << "After update rubric" << endl;
 }
 
 void textView::makeComment(Code* myCode){
+    if(myCode == nullptr) {return;}
     myCode->insert(commentLoc,newFeedback + ":: " + tag);
     integ->add_new_feedback(newFeedback, tag, commentLoc);
     //ui->textBrowser->clear();
@@ -71,6 +74,7 @@ void textView::makeComment(Code* myCode){
 }
 
 void textView::clickComment(int pos, Code* myCode){
+    if(myCode == nullptr) {return;}
     myCode->insert(pos,newFeedback + ":: " + tag);
     integ->add_new_feedback(newFeedback, tag, pos);
     //ui->textBrowser->clear();
@@ -81,6 +85,7 @@ void textView::clickComment(int pos, Code* myCode){
 /*Code* textView::updateCode(Code* myCode)
 {
     if (myCode != nullptr) {
+        cout << myCode->get_name() << endl;
         writing=true;
 
         ui->textBrowser->clear();
@@ -99,10 +104,8 @@ void textView::clickComment(int pos, Code* myCode){
 
         vector<string> v = x->parse();
         cerr<<v.size();
-        ui->textBrowser->setHTML("<html><head><style>a {text-decoration: none; color: black;}</style></head><body>");
         for(int i=0; i<v.size(); i++){//lines
-            ext += "<a href='" + temp->name + "'>" + temp->name + "</a></span><br/>";
-            ui->textBrowser->insertHtml("<a href='" + i + "'>");
+            //ext += "<a href='" + temp->name + "'>" + temp->name + "</a></span><br/>";
             vector<string> tokens = x->tokenize(v[i]);
             vector<string> delims = x->delimiters(v.at(i));
             if(1){
@@ -119,17 +122,17 @@ void textView::clickComment(int pos, Code* myCode){
                 ui->textBrowser->setTextColor("Orange");
                 QString temp= QString::fromStdString(s);
 
-                ui->textBrowser->insertHtml(temp);
+                ui->textBrowser->insertPlainText(temp);
             }
 
             if(v.at(i)[0] == '`' && v.at(i)[1] == '`' && v.at(i)[v.at(i).length()-1] == '`') {
                 ui->textBrowser->setTextColor("Yellow");
                 QString qstr = QString::fromStdString("FEEDBACK: ");
-                ui->textBrowser->insertHtml(qstr);
+                ui->textBrowser->insertPlainText(qstr);
                 qstr = QString::fromStdString(v.at(i).substr(2,v.at(i).length()-3));
-                ui->textBrowser->insertHtml(qstr);
+                ui->textBrowser->insertPlainText(qstr);
                 qstr = QString::fromStdString("\n");
-                ui->textBrowser->insertHtml(qstr);
+                ui->textBrowser->insertPlainText(qstr);
                 continue;
             }
 
@@ -173,7 +176,7 @@ void textView::clickComment(int pos, Code* myCode){
 
                 //  int dtype = x->categorize()
                 // int delimType= x->categorize(delims[a]);
-                /*if(a==0&&type==11)
+                if(a==0&&type==11)
             {
                 lineComment=true;
             }
@@ -328,12 +331,14 @@ void textView::clickComment(int pos, Code* myCode){
 
 }*/
 
-Code* textView::updateCode(Code* myCode) {
+Code* textView::updateCode(Code* mc) {
+    //cout << "Update code" << endl;
     string rawHTML = "";
     rawHTML += "<html><head><style>a {text-decoration: none; color: black;}</style></head><body style='background-color:#333333'>";
 
-    if(myCode != nullptr) {
-        Code* firstFile = myCode;
+    if(mc != nullptr) {
+        writing = true;
+        Code* firstFile = mc;
 
         string fileName = firstFile->fileName.substr(firstFile->fileName.find_last_of("/")+1);
 
@@ -507,10 +512,13 @@ Code* textView::updateCode(Code* myCode) {
         }
         rawHTML += "</div>";
     }
+    //cout << "Got past if statement" << endl;
     rawHTML += "</body></html>";
     ui->textBrowser->setHtml(QString::fromStdString(rawHTML));
+    writing = false;
     return myCode;
 }
+
 
 void textView::on_lineEdit_2_textChanged(const QString &arg1)
 {
@@ -545,7 +553,8 @@ void textView::on_pushButton_2_clicked()
 void textView::on_comboBox_2_activated(const QString &arg1)
 {
     for (Code* k : integ->activeSubmission->files) {
-        if (arg1 == QString::fromStdString(k->fileName)) {
+        string obfuscatedFileName = k->fileName.substr(k->fileName.find_last_of("/")+1);
+        if (arg1 == QString::fromStdString(obfuscatedFileName)) {
             integ->activeFile = k;
             myCode = integ->activeFile;
         }
@@ -561,10 +570,17 @@ void textView::update_rubric()
 {
     Assignment* active = integ->activeSubmission;
 
-    for (int i = 0; i < active->gradeCategory.size(); i++) {
-        active->change_grade(active->gradeComponent[i], active->gradeCategory[i]);
+    if(active == nullptr) {return;}
+
+    for (unsigned i = 0;i < active->gradeCategory.size(); i++) {
+        if(/*active->gradeComponent[i] != NULL && */active->gradeCategory[i] != "") {
+            //active->change_grade(active->gradeComponent[i], active->gradeCategory[i]);
+        }
     }
 
+    cout << "Got here in update rubric" << endl;
+
+    if(integ->activeSubmission == nullptr) {return;}
     vector<Feedback*> comments;
     for (Code* k : integ->activeSubmission->files) {
         for (Feedback* j : k->profFeedback) {
@@ -572,23 +588,29 @@ void textView::update_rubric()
         }
     }
 
+    cout << "Made it to this point in update rubric" << endl;
+
     string rubric;
-    for (int i = 0; i < integ->activeSubmission->gradeCategory.size(); i++) {
-        string component = to_string(roundf(active->gradeComponent[i]*100)/100);
-        string total = to_string(roundf(active->rubric->cat[i]->pts*100)/100);
-        if (active->gradeQuality[i] == "NULL" || active->gradeQuality[i] == "NULL2") {
-            rubric += active->gradeCategory[i] + ": " + component.substr(0,component.length()-5) + "/" + total.substr(0,total.length()-5) + "\n";
-        } else {
-            rubric += active->gradeCategory[i] + ": " + component.substr(0,component.length()-5) + "/" + total.substr(0,total.length()-5) + "; " + active->gradeQuality[i] + "\n";
-        }
-
-        for (Feedback* k : comments) {
-            if (k->tag == active->gradeCategory[i]) {
-                rubric += "       " + k->text + "\n";
+    for (unsigned i = 0; i < integ->activeSubmission->gradeCategory.size(); i++) {
+        if(active->rubric->cat[i] == nullptr) {return;}
+        if(active->gradeCategory[i] == "") {return;}
+        try {
+            string component = to_string(roundf(active->gradeComponent[i]*100)/100);
+            string total = to_string(roundf(active->rubric->cat[i]->pts*100)/100);
+            if (active->gradeQuality[i] == "NULL" || active->gradeQuality[i] == "NULL2") {
+                rubric += active->gradeCategory[i] + ": " + component.substr(0,component.length()-5) + "/" + total.substr(0,total.length()-5) + "\n";
+            } else {
+                rubric += active->gradeCategory[i] + ": " + component.substr(0,component.length()-5) + "/" + total.substr(0,total.length()-5) + "; " + active->gradeQuality[i] + "\n";
             }
-        }
 
-        ui->textBrowser_2->setText(QString::fromStdString(rubric));
+            for (Feedback* k : comments) {
+                if (k->tag == active->gradeCategory[i]) {
+                    rubric += "       " + k->text + "\n";
+                }
+            }
+
+            ui->textBrowser_2->setText(QString::fromStdString(rubric));
+        } catch(...) {cout << "Catch" << endl;}
     }
 }
 
@@ -599,7 +621,7 @@ void textView::on_comboBox_3_activated(const QString &arg1)
 
 void textView::on_comboBox_activated(const QString &arg1)
 {
-    for (int i = 0; i <integ->activeSubmission->gradeCategory.size(); i++) {
+    for (unsigned i = 0; i <integ->activeSubmission->gradeCategory.size(); i++) {
         if (arg1.toStdString() == integ->activeSubmission->gradeCategory[i]) {
             categoryIndex = i;
         }
@@ -679,10 +701,12 @@ void textView::on_textBrowser_cursorPositionChanged()
 }
 
 bool textView::eventFilter(QObject *watched, QEvent *event){
+    Q_UNUSED(watched);
     if(event->type()==QMouseEvent::MouseButtonDblClick)
     {
         cerr<<"double";
     }
+    return false;
 }
 
 
@@ -699,4 +723,10 @@ void textView::on_comboBox_4_activated(const QString &arg1)
     ui->lineEdit->clear();
     ui->lineEdit->insert(arg1);
     ui->lineEdit->textEdited(arg1);
+}
+
+void textView::on_saveButton_clicked()
+{
+    delete integ;
+    set_integ(new Integration(".", "TestDB"));
 }

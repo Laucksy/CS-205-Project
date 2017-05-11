@@ -15,10 +15,14 @@ Integration::Integration(string path, string name)
     populate();
     if (assignments.size() > 0) {
         set_active_assignment(assignments[0]);
+    } else {
+        activeAssignemnt = nullptr;
     }
 
     if (students.size() > 0) {
         set_active_class(students[0]);
+    } else {
+        activeClass = nullptr;
     }
 }
 
@@ -36,7 +40,6 @@ Integration::~Integration()
     for (Assignments* k : assignments) {
         delete k;
     }
-
     delete db;
     delete autoComplete;
     Git::push();
@@ -276,18 +279,32 @@ Assignment* Integration::add_new_submission(Rubric* rubric, Student* student)
 // add new code files to the provided assignemnt
 void Integration::add_new_file(Assignment* assign, string name)
 {
+    /*
+    cout << "Start new file" << endl;
     string pwd = Bash::exec("pwd");
-    pwd = pwd.substr(0, pwd.size()-1);
-    cout << pwd << "###" << endl;
-    if (name.size() <= pwd.size() || name.substr(0,pwd.size()-1) == pwd) {
+    //cout << pwd.length() << "," << pwd.length()-1 << endl;
+    pwd = pwd.substr(0, pwd.length()-1);
+    //cout << pwd << "###" << endl;
+    cout << "Before if statement" << endl;
+    if(pwd.length() >= name.length()) {
         return;
-    } else {
-        name = name.substr(pwd.size(), name.size()-1);
-        cout << name << endl;
     }
-    Code* f = new Code(db, name, assign->id);
+    //if (name.length() <= pwd.length() && name.substr(0,pwd.length()-1) == pwd) {
+    //    return;
+    //} else {
+    cout << pwd.length() << "," << name.length() << "," << name.length()-1 << endl;
+    name = name.substr(pwd.length(), name.length()-1);
+    cout << name << endl;
+    //}
+    //Bash::exec("cp " + Git::escape_spaces(name) + " " + Git::escape_spaces(pwd));
+    //string simpleFileName = name.substr(name.find_last_of("/"));
+    */
+    string newPath = Bash::copy(assign, name);
+    cout << "Here new file " << newPath << endl;
+    Code* f = new Code(db, newPath, assign->id);
     assign->files.push_back(f);
-    Git::add_file(name.substr(1,name.size()-1));
+    //Git::add_file(newPath.substr(1,newPath.length()-1));
+    cout << "Finishing method" << endl;
 }
 
 // creates  new rubric and adds it to the rubrics list
@@ -304,7 +321,7 @@ void Integration::add_new_category(Rubric* rubric, string name, double points, v
 {
     Category* c = new Category(db, rubric, points, matrix);
 
-    for (int i = 0; i < markers.size(); i++) {
+    for (unsigned i = 0; i < markers.size(); i++) {
         c->add_quality(quality[i], markers[i]);
     }
 
@@ -328,17 +345,15 @@ void Integration::delete_class(Students* g)
 {
     g->set_to_delete();
 
-    for (int i = 0; i < students.size(); i++) {
+    for (unsigned i = 0; i < students.size(); i++) {
         if (g == students[i]) {
+            for (Student* k : g->list) {
+                delete_student(k);
+            }
+            delete g;
             students.erase(students.begin() + i);
         }
     }
-
-    for (Student* k : g->list) {
-        delete_student(k);
-    }
-
-    delete g;
 }
 
 // delete student class instance
@@ -349,19 +364,17 @@ void Integration::delete_student(Student* s)
 
     for (Students* k : students) {
         if (k->id == classId) {
-            for (int i = 0; i < k->list.size(); i++) {
+            for (unsigned i = 0; i < k->list.size(); i++) {
                 if (s == k->list[i]) {
+                    for (Assignment* k : s->list) {
+                        delete_submission(k);
+                    }
+                    delete s;
                     k->list.erase(k->list.begin() + i);
                 }
             }
         }
     }
-
-    for (Assignment* k : s->list) {
-        delete_submission(k);
-    }
-
-    delete s;
 }
 
 // delete assignments class instance
@@ -369,17 +382,15 @@ void Integration::delete_assignment(Assignments* l)
 {
     l->set_to_delete();
 
-    for (int i = 0; i < assignments.size(); i++) {
+    for (unsigned i = 0; i < assignments.size(); i++) {
         if (l == assignments[i]) {
+            for (Assignment* k : l->list) {
+                delete_submission(k);
+            }
             assignments.erase(assignments.begin() + i);
+            delete l;
         }
     }
-
-    for (Assignment* k : l->list) {
-        delete_submission(k);
-    }
-
-    delete l;
 }
 
 // delete assignment class instance
@@ -390,19 +401,18 @@ void Integration::delete_submission(Assignment* a)
 
     for (Assignments* k : assignments) {
         if (k->id == assignId) {
-            for (int i = 0; i < k->list.size(); i++) {
+            for (unsigned i = 0; i < k->list.size(); i++) {
                 if (a == k->list[i]) {
+                    for (Code* k : a->files) {
+                        delete_file(k);
+                    }
                     k->list.erase(k->list.begin() + i);
+                    delete a;
+                    return;
                 }
             }
         }
     }
-
-    for (Code* k : a->files) {
-        delete_file(k);
-    }
-
-    delete a;
 }
 
 // delete code class instance
@@ -421,18 +431,16 @@ void Integration::delete_file(Code* o)
     }
 
     if (assign != nullptr) {
-        for (int i = 0; i < assign->files.size(); i++) {
+        for (unsigned i = 0; i < assign->files.size(); i++) {
             if (o == assign->files[i]) {
                 assign->files.erase(assign->files.begin() + i);
+                for (Feedback* k : o->profFeedback) {
+                    delete_feedback(k);
+                }
+                delete o;
             }
         }
     }
-
-    for (Feedback* k : o->profFeedback) {
-        delete_feedback(k);
-    }
-
-    delete o;
 }
 
 // delete rubric class instance
@@ -440,17 +448,15 @@ void Integration::delete_rubric(Rubric* r)
 {
     r->set_to_delete();
 
-    for (int i = 0; i < rubrics.size(); i++) {
+    for (unsigned i = 0; i < rubrics.size(); i++) {
         if (r == rubrics[i]) {
+            for (Category* k : r->cat) {
+                delete_category(k);
+            }
+            delete r;
             rubrics.erase(rubrics.begin() + i);
         }
     }
-
-    for (Category* k : r->cat) {
-        delete_category(k);
-    }
-
-    delete r;
 }
 
 // delete category class instance
@@ -461,16 +467,15 @@ void Integration::delete_category(Category* c)
 
     for (Rubric* k : rubrics) {
         if (k->id == rubId) {
-            for (int i = 0; i < k->cat.size(); i++) {
+            for (unsigned i = 0; i < k->cat.size(); i++) {
                 if (c == k->cat[i]) {
+                    delete c;
                     k->cat.erase(k->cat.begin() + i);
                     k->name.erase(k->name.begin() + i);
                 }
             }
         }
     }
-
-    delete c;
 }
 
 // delete feedback class instance
@@ -491,14 +496,13 @@ void Integration::delete_feedback(Feedback* f)
     }
 
     if (code != nullptr) {
-        for (int i = 0; i < code->profFeedback.size(); i++) {
+        for (unsigned i = 0; i < code->profFeedback.size(); i++) {
             if (f == code->profFeedback[i]) {
+                delete f;
                 code->profFeedback.erase(code->profFeedback.begin() + i);
             }
         }
     }
-
-    delete f;
 }
 
 // imports a rubric from an absolute file address
@@ -557,10 +561,12 @@ void Integration::add_directory(Assignment* a, string path)
     vector<string> f = Git::find_all_files(path);
     //cout << "LENGTH" << f.size() << endl;
     for (string k : f) {
-        string extension = k.substr(k.find_last_of("."));
-        //cout << "FILE" <<  << endl;
-        if(extension == ".java" || extension == ".pde" || extension == ".cpp") {
-            add_new_file(a, path + "/" + k);
+        if(k.find_last_of(".") != string::npos) {
+            string extension = k.substr(k.find_last_of("."));
+            //cout << "FILE" <<  << endl;
+            if(extension == ".java" || extension == ".pde" || extension == ".cpp") {
+                add_new_file(a, path + "/" + k);
+            }
         }
     }
 }

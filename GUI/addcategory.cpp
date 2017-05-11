@@ -40,7 +40,7 @@ void AddCategory::set_integ(Integration *i, Rubric* r)
 
     string text = "<html><head><style>a {text-decoration: none; color: black;}</style></head><body>";
     // ui->comboBox->addItem("None");
-    for (int i=0; i < rubric->cat.size(); i++) {
+    for (unsigned i=0; i < rubric->cat.size(); i++) {
         Category* temp = rubric->cat.at(i);
         // Rubric* temp = integ->rubrics.at(i);
         if(temp == cat) {
@@ -87,7 +87,7 @@ void AddCategory::on_pushButton_2_clicked()
 void AddCategory::on_comboBox_activated(const QString &arg1)
 {
     int ind = -1;
-    for (int i = 0; i < rubric->name.size(); i++) {
+    for (unsigned i = 0; i < rubric->name.size(); i++) {
         if (arg1.toStdString() == rubric->name[i]) {
             ind = i;
         }
@@ -100,6 +100,7 @@ void AddCategory::on_comboBox_activated(const QString &arg1)
     }
 
     set_integ(integ, rubric);
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(arg1));
 }
 
 void AddCategory::on_pushButton_4_clicked()
@@ -114,11 +115,12 @@ void AddCategory::on_textBrowser_anchorClicked(const QUrl &arg1)
 {
     string url = arg1.url().toStdString();
     //cout << "URL" << url << endl;
-    for(unsigned i = 0; i < rubric->cat.size(); i++) {
+    for(unsigned i = 0; i < rubric->name.size(); i++) {
         Category* temp = rubric->cat.at(i);
         if(rubric->name.at(i) == url) {
             cat = temp;
         }
     }
     this->set_integ(integ, rubric);
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(QString::fromStdString(url)));
 }

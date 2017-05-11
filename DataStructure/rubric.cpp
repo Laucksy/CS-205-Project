@@ -116,9 +116,9 @@ string Rubric::find_qual(double p, string c)
 {
     int ind = -1;
 
-    for (int i = 0; i < name.size(); i++) {
-        if (name[i] == c) {
-            ind = i;
+    for (unsigned i = 0; i < name.size(); i++) {
+        if (name.at(i) == c) {
+            ind = (int)i;
         }
     }
 
@@ -412,7 +412,7 @@ int cb_select_id_rubric(void  *data,
                         char **argv,
                         char **azColName)
 {
-
+    Q_UNUSED(azColName);
 
 
     std::cerr << "cb_select_all being called\n";
@@ -422,8 +422,6 @@ int cb_select_id_rubric(void  *data,
                   << "argc = " << argc
                   << std::endl;
     }
-
-    int i;
 
     Rubric *obj = (Rubric *) data;
     obj->isNew = false; // object was generated from table

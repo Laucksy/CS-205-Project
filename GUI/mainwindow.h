@@ -5,6 +5,7 @@
 #include "textview.h"
 #include "dataview.h"
 #include "newuser.h"
+#include "options.h"
 #include "forgotpassword.h"
 #include "../git/git.h"
 
@@ -29,6 +30,8 @@ private slots:
     void on_pushButton_2_clicked();
 
     void on_pushButton_3_clicked();
+
+    void on_optionsButton_clicked();
 
 private:
     Ui::MainWindow *ui;

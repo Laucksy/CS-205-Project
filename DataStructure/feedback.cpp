@@ -27,10 +27,10 @@ Feedback::Feedback(DBTool* db, std::string te, std::string ta, int cid, int p): 
     toDelete = false;
 
     // initialize vars
-    string text = te;
-    string tag = ta;
-    int codeId = cid;
-    int position = p;
+    text = te;
+    tag = ta;
+    codeId = cid;
+    position = p;
 }
 
 void Feedback::change_text(string txt)
@@ -371,7 +371,7 @@ int cb_select_id_feedback(void  *data,
                         char **argv,
                         char **azColName)
 {
-
+    Q_UNUSED(azColName);
 
 
     std::cerr << "cb_select_all being called\n";
@@ -381,8 +381,6 @@ int cb_select_id_feedback(void  *data,
                   << "argc = " << argc
                   << std::endl;
     }
-
-    int i;
 
     Feedback *obj = (Feedback *) data;
     obj->isNew = false; // object was generated from table
@@ -476,7 +474,7 @@ int cb_select_similar_feedback(void  *data,
                         char **argv,
                         char **azColName)
 {
-
+    Q_UNUSED(azColName);
 
 
     std::cerr << "cb_select_all being called\n";
@@ -486,8 +484,6 @@ int cb_select_similar_feedback(void  *data,
                   << "argc = " << argc
                   << std::endl;
     }
-
-    int i;
 
     Feedback *obj = (Feedback *) data;
     obj->isNew = false; // object was generated from table

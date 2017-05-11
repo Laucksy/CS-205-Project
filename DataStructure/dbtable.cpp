@@ -167,6 +167,9 @@ int cb_template(void  *data,
                 int    argc,
                 char **argv,
                 char **azColName){
+    Q_UNUSED(data);
+    Q_UNUSED(argv);
+    Q_UNUSED(azColName);
 
     if(argc < 1) {
         std::cerr << "No data presented to callback "
@@ -221,7 +224,7 @@ int cb_exist(void  *data,        // pointer to the DBTable object.
              int    argc,        // number of data columns
              char **argv,        // the actual data columns
              char **azColName){  // the data column names
-
+    Q_UNUSED(azColName);
 
     if(argc != 1) {
 
@@ -285,6 +288,9 @@ int cb_create(void  *data,
               int    argc,
               char **argv,
               char **azColName){
+    Q_UNUSED(data);
+    Q_UNUSED(argv);
+    Q_UNUSED(azColName);
 
     // Create failed, generate error message.
     if(argc < 1) {
@@ -351,7 +357,9 @@ int cb_drop(void  *data,
             int    argc,
             char **argv,
             char **azColName){
-
+    Q_UNUSED(data);
+    Q_UNUSED(argv);
+    Q_UNUSED(azColName);
 
     // Table not dropped, generate error message.
     if(argc < 1) {
@@ -414,6 +422,8 @@ int cb_size(void  *data,
             int    argc,
             char **argv,
             char **azColName){
+    Q_UNUSED(argc);
+    Q_UNUSED(azColName);
 
     // If no data is presented generate error message.
     if(argc < 1) {

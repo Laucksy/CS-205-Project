@@ -12,6 +12,7 @@
 #include "dbtable.h"
 #include "category.h"
 #include "ident.h"
+#include "../project/macros.h"
 
 using namespace std;
 

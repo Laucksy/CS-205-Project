@@ -35,6 +35,7 @@ void DataView::on_pushButton_clicked()
         ui->label->setText("Please create an assignment and submissions");
         return;
     }
+    //cout << "About to transition" << endl;
     textView *tv= new textView();
     tv->set_integ(integ);
 
