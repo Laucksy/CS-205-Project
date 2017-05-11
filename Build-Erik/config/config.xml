@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Installer>
-    <Name>Axolotl Grader</Name>
-    <Version>1.0.0</Version>
-    <Title>Axolotl Grader Installer</Title>
-    <Publisher>Axolotl Development</Publisher>
-    <StartMenuDir>Super App</StartMenuDir>
-    <TargetDir>@HomeDir@/InstallationDirectory</TargetDir>
-</Installer>
