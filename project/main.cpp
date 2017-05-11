@@ -41,14 +41,14 @@ using namespace std;
 class ProjectTest : public::testing::Test {
 protected:
 
+
+
     // You can remove any or all of the following functions if its body
 
     // is empty.
 
 
     ProjectTest() {
-
-
 
 
     }
@@ -67,9 +67,8 @@ protected:
 
     virtual void SetUp() {
 
-        // Code here will be called immediately after the constructor (right
 
-        // before each test).
+
     }
 
 
@@ -96,11 +95,19 @@ TEST_F(ProjectTest, TESTONE) {
 }
 
 TEST_F(ProjectTest, TESTTWO) {
-    DBTool* t = new DBTool("BaseDrop");
-   Code* c = new Code(t,"n",1);
+    DBTool* db = new DBTool("Test2DB");
+     Code* c = new Code(db,"n",1);
    string namer = "name";
    c->set_file(namer);
    ASSERT_TRUE(c->get_name()==namer);
+
+}
+
+TEST_F(ProjectTest, TESTTHREE) {
+    DBTool* db = new DBTool("Test3DB");
+     Code* c = new Code(db,"n",1);
+   string q = "for";
+   ASSERT_TRUE(c->categorize(q)==(3));
 
 }
 
