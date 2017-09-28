@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>288</width>
-    <height>313</height>
+    <width>456</width>
+    <height>557</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -16,88 +16,75 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="palette">
+   <palette>
+    <active>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>136</red>
+        <green>138</green>
+        <blue>133</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </active>
+    <inactive>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>136</red>
+        <green>138</green>
+        <blue>133</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </inactive>
+    <disabled>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>136</red>
+        <green>138</green>
+        <blue>133</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>136</red>
+        <green>138</green>
+        <blue>133</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </disabled>
+   </palette>
+  </property>
   <property name="windowTitle">
    <string>Rubrics</string>
   </property>
-  <layout class="QFormLayout" name="formLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Rubric Title</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Category 1:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Discription:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Points:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QSpinBox" name="spinBox">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <widget class="QPushButton" name="pushButton">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Add New</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="6" column="1">
-    <spacer name="verticalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="7" column="0">
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
     <widget class="QPushButton" name="pushButton_2">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -110,14 +97,421 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="QTextEdit" name="textEdit_3"/>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="lineEdit"/>
-   </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="lineEdit_2"/>
+   <item>
+    <widget class="QWidget" name="widget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="lineEdit_2"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Name:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QScrollArea" name="scrollArea">
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>332</width>
+           <height>428</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QTableWidget" name="tableWidget">
+            <property name="rowCount">
+             <number>20</number>
+            </property>
+            <property name="columnCount">
+             <number>2</number>
+            </property>
+            <attribute name="horizontalHeaderVisible">
+             <bool>false</bool>
+            </attribute>
+            <attribute name="horizontalHeaderDefaultSectionSize">
+             <number>100</number>
+            </attribute>
+            <attribute name="horizontalHeaderStretchLastSection">
+             <bool>true</bool>
+            </attribute>
+            <attribute name="verticalHeaderVisible">
+             <bool>false</bool>
+            </attribute>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <row/>
+            <column/>
+            <column/>
+            <item row="0" column="0">
+             <property name="text">
+              <string notr="true">Quality 1:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="0" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="1" column="0">
+             <property name="text">
+              <string>Points:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="1" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="2" column="0">
+             <property name="text">
+              <string>Quality 2:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="2" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="3" column="0">
+             <property name="text">
+              <string>Points:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="3" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="4" column="0">
+             <property name="text">
+              <string>Quality 3:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="4" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="5" column="0">
+             <property name="text">
+              <string>Points:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="5" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="6" column="0">
+             <property name="text">
+              <string>Quality 4:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="6" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="7" column="0">
+             <property name="text">
+              <string>Points:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="7" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="8" column="0">
+             <property name="text">
+              <string>Quality 5:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="8" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="9" column="0">
+             <property name="text">
+              <string>Points:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="9" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="10" column="0">
+             <property name="text">
+              <string>Quality 6:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="10" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="11" column="0">
+             <property name="text">
+              <string>Points:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="11" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="12" column="0">
+             <property name="text">
+              <string>Quality 7:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="12" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="13" column="0">
+             <property name="text">
+              <string>Points:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="13" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="14" column="0">
+             <property name="text">
+              <string>Quality 8:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="14" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="15" column="0">
+             <property name="text">
+              <string>Points:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="15" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="16" column="0">
+             <property name="text">
+              <string>Quality 9:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="16" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="17" column="0">
+             <property name="text">
+              <string>Points:</string>
+             </property>
+             <property name="flags">
+              <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="17" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="18" column="0">
+             <property name="text">
+              <string>Quality 10:</string>
+             </property>
+            </item>
+            <item row="18" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+            <item row="19" column="0">
+             <property name="text">
+              <string>Points:</string>
+             </property>
+            </item>
+            <item row="19" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="lineEdit"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Points:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="checkBox">
+        <property name="text">
+         <string>Matrix</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>

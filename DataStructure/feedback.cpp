@@ -1,11 +1,18 @@
 #include "feedback.h"
 
+/*	The Feedback class handles the user’s comments on the student’s assignment.
+ * The Feedback class contains a text string, which is the content of the
+ * comment and the tag string which aligns with the matching Category’s name.
+ * Two Feedback  methods enable changing the text (change_text)
+ * and updating the tag (update_tag).
+ * */
+
 Feedback::Feedback()
 {
 
 }
 
-Feedback::Feedback(DBTool* db, string te, string ta, int cid, int p): Ident::Ident('f'), DBTable::DBTable(db, feedback_table)
+Feedback::Feedback(DBTool* db, std::string te, std::string ta, int cid, int p): Ident::Ident('f'), DBTable::DBTable(db, feedback_table)
 {
     // Load SQL specific to child class.
     store_add_row_sql();
@@ -17,29 +24,48 @@ Feedback::Feedback(DBTool* db, string te, string ta, int cid, int p): Ident::Ide
     feedback_row_cnt = size();
 
     isNew = true; // assumes object is unique and not in table
+    toDelete = false;
 
     // initialize vars
-    string text = te;
-    string tag = ta;
-    int codeId = cid;
-    int position = p;
+    text = te;
+    tag = ta;
+    codeId = cid;
+    position = p;
 }
 
 void Feedback::change_text(string txt)
 {
     text = txt;
+    store_in_db();
 }
 
 void Feedback::update_tag(string t)
 {
     tag = t;
+    store_in_db();
+}
+
+int Feedback::get_position()
+{
+    return position;
 }
 
 Feedback::~Feedback()
 {
+    store_in_db();
+}
+
+// database methods
+void Feedback::store_in_db()
+{
+    if (toDelete) {
+        delete_id(id);
+        return;
+    }
     // if valid object, adds or updates it in table
     if (isNew && id >= 0) {
         add_row(id, text, tag, codeId, position);
+        isNew = false;
     } else if (!isNew && id >= 0){
         update_id(id, text, tag, codeId, position);
     } else {
@@ -47,7 +73,11 @@ Feedback::~Feedback()
     }
 }
 
-// database methods
+void Feedback::set_to_delete()
+{
+    toDelete = true;
+}
+
 int Feedback::get_row_cnt()
 {
     return row_cnt;
@@ -229,6 +259,77 @@ bool Feedback::update_id(int id, string text, string tag, int codeId, int positi
     return retCode;
 }
 
+// deletes entry by unique id
+bool Feedback::delete_id(int i) {
+
+    int   retCode = 0;
+    char *zErrMsg = 0;
+
+    sql_delete_id  = "DELETE FROM ";
+    sql_delete_id += table_name;
+    sql_delete_id += " WHERE ";
+    sql_delete_id += "     id = ";
+    sql_delete_id += to_string(i);
+    sql_delete_id += ";";
+
+    retCode = sqlite3_exec(curr_db->db_ref(),
+                           sql_delete_id.c_str(),
+                           cb_delete_id_feedback,
+                           this,
+                           &zErrMsg          );
+
+    if( retCode != SQLITE_OK ){
+
+        std::cerr << table_name
+                  << " template ::"
+                  << std::endl
+                  << "SQL error: "
+                  << zErrMsg;
+
+        sqlite3_free(zErrMsg);
+    }
+
+    return retCode;
+}
+
+// selects entry by similarity to provied string
+bool Feedback::select_similar(string sim) {
+
+    int   retCode = 0;
+    char *zErrMsg = 0;
+
+    sql_select_similar  = "SELECT text FROM ";
+    sql_select_similar += table_name;
+    sql_select_similar += " WHERE ";
+    sql_select_similar += "     text LIKE ";
+    sql_select_similar += "\"";
+    sql_select_similar += "%";
+    sql_select_similar += sim;
+    sql_select_similar += "%";
+    sql_select_similar += "\"";
+    sql_select_similar += ";";
+
+    retCode = sqlite3_exec(curr_db->db_ref(),
+                           sql_select_similar.c_str(),
+                           cb_select_similar_feedback,
+                           this,
+                           &zErrMsg          );
+
+    if( retCode != SQLITE_OK ){
+
+        std::cerr << table_name
+                  << " template ::"
+                  << std::endl
+                  << "SQL error: "
+                  << zErrMsg;
+
+        sqlite3_free(zErrMsg);
+    }
+
+    return retCode;
+}
+
+
 // callbacks
 int cb_add_row_feedback(void  *data,
                       int    argc,
@@ -270,7 +371,7 @@ int cb_select_id_feedback(void  *data,
                         char **argv,
                         char **azColName)
 {
-
+    Q_UNUSED(azColName);
 
 
     std::cerr << "cb_select_all being called\n";
@@ -281,16 +382,17 @@ int cb_select_id_feedback(void  *data,
                   << std::endl;
     }
 
-    int i;
-
     Feedback *obj = (Feedback *) data;
     obj->isNew = false; // object was generated from table
+    obj->called = true; // callback was reached, valid id used
 
     std::cout << "------------------------------\n";
     std::cout << obj->get_name()
               << std::endl;
 
     // assign object members from table data
+    obj->id = atoi(argv[0]);
+    obj->id_feedback = atoi(argv[0]) + 1;
     obj->text = argv[1];
     obj->tag = argv[2];
     obj->codeId = atoi(argv[3]);
@@ -332,5 +434,80 @@ int cb_update_id_feedback(void  *data,
 
     return 0;
 }
+
+int cb_delete_id_feedback(void  *data,
+                        int    argc,
+                        char **argv,
+                        char **azColName)
+{
+
+
+
+    std::cerr << "cb_add_row being called\n";
+
+    if(argc < 1) {
+        std::cerr << "No data presented to callback "
+                  << "argc = " << argc
+                  << std::endl;
+    }
+
+    int i;
+
+    Feedback *obj = (Feedback *) data;
+
+    std::cout << "------------------------------\n";
+    std::cout << obj->get_name()
+              << std::endl;
+
+    for(i = 0; i < argc; i++){
+        std::cout << azColName[i]
+                     << " = "
+                     <<  (argv[i] ? argv[i] : "NULL")
+                      << std::endl;
+    }
+
+    return 0;
+}
+
+int cb_select_similar_feedback(void  *data,
+                        int    argc,
+                        char **argv,
+                        char **azColName)
+{
+    Q_UNUSED(azColName);
+
+
+    std::cerr << "cb_select_all being called\n";
+
+    if(argc < 1) {
+        std::cerr << "No data presented to callback "
+                  << "argc = " << argc
+                  << std::endl;
+    }
+
+    Feedback *obj = (Feedback *) data;
+    obj->isNew = false; // object was generated from table
+
+    std::cout << "------------------------------\n";
+    std::cout << obj->get_name()
+              << std::endl;
+
+    // assign object members from table data
+    bool has= false;
+    for (int i = 0; i < argc; i++) {
+        for (string k : obj->simillar) {
+            if (k == argv[i]) {
+                has = true;
+            }
+        }
+        if (!has) {
+            obj->simillar.push_back(argv[i]);
+        }
+        has = false;
+    }
+
+    return 0;
+}
+
 
 

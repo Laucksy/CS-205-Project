@@ -1,3 +1,7 @@
+/*Ident is a class that handles the objects belonging to a specific id.
+ * It is used to create id's for new objects created.
+ * */
+
 #include "ident.h"
 
 int Ident::id_student = 0;
@@ -29,12 +33,14 @@ string Ident::feedback_table = "feedback_table";
 
 Ident::Ident()
 {
+    called = false;
     // object is none of above, id irrelevant
     id = -1;
 }
 
 Ident::Ident(char k)
 {
+    called = false;
     switch (k) {
     case 's':
         // object is student, increment student id

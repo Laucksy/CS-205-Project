@@ -14,7 +14,7 @@ SOURCES += \
     ../DataStructure/students.cpp \
     ../DataStructure/assignments.cpp \
     ../DataStructure/assignment.cpp \
-    ../DataStructure/rubrics.cpp \
+    #../DataStructure/rubrics.cpp \
     ../DataStructure/rubric.cpp \
     ../DataStructure/category.cpp \
     ../DataStructure/ident.cpp \
@@ -25,7 +25,7 @@ HEADERS += \
     ../DataStructure/students.h \
     ../DataStructure/assignments.h \
     ../DataStructure/assignment.h \
-    ../DataStructure/rubrics.h \
+    #../DataStructure/rubrics.h \
     ../DataStructure/rubric.h \
     ../DataStructure/category.h \
     ../DataStructure/ident.h \
@@ -41,4 +41,30 @@ HEADERS += ../DataStructure/dbtool.h \
 SOURCES += ../DataStructure/dbtool.cpp \
     ../DataStructure/dbtable.cpp
 
-LIBS += -l sqlite3
+HEADERS += ../git/bash.h
+SOURCES += ../git/bash.cpp
+
+HEADERS += ../git/git.h
+SOURCES += ../git/git.cpp
+
+HEADERS += ../tools/baseclass.h \
+        ../tools/configuration.h \
+        ../tools/log.h
+
+SOURCES += ../tools/baseclass.cpp \
+        ../tools/configuration.cpp \
+        ../tools/log.cpp
+
+LIBS += -l sqlite3 \
+        -pthread
+
+DISTFILES += \
+    ../../../lab 7/t.java \
+    ../../../lab 7/t.java
+
+SOURCES += ../gtest/googletest/src/gtest-all.cc
+
+INCLUDEPATH +=  ../gtest                                   \
+                ../gtest/googletest                        \
+                ../gtest/googletest/include                \
+                ../gtest/googletest/include/gtest

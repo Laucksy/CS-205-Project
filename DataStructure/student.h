@@ -12,10 +12,14 @@
 #include "dbtable.h"
 #include "ident.h"
 #include "assignment.h"
+#include "students.h"
+#include "../project/macros.h"
 
 using namespace std;
 
 class Assignment;
+class Students;
+class DBTool;
 
 // holds the grade and information for a student
 class Student : public Ident, public DBTable
@@ -23,8 +27,10 @@ class Student : public Ident, public DBTable
 public:
     // constuctors and deconstructors
     Student();
-    Student(DBTool* db, string f, string l);
+    Student(DBTool* db, string n);
     ~Student();
+
+    void set_to_delete();
 
     // manipulate score
     void calc_score();
@@ -42,24 +48,29 @@ public:
     virtual void store_add_row_sql();
 
     // executes specific sql
-    bool add_row(int id, string firstName, string lastName, int classId, double score);
+    bool add_row(int id, string name, int classId, double score);
 
     bool select_id(int i);
 
-    bool update_id(int id, string firstName, string lastName, int classId, double score);
+    bool update_id(int id, string name, int classId, double score);
+
+    bool delete_id(int i);
 
     //members
     vector<Assignment*> list;
-    string firstName;
-    string lastName;
+    Students* section;
+    string name;
     double score;
     bool isNew;
     int classId;
+    bool toDelete;
+    int numClassAssign;
 
 protected:
     // sql command templates
     std::string sql_select_id;
     std::string sql_update_id;
+    std::string sql_delete_id;
 };
 
 // This is a callback function that is sent to the library and used
@@ -77,6 +88,12 @@ int cb_select_id_student(void  *data,
 // This is a callback function that is sent to the library and used
 // to parse the sql request being sent to the database.
 int cb_update_id_student(void  *data,
+                        int    argc,
+                        char **argv,
+                        char **azColName);
+// This is a callback function that is sent to the library and used
+// to parse the sql request being sent to the database.
+int cb_delete_id_student(void  *data,
                         int    argc,
                         char **argv,
                         char **azColName);

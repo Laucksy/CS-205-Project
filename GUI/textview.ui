@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>566</width>
-    <height>383</height>
+    <width>898</width>
+    <height>384</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -108,19 +108,170 @@
    </palette>
   </property>
   <property name="mouseTracking">
-   <bool>true</bool>
+   <bool>false</bool>
   </property>
   <property name="focusPolicy">
    <enum>Qt::ClickFocus</enum>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Axolotl Development</string>
   </property>
   <property name="autoFillBackground">
    <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="2" column="1">
+   <item row="7" column="4">
+    <widget class="QLabel" name="label_5">
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>204</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>204</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>127</red>
+           <green>127</green>
+           <blue>127</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+     <property name="text">
+      <string>Tag:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="13">
+    <widget class="QLabel" name="label_3">
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>204</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>204</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>127</red>
+           <green>127</green>
+           <blue>127</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+     <property name="text">
+      <string>Category:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="13">
+    <widget class="QLabel" name="label_6">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>204</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>204</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>127</red>
+           <green>127</green>
+           <blue>127</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
+     <property name="text">
+      <string>Points:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="13">
+    <widget class="QComboBox" name="comboBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="6">
     <widget class="QLabel" name="label_2">
      <property name="palette">
       <palette>
@@ -189,16 +340,12 @@
      <property name="text">
       <string>Line:</string>
      </property>
-    </widget>
-   </item>
-   <item row="2" column="3">
-    <widget class="QPushButton" name="pushButton">
-     <property name="text">
-      <string>PushButton</string>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
-   <item row="0" column="1" rowspan="2" colspan="2">
+   <item row="1" column="13">
     <widget class="QLabel" name="label">
      <property name="palette">
       <palette>
@@ -237,15 +384,293 @@
        </disabled>
       </palette>
      </property>
-     <property name="lineWidth">
-      <number>1</number>
-     </property>
      <property name="text">
-      <string>Rubric Stuff</string>
+      <string>Rubric:</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="6" column="13">
+    <widget class="QLineEdit" name="lineEdit_3">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="13">
+    <widget class="QTextBrowser" name="textBrowser_2"/>
+   </item>
+   <item row="7" column="0" colspan="4">
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="Text">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>128</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>51</red>
+           <green>51</green>
+           <blue>51</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="Text">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>128</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>51</red>
+           <green>51</green>
+           <blue>51</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="Text">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>127</red>
+           <green>127</green>
+           <blue>127</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>236</red>
+           <green>236</green>
+           <blue>236</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+     <property name="font">
+      <font>
+       <family>Courier New</family>
+       <italic>true</italic>
+      </font>
+     </property>
+     <property name="text">
+      <string>Add Feedback Here</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>233</red>
+             <green>238</green>
+             <blue>178</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>233</red>
+             <green>238</green>
+             <blue>178</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>127</red>
+             <green>127</green>
+             <blue>127</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="text">
+        <string>File:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox_2">
+       <item>
+        <property name="text">
+         <string>Code 1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Student</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="7" column="5">
+    <widget class="QComboBox" name="comboBox_3"/>
+   </item>
+   <item row="7" column="8">
+    <widget class="QLineEdit" name="lineEdit_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="Text">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>128</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>51</red>
+           <green>51</green>
+           <blue>51</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="Text">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>128</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>51</red>
+           <green>51</green>
+           <blue>51</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="Text">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>127</red>
+           <green>127</green>
+           <blue>127</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>127</red>
+           <green>127</green>
+           <blue>127</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="9">
+    <widget class="QPushButton" name="pushButton_4">
+     <property name="text">
+      <string>Delete Comment</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="13">
+    <widget class="QPushButton" name="pushButton_3">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Finish Grading</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="11">
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="text">
+      <string>Back</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" rowspan="6" colspan="12">
     <widget class="QTextBrowser" name="textBrowser">
      <property name="palette">
       <palette>
@@ -343,8 +768,11 @@
        <family>Courier</family>
       </font>
      </property>
+     <property name="cursor" stdset="0">
+      <cursorShape>IBeamCursor</cursorShape>
+     </property>
      <property name="mouseTracking">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="focusPolicy">
       <enum>Qt::ClickFocus</enum>
@@ -352,146 +780,61 @@
      <property name="autoFillBackground">
       <bool>true</bool>
      </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
      <property name="lineWidth">
       <number>14</number>
      </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLineEdit" name="lineEdit">
-     <property name="palette">
-      <palette>
-       <active>
-        <colorrole role="Text">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>255</red>
-           <green>128</green>
-           <blue>0</blue>
-          </color>
-         </brush>
-        </colorrole>
-        <colorrole role="Base">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>51</red>
-           <green>51</green>
-           <blue>51</blue>
-          </color>
-         </brush>
-        </colorrole>
-       </active>
-       <inactive>
-        <colorrole role="Text">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>255</red>
-           <green>128</green>
-           <blue>0</blue>
-          </color>
-         </brush>
-        </colorrole>
-        <colorrole role="Base">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>51</red>
-           <green>51</green>
-           <blue>51</blue>
-          </color>
-         </brush>
-        </colorrole>
-       </inactive>
-       <disabled>
-        <colorrole role="Text">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>127</red>
-           <green>127</green>
-           <blue>127</blue>
-          </color>
-         </brush>
-        </colorrole>
-        <colorrole role="Base">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>236</red>
-           <green>236</green>
-           <blue>236</blue>
-          </color>
-         </brush>
-        </colorrole>
-       </disabled>
-      </palette>
+     <property name="lineWrapMode">
+      <enum>QTextEdit::NoWrap</enum>
      </property>
-     <property name="font">
-      <font>
-       <family>Courier New</family>
-       <italic>true</italic>
-      </font>
+     <property name="textInteractionFlags">
+      <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
      </property>
     </widget>
    </item>
-   <item row="2" column="2">
-    <widget class="QLineEdit" name="lineEdit_2">
+   <item row="8" column="0" colspan="6">
+    <widget class="QComboBox" name="comboBox_4">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+    </widget>
+   </item>
+   <item row="8" column="6">
+    <widget class="QLabel" name="label_7">
      <property name="palette">
       <palette>
        <active>
-        <colorrole role="Text">
+        <colorrole role="WindowText">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
            <red>255</red>
-           <green>128</green>
-           <blue>0</blue>
-          </color>
-         </brush>
-        </colorrole>
-        <colorrole role="Base">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>51</red>
-           <green>51</green>
-           <blue>51</blue>
+           <green>255</green>
+           <blue>204</blue>
           </color>
          </brush>
         </colorrole>
        </active>
        <inactive>
-        <colorrole role="Text">
+        <colorrole role="WindowText">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
            <red>255</red>
-           <green>128</green>
-           <blue>0</blue>
-          </color>
-         </brush>
-        </colorrole>
-        <colorrole role="Base">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>51</red>
-           <green>51</green>
-           <blue>51</blue>
+           <green>255</green>
+           <blue>204</blue>
           </color>
          </brush>
         </colorrole>
        </inactive>
        <disabled>
-        <colorrole role="Text">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>127</red>
-           <green>127</green>
-           <blue>127</blue>
-          </color>
-         </brush>
-        </colorrole>
-        <colorrole role="Base">
+        <colorrole role="WindowText">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
            <red>127</red>
@@ -503,42 +846,24 @@
        </disabled>
       </palette>
      </property>
+     <property name="text">
+      <string>Auto Complete</string>
+     </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QComboBox" name="comboBox">
-       <property name="editable">
-        <bool>false</bool>
-       </property>
-       <item>
-        <property name="text">
-         <string>Shira</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Drew</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBox_2">
-       <item>
-        <property name="text">
-         <string>Cody McCodyface</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Student</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-    </layout>
+   <item row="0" column="8">
+    <widget class="QLabel" name="assignmentLabel">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="13">
+    <widget class="QPushButton" name="saveButton">
+     <property name="text">
+      <string>Save Current Progress</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

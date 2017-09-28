@@ -28,8 +28,24 @@ SOURCES += main.cpp\
     textview.cpp \
     dataview.cpp \
     rubrics.cpp \
-    newuser.cpp \
-    forgotpassword.cpp
+    rubrictitle.cpp \
+    addcategory.cpp \
+    newclass.cpp \
+    classview.cpp \
+    newstudent.cpp \
+    newassignment.cpp \
+    assignmentview.cpp \
+    newsubmission.cpp \
+    submissionview.cpp \
+    newfile.cpp \
+    selectclass.cpp \
+    selectrubric.cpp \
+    selectassignment.cpp \
+    gitmanager.cpp \
+    sudentsubdirectory.cpp \
+    importclass.cpp \
+    importrubric.cpp \
+    options.cpp
 
 
 
@@ -37,16 +53,48 @@ HEADERS  += mainwindow.h \
     textview.h \
     dataview.h \
     rubrics.h \
-    newuser.h \
-    forgotpassword.h
+    rubrictitle.h \
+    addcategory.h \
+    newclass.h \
+    classview.h \
+    newstudent.h \
+    newassignment.h \
+    assignmentview.h \
+    newsubmission.h \
+    submissionview.h \
+    newfile.h \
+    selectclass.h \
+    selectrubric.h \
+    selectassignment.h \
+    gitmanager.h \
+    sudentsubdirectory.h \
+    importclass.h \
+    importrubric.h \
+    options.h
 
 
 FORMS    += mainwindow.ui \
     textview.ui \
     dataview.ui \
     rubrics.ui \
-    newuser.ui \
-    forgotpassword.ui
+    rubrictitle.ui \
+    addcategory.ui \
+    newclass.ui \
+    classview.ui \
+    newstudent.ui \
+    newassignment.ui \
+    assignmentview.ui \
+    newsubmission.ui \
+    submissionview.ui \
+    newfile.ui \
+    selectclass.ui \
+    selectrubric.ui \
+    selectassignment.ui \
+    gitmanager.ui \
+    sudentsubdirectory.ui \
+    importclass.ui \
+    importrubric.ui \
+    options.ui
 
 RESOURCES += \
     logo.qrc
@@ -55,21 +103,59 @@ DISTFILES += \
     Logo.png \
     Student.java
 
-SOURCES +=  ../project/code.cpp\
+SOURCES += \
+    ../Integration/integration.cpp
 
-HEADERS +=    ../project/code.h\
+HEADERS += \
+    ../Integration/integration.h
 
-SOURCES += ../DataStructure/feedback.cpp
-HEADERS += ../DataStructure/feedback.h
+SOURCES += \
+    ../DataStructure/student.cpp \
+    ../DataStructure/students.cpp \
+    ../DataStructure/assignments.cpp \
+    ../DataStructure/assignment.cpp \
+    #../DataStructure/rubrics.cpp \
+    ../DataStructure/rubric.cpp \
+    ../DataStructure/category.cpp \
+    ../DataStructure/ident.cpp \
+    ../DataStructure/feedback.cpp
 
-SOURCES += ../DataStructure/ident.cpp
-HEADERS += ../DataStructure/ident.h
+HEADERS += \
+    ../DataStructure/student.h \
+    ../DataStructure/students.h \
+    ../DataStructure/assignments.h \
+    ../DataStructure/assignment.h \
+    #../DataStructure/rubrics.h \
+    ../DataStructure/rubric.h \
+    ../DataStructure/category.h \
+    ../DataStructure/ident.h \
+    ../DataStructure/feedback.h
 
-SOURCES += ../DataStructure/dbtable.cpp
-HEADERS += ../DataStructure/dbtable.h
+HEADERS += ../project/code.h
 
-SOURCES += ../DataStructure/dbtool.cpp
-HEADERS += ../DataStructure/dbtool.h
+SOURCES += ../project/code.cpp
 
+HEADERS += ../git/bash.h
+SOURCES += ../git/bash.cpp
+
+HEADERS += ../export/exporthtml.h
+SOURCES += ../export/exporthtml.cpp
+
+HEADERS += ../tools/baseclass.h \
+        ../tools/configuration.h \
+        ../tools/log.h
+
+SOURCES += ../tools/baseclass.cpp \
+        ../tools/configuration.cpp \
+        ../tools/log.cpp
+
+HEADERS += ../git/git.h
+SOURCES += ../git/git.cpp
+
+HEADERS += ../DataStructure/dbtool.h \
+    ../DataStructure/dbtable.h
+
+SOURCES += ../DataStructure/dbtool.cpp \
+    ../DataStructure/dbtable.cpp
 LIBS += -l sqlite3
 

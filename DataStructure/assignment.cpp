@@ -1,5 +1,16 @@
 #include "assignment.h"
 
+/*	Assignment class contains information on a single assignment.
+ * An Assignment contains information about the code through a vector
+ * of type Code called javaFiles and the grade received for the
+ * assignment. Assignment contains a Rubric, which is the rubric being
+ * used for that submission, as well as a method to change the Rubric.
+ * Assignment also contains a point breakdown as based on the Rubric.
+ * Based on the Rubric type, the pointBreakdown key of type String
+ * will either be the name of a Category or the String in listRubric
+ * in Rubric.
+ * */
+
 // basic constructor, do not use
 Assignment::Assignment() : Ident::Ident('a')
 {
@@ -19,6 +30,7 @@ Assignment::Assignment(DBTool* db, Rubric* r, Student* s, int n) : Ident::Ident(
     assignment_row_cnt = size();
 
     isNew = true; // assumes object is unique and not in table
+    toDelete = false;
     status = 0;
 
     // initialize vars
@@ -40,14 +52,20 @@ Assignment::Assignment(DBTool* db, Rubric* r, Student* s, int n) : Ident::Ident(
         }
     }
 
-    for (int i = 0; i < gradeCategory.size(); i ++) {
-        gradeQuality.push_back(r->find_qual(gradeComponent[i], gradeCategory[i]));
+    for (unsigned i = 0; i < gradeCategory.size(); i ++) {
+        gradeQuality.push_back(r->find_qual(gradeComponent.at(i), gradeCategory.at(i)));
     }
 }
 
 // destructor
 Assignment::~Assignment()
 {
+    // if an object is slated for delete, delete it
+    if (toDelete) {
+        delete_id(id);
+        return;
+    }
+
     // if valid object, adds or updates it in table
     if (isNew && id >= 0) {
         add_row(id, grade, convert_category(), convert_component(),
@@ -67,31 +85,46 @@ Assignment::~Assignment()
 // affects a grade category
 void Assignment::change_grade(double g, string c)
 {
+    //cout << "Start change grade" << endl;
     int ind = -1;
 
-    for (int i = 0; i < gradeCategory.size(); i++) {
-        if (gradeCategory[i] == c) {
+    for (unsigned i = 0; i < gradeCategory.size(); i++) {
+        if (gradeCategory.at(i) == c) {
             ind = i;
         }
     }
 
-    if (ind != -1 && !rubric->is_deduction()) {
-        if (rubric->cat[ind]->pts >= gradeComponent[ind] + g){
-        gradeComponent[ind] += g;
-        gradeQuality[ind] = rubric->find_qual(g, gradeCategory[ind]);
-        }
-    }
+    //    if (ind != -1 && !rubric->is_deduction()) {
+    //        if (rubric->cat[ind]->pts >= gradeComponent[ind] + g){
+    //        gradeComponent[ind] += g;
+    //        gradeQuality[ind] = rubric->find_qual(g, gradeCategory[ind]);
+    //        }
+    //    }
 
-    if (ind != -1 && rubric->is_deduction()) {
-        if (gradeComponent[ind] - g >= 0){
-        gradeComponent[ind] -= g;
-        gradeQuality[ind] = rubric->find_qual(gradeComponent[ind], gradeCategory[ind]);
+    //    if (ind != -1 && rubric->is_deduction()) {
+    //        if (gradeComponent[ind] - g >= 0){
+    //        gradeComponent[ind] -= g;
+    //        gradeQuality[ind] = rubric->find_qual(gradeComponent[ind], gradeCategory[ind]);
+    //        }
+    //    }
+
+    //cout << "Partway through" << endl;
+    if (g >= 0 && rubric->cat[ind] != nullptr && g <= rubric->cat[ind]->pts){
+        gradeComponent[ind] = g;
+        while (gradeQuality.size() < (unsigned)ind) {
+            gradeQuality.push_back("");
         }
+        gradeQuality[ind] = rubric->find_qual(gradeComponent[ind], gradeCategory[ind]);
     }
+    //cout << "More partway through" << endl;
+
+
+    grade = 0;
 
     for (double k : gradeComponent) {
         grade += k;
     }
+    //cout << "Finished change grade" << endl;
 }
 
 // return grade
@@ -104,6 +137,11 @@ void Assignment::add_code(Code *c) {
     files.push_back(c);
 }
 
+void Assignment::set_to_delete()
+{
+    toDelete = true;
+}
+
 // db parse
 // convert list to single string
 string Assignment::convert_category()
@@ -112,7 +150,7 @@ string Assignment::convert_category()
 
     for (string k : gradeCategory) {
         ret += k;
-        ret += " ";
+        ret += "~";
     }
 
     return ret;
@@ -145,14 +183,28 @@ string Assignment::convert_quality()
 // convert db string to list
 void Assignment::parse_category(string s)
 {
-    stringstream ss(s);
+    /*stringstream ss(s);
 
     string i;
 
     while (ss >> i) {
         gradeCategory.push_back(i);
+    }*/
+
+    vector<string> tokens;
+    unsigned firstIndex = 0;
+    unsigned secondIndex = 0;
+    for(unsigned i = 0; i < s.length(); i++) {
+        if(s.at(i) == '~') {
+            secondIndex = i;
+            tokens.push_back(s.substr(firstIndex,secondIndex-firstIndex));
+            firstIndex = secondIndex + 1;
+        }
     }
 
+    for(unsigned i = 0; i < tokens.size(); i++) {
+        gradeCategory.push_back(tokens.at(i));
+    }
 }
 
 void Assignment::parse_component(string s)
@@ -402,13 +454,45 @@ bool Assignment::update_id(int id, double grade, string category, string compone
     return retCode;
 }
 
+// selects entry by unique id
+bool Assignment::delete_id(int i) {
+
+    int   retCode = 0;
+    char *zErrMsg = 0;
+
+    sql_delete_id  = "DELETE FROM ";
+    sql_delete_id += table_name;
+    sql_delete_id += " WHERE ";
+    sql_delete_id += "     id = ";
+    sql_delete_id += to_string(i);
+    sql_delete_id += ";";
+
+    retCode = sqlite3_exec(curr_db->db_ref(),
+                           sql_delete_id.c_str(),
+                           cb_delete_id_assignment,
+                           this,
+                           &zErrMsg          );
+
+    if( retCode != SQLITE_OK ){
+
+        std::cerr << table_name
+                  << " template ::"
+                  << std::endl
+                  << "SQL error: "
+                  << zErrMsg;
+
+        sqlite3_free(zErrMsg);
+    }
+
+    return retCode;
+}
+
 // callbacks
 int cb_add_row_assignment(void  *data,
-                      int    argc,
-                      char **argv,
-                      char **azColName)
+                          int    argc,
+                          char **argv,
+                          char **azColName)
 {
-
 
 
     std::cerr << "cb_add_row being called\n";
@@ -439,11 +523,11 @@ int cb_add_row_assignment(void  *data,
 }
 
 int cb_select_id_assignment(void  *data,
-                        int    argc,
-                        char **argv,
-                        char **azColName)
+                            int    argc,
+                            char **argv,
+                            char **azColName)
 {
-
+    Q_UNUSED(azColName);
 
 
     std::cerr << "cb_select_all being called\n";
@@ -454,16 +538,17 @@ int cb_select_id_assignment(void  *data,
                   << std::endl;
     }
 
-    int i;
-
     Assignment *obj = (Assignment *) data;
     obj->isNew = false; // object was generated from table
+    obj->called = true; // callback was reached, valid id used
 
     std::cout << "------------------------------\n";
     std::cout << obj->get_name()
               << std::endl;
 
     // assign object members from table data
+    obj->id = atoi(argv[0]);
+    obj->id_assignment = atoi(argv[0]) + 1;
     obj->grade = atof(argv[1]);
     obj->parse_category(argv[2]);
     obj->parse_component(argv[3]);
@@ -477,9 +562,43 @@ int cb_select_id_assignment(void  *data,
 }
 
 int cb_update_id_assignment(void  *data,
-                        int    argc,
-                        char **argv,
-                        char **azColName)
+                            int    argc,
+                            char **argv,
+                            char **azColName)
+{
+
+
+
+    std::cerr << "cb_add_row being called\n";
+
+    if(argc < 1) {
+        std::cerr << "No data presented to callback "
+                  << "argc = " << argc
+                  << std::endl;
+    }
+
+    int i;
+
+    Assignment *obj = (Assignment *) data;
+
+    std::cout << "------------------------------\n";
+    std::cout << obj->get_name()
+              << std::endl;
+
+    for(i = 0; i < argc; i++){
+        std::cout << azColName[i]
+                     << " = "
+                     <<  (argv[i] ? argv[i] : "NULL")
+                      << std::endl;
+    }
+
+    return 0;
+}
+
+int cb_delete_id_assignment(void  *data,
+                            int    argc,
+                            char **argv,
+                            char **azColName)
 {
 
 

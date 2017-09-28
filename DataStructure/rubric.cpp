@@ -1,5 +1,16 @@
 #include "rubric.h"
 
+/* The Rubric class shows the characteristics of all possible rubric types.
+ * In order to implement functionality for different grading and rubric styles,
+ * the Rubric class provides option handling for unique grading styles.
+ * Rubric contains two maps, to be used if the rubric being parsed
+ * is in list versus matrix form, as well as a boolean for whether the grader
+ * will be using a reward or deduction point-based system.
+ * Rubric also contains a method to add a new point category to a rubric
+ * and to go back and change the point value associated with category.
+ * */
+
+
 // basic constructor, closes program
 Rubric::Rubric()
 {
@@ -19,15 +30,25 @@ Rubric::Rubric(DBTool* db, bool d, string n) : Ident::Ident('r'), DBTable::DBTab
     rubric_row_cnt = size();
 
     isNew = true; // assumes object is unique and not in table
+    toDelete = false;
 
     // initialize vars
     isDeduction = d;
     title = n;
+    grade = 0;
+    calc_grade();
 }
 
 // destructor
 Rubric::~Rubric()
 {
+    calc_grade();
+    // if an object is slated for delete, delete it
+    if (toDelete) {
+        delete_id(id);
+        return;
+    }
+
     // if valid object, adds or updates it in table
     if (isNew && id >= 0) {
         add_row(id, title, grade, convert_name(), (int)isDeduction);
@@ -42,9 +63,15 @@ Rubric::~Rubric()
     }
 }
 
+void Rubric::set_to_delete()
+{
+    toDelete = true;
+}
+
 // determines the total grade from the grade parts in categories
 void Rubric::calc_grade()
 {
+    grade = 0;
     for (Category* k : cat) {
         grade += k->get_pts();
     }
@@ -81,6 +108,7 @@ void Rubric::add_category(Category* c, string n)
 {
     cat.push_back(c);
     name.push_back(n);
+    calc_grade();
 }
 
 // finds the appropriate category quality
@@ -88,9 +116,9 @@ string Rubric::find_qual(double p, string c)
 {
     int ind = -1;
 
-    for (int i = 0; i < name.size(); i++) {
-        if (name[i] == c) {
-            ind = i;
+    for (unsigned i = 0; i < name.size(); i++) {
+        if (name.at(i) == c) {
+            ind = (int)i;
         }
     }
 
@@ -109,7 +137,7 @@ string Rubric::convert_name()
 
     for (string k : name) {
         ret += k;
-        ret += " ";
+        ret += "#";
     }
 
     return ret;
@@ -122,7 +150,7 @@ void Rubric::parse_name(string s)
 
     string i;
 
-    while (ss >> i) {
+    while (getline(ss, i, '#')) {
         name.push_back(i);
     }
 
@@ -310,6 +338,39 @@ bool Rubric::update_id(int id, string title, double grade, string name, int isDe
     return retCode;
 }
 
+// deletes entry by unique id
+bool Rubric::delete_id(int i) {
+
+    int   retCode = 0;
+    char *zErrMsg = 0;
+
+    sql_delete_id  = "DELETE FROM ";
+    sql_delete_id += table_name;
+    sql_delete_id += " WHERE ";
+    sql_delete_id += "     id = ";
+    sql_delete_id += to_string(i);
+    sql_delete_id += ";";
+
+    retCode = sqlite3_exec(curr_db->db_ref(),
+                           sql_delete_id.c_str(),
+                           cb_delete_id_rubric,
+                           this,
+                           &zErrMsg          );
+
+    if( retCode != SQLITE_OK ){
+
+        std::cerr << table_name
+                  << " template ::"
+                  << std::endl
+                  << "SQL error: "
+                  << zErrMsg;
+
+        sqlite3_free(zErrMsg);
+    }
+
+    return retCode;
+}
+
 // callbacks
 int cb_add_row_rubric(void  *data,
                       int    argc,
@@ -351,7 +412,7 @@ int cb_select_id_rubric(void  *data,
                         char **argv,
                         char **azColName)
 {
-
+    Q_UNUSED(azColName);
 
 
     std::cerr << "cb_select_all being called\n";
@@ -362,16 +423,17 @@ int cb_select_id_rubric(void  *data,
                   << std::endl;
     }
 
-    int i;
-
     Rubric *obj = (Rubric *) data;
     obj->isNew = false; // object was generated from table
+    obj->called = true; // callback was reached, valid id used
 
     std::cout << "------------------------------\n";
     std::cout << obj->get_name()
               << std::endl;
 
     // assign object members from table data
+    obj->id = atoi(argv[0]);
+    obj->id_rubric = atoi(argv[0]) + 1;
     obj->title = argv[1];
     obj->grade = atof(argv[2]);
     obj->parse_name(argv[3]);
@@ -381,6 +443,40 @@ int cb_select_id_rubric(void  *data,
 }
 
 int cb_update_id_rubric(void  *data,
+                        int    argc,
+                        char **argv,
+                        char **azColName)
+{
+
+
+
+    std::cerr << "cb_add_row being called\n";
+
+    if(argc < 1) {
+        std::cerr << "No data presented to callback "
+                  << "argc = " << argc
+                  << std::endl;
+    }
+
+    int i;
+
+    Rubric *obj = (Rubric *) data;
+
+    std::cout << "------------------------------\n";
+    std::cout << obj->get_name()
+              << std::endl;
+
+    for(i = 0; i < argc; i++){
+        std::cout << azColName[i]
+                     << " = "
+                     <<  (argv[i] ? argv[i] : "NULL")
+                      << std::endl;
+    }
+
+    return 0;
+}
+
+int cb_delete_id_rubric(void  *data,
                         int    argc,
                         char **argv,
                         char **azColName)

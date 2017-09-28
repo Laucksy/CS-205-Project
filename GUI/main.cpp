@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "../project/code.h"
+#include "../Integration/integration.h"
+
 
 #include <QApplication>
 
@@ -12,8 +14,10 @@
 using namespace std;
 int main(int argc, char *argv[])
 {
+    //Integration integ(".", "TestDB"); //= new Integration();
     QApplication a(argc, argv);
     MainWindow w;
+    //w.set_integ(&integ);
 
     w.show();
 

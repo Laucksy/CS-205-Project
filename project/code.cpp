@@ -1,14 +1,22 @@
-//#include <boost/algorithm/string.hpp>
 //using namespace boost;
 #include "code.h"
 
 using namespace std;
 
+/*The Code class handles the student’s code submission.
+ * Code parses the text from the Java Files in the parse_code method
+ * and the comments are stored in a vector of Strings.
+ * Code also sets colors for the code for the user interface.
+ * Code then has two methods to add comments into the code,
+ * one for direct comment insertion and one associated to a grade.
+ * Code also has a method to autocomplete comments.
+ * */
 Code::Code() : Ident::Ident('o')
 {
 
 }
 
+//constructor sets up database information
 Code::Code(DBTool* db, string n, int aid) : Ident::Ident('o'), DBTable::DBTable(db, code_table)
 {
     // Load SQL specific to child class.
@@ -21,39 +29,89 @@ Code::Code(DBTool* db, string n, int aid) : Ident::Ident('o'), DBTable::DBTable(
     code_row_cnt = size();
 
     isNew = true; // assumes object is unique and not in table
+    toDelete = false;
 
     //initialize vars
     fileName = n;
     assignId = aid;
 }
 
+//deconstructor deletes code objects in database
 Code::~Code() {
-    // if valid object, adds or updates it in table
+    // deletes the objectfrom the db if slated for delete
+    if (toDelete) {
+        delete_id(id);
+        return;
+    }
+    //if valid object, adds or updates it in table
     if (isNew && id >= 0) {
-        add_row(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+        add_row(id, fileName, "", "", "", assignId);
     } else if (!isNew && id >= 0){
-        update_id(id, fileName, convert_full(), convert_comments(),convert_lines(), assignId);
+        update_id(id, fileName, "", "", "", assignId);
     } else {
 
     }
+
+    for (Feedback* k : profFeedback) {
+        delete k;
+    }
 }
 
+//sets the name of the name of file for the student's code files
 void Code::set_file(string name)
 {
     fileName = name;
 }
 
+void Code::set_to_delete()
+{
+    toDelete = true;
+}
+
+
+string Code::exec_sec(string cmd) {
+    array<char, 128> buffer;
+    string result;
+    shared_ptr<FILE> pipe(popen(cmd.c_str(), "r"), pclose);
+    if (!pipe) throw runtime_error("popen() failed!");
+    while (!feof(pipe.get())) {
+        if (fgets(buffer.data(), 128, pipe.get()) != NULL)
+            result += buffer.data();
+    }
+    return result;
+}
+
+//THIS IS TO FIND PATH OF WHERE FILE IS BEING CREATED
+/*
+ *string r = Bash::exec("pwd");
+ *find_file_path();
+ * when opening file in parse method,  instead of fileName use string of absolute path
+*/
+string Code::file_path(string file)
+{
+    string use = "pwd";
+    string r = exec_sec(use);
+    string ret = r.substr(0, r.size()-1);
+    ret += file;
+    //cout << ret << endl;
+    return ret;
+}
+
+
+//the parse method parses out the lines of code from the student's file.
+//placing into unique vectors depending on the type of code it is
+//(comment or otherwise)
 vector<string> Code::parse()
 {
     if(fullCode.size() == 0) {
         string line;
         string space =" ";
         char commentTest[2];
-
+        string fullFileName = file_path(fileName);
         //going through each line of the selected file
         ifstream file;
-        file.open(fileName, ifstream::in);
-        cout << fileName << endl;
+        file.open(fullFileName, ifstream::in);
+        cout << fullFileName << endl;
         int cnt=0;
         while(file.good())
         {
@@ -76,6 +134,10 @@ vector<string> Code::parse()
             }
             file.close();
         }
+
+        for (Feedback* k : profFeedback) {
+            insert(k->position, k->text + ":: " + k->tag);
+        }
     }
     //prints out all items of fullCode
     //only there to show to demonstrate functionality
@@ -93,15 +155,8 @@ vector<string> Code::tokenize(string line)
     stringstream ss(line);
     vector<string> tokens;
     string t;
-    vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@' };
+    vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@','#' };
 
-    /*for(unsigned int x = 0; x < delimiterChars.size(); x++)
-    {
-        while (getline(ss,t,delimiterChars.at(x)))
-        {
-                tokens.push_back(t);
-        }
-    }*/
     unsigned firstIndex = 0;
     unsigned secondIndex = 0;
     for(unsigned i = 0; i < line.length(); i++) {
@@ -113,9 +168,16 @@ vector<string> Code::tokenize(string line)
             }
         }
     }
+    try {
+        secondIndex = line.length();
+        string test = line.substr(firstIndex,secondIndex-firstIndex);
+        //cout << "TEST" << test << "TEST" << endl;
+        if(test.length() > 0)
+            tokens.push_back(test);
+    } catch(int e) {}
 
-    for (unsigned long j =0; j< tokens.size(); j++)
-        cout << "TOKENS:" << tokens.at(j) << "," << endl;
+    //for (unsigned long j = 0; j< tokens.size(); j++)
+        //cout << "TOKENS:" << tokens.at(j) << "," << endl;
 
     return tokens;
 }
@@ -154,28 +216,17 @@ vector<string> Code::tokenize(string line)
     }
 }*/
 
+//a supplementary method for tokenize to help color the split up the unique
+//objects by any delimiter
 vector<string> Code::delimiters(string line)
 {
     vector<string> delims;
-    vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@' };
-    vector<string> delimiterStrings = {" ", ",", ".", ":", "\t", "(", ")", "/", ";", "[", "]", "{", "}", "*", "@"};
+    vector<char> delimiterChars = { ' ', ',', '.', ':', '\t', '(', ')', '/', ';', '[', ']', '{', '}', '*', '@','#' };
+    vector<string> delimiterStrings = {" ", ",", ".", ":", "\t", "(", ")", "/", ";", "[", "]", "{", "}", "*", "@","#"};
 
     stringstream ss(line);
 
     string i;
-
-    /*while (ss >> i)
-    {
-        //tokens.push_back(i);
-
-        for(unsigned long x = 0; x < delimiterChars.size(); x++)
-        {
-            if (ss.peek() == delimiterChars.at(x)) {
-               ss.ignore();
-               delims.push_back(delimiterStrings.at(x));
-            }
-        }
-    }*/
 
     for(unsigned i = 0; i < line.length(); i++) {
         for(unsigned x = 0; x < delimiterChars.size(); x++) {
@@ -185,18 +236,18 @@ vector<string> Code::delimiters(string line)
         }
     }
 
-    //for (unsigned long j =0; j< tokens.size(); j++)
-    //cout << tokens.at(j)<< endl;
-
     return delims;
 }
 
-void Code::insert(int position)
+//inssert feedback into the student's file
+void Code::insert(int position,string feed)
 {
     //iterating through code to insert text at a given position inside the vector
     vector<string>::iterator it = fullCode.begin();
-
-    fullCode.insert (it+position," ");
+    string s1= "``";
+    string s2= "`";
+    string s3= s1+feed+s2;
+    fullCode.insert (it+position,s3);
     /*also if we only want to insert blank text as to make room for an overlay comment
       * rather than text, we could take in only position and add in a blank line.
       */
@@ -205,17 +256,32 @@ void Code::insert(int position)
 //remove blank space (slot for feedback) from given position
 void Code::delete_space_for_feedback(int position)
 {
-    vector<string>::iterator itDelete = fullCode.begin();
-    advance(itDelete, position);
-    fullCode.erase(itDelete);
+    //cout << "TESTINGFEED" << fullCode.at(position).substr(0,9) << endl;
+    if(fullCode.at(position)[0] == '`' && fullCode.at(position)[1] == '`' && fullCode.at(position)[fullCode.at(position).length()-1] == '`') {
+        vector<string>::iterator itDelete = fullCode.begin();
+        advance(itDelete, position);
+        fullCode.erase(itDelete);
+    }
 }
 
+//add new feedback object into vector of feedback
 void Code::add_feedback(Feedback* newComment)
 {
     profFeedback.push_back(newComment);
 }
 
+void Code::delete_feedback(int commentLoc)
+{
+    for(unsigned int i = 0; i < profFeedback.size(); i++)
+    {
+        if(profFeedback.at(i)->get_position()==commentLoc)
+            delete profFeedback.at(i);
+    }
+}
 
+/*categorize returns an int corresponding with the category the word falls in,
+ * which can be used in coloring each word via cascade of if statements.
+ */
 int Code::categorize(string word)
 {
     /*here, maybe should traverse through each word in each string of the vector,
@@ -225,9 +291,6 @@ int Code::categorize(string word)
      * are comments don't have to be parsed because they should fall into one specific color.
      * only contents of vector linesOfCode should be categorized.
      * NOTE: needs to be parsed by spaces, periods, parentheses. not only spaces!
-     */
-    /*categorize returns an int corresponding with the category the word falls in,
-     * which can be used in coloring each word via cascade of if statements.
      */
     if(word=="float" || word=="string" || word=="int" || word=="char" || word=="long" || word=="short" || word=="double" || word=="boolean" || word=="byte" || word=="void"||word=="String")
     {
@@ -281,6 +344,8 @@ int Code::categorize(string word)
     {
         return 13;
     }
+
+
     //everything else is just normal code, should be black (or some standard color).
     return 0;
 }
@@ -292,49 +357,88 @@ vector<string> Code::get_full_code()
 
 // db parse
 // convert list to single string
+
+//convert methods turn vector of strings into single string with delimiter character in between entries
 string Code::convert_full()
 {
     string ret;
-
+    for(vector<string>::iterator it = fullCode.begin(); it != fullCode.end(); ++it) {
+        ret = ret+ *it + "`";
+    }
+    //cout << ret << endl;
     return ret;
 }
 
 string Code::convert_comments()
 {
-    string ret;
 
+    string ret;
+    for(vector<string>::iterator it = comments.begin(); it != comments.end(); ++it) {
+        ret = ret+ *it + "`";
+    }
+    //cout << ret << endl;
     return ret;
 }
 
 string Code::convert_lines()
 {
     string ret;
-
+    for(vector<string>::iterator it = linesOfCode.begin(); it != linesOfCode.end(); ++it) {
+        ret = ret+ *it + "`";
+    }
+    //cout << ret << endl;
     return ret;
 }
 
 // convert db string to list
-void Code::parse_full(string s)
+//parse methods turn the single string from convert methods back into the original vector of strings
+vector<string> Code::parse_full(string s)
 {
     stringstream ss(s);
+    string piece;
+    vector<string> vect;
+    while (getline(ss, piece, '`')) {
+        vect.push_back(piece);
+    }
+    return vect;
 
-    string i;
+    //        for(unsigned long i = 0; i < vect.size(); i++)
+    //       {
+    //        cout << vect.at(i) << endl;
+    //        }
+}
+
+vector<string> Code::parse_comments(string s)
+{
+    stringstream ss(s);
+    string piece;
+    vector<string> vect;
+    while (getline(ss, piece, '`')) {
+        vect.push_back(piece);
+    }
+    return vect;
+
+    //        for(unsigned long i = 0; i < vect.size(); i++)
+    //       {
+    //        cout << vect.at(i) << endl;
+    //        }
 
 }
 
-void Code::parse_comments(string s)
+vector<string> Code::parse_lines(string s)
 {
     stringstream ss(s);
+    string piece;
+    vector<string> vect;
+    while (getline(ss, piece, '`')) {
+        vect.push_back(piece);
+    }
+    return vect;
 
-    string i;
-
-}
-
-void Code::parse_lines(string s)
-{
-    stringstream ss(s);
-
-    string i;
+    //        for(unsigned long i = 0; i < vect.size(); i++)
+    //       {
+    //        cout << vect.at(i) << endl;
+    //        }
 
 }
 
@@ -530,6 +634,39 @@ bool Code::update_id(int id, string name, string full,
     return retCode;
 }
 
+// deletes entry by unique id
+bool Code::delete_id(int i) {
+
+    int   retCode = 0;
+    char *zErrMsg = 0;
+
+    sql_delete_id  = "DElETE FROM ";
+    sql_delete_id += table_name;
+    sql_delete_id += " WHERE ";
+    sql_delete_id += "     id = ";
+    sql_delete_id += to_string(i);
+    sql_delete_id += ";";
+
+    retCode = sqlite3_exec(curr_db->db_ref(),
+                           sql_delete_id.c_str(),
+                           cb_delete_id_code,
+                           this,
+                           &zErrMsg          );
+
+    if( retCode != SQLITE_OK ){
+
+        std::cerr << table_name
+                  << " template ::"
+                  << std::endl
+                  << "SQL error: "
+                  << zErrMsg;
+
+        sqlite3_free(zErrMsg);
+    }
+
+    return retCode;
+}
+
 // callbacks
 int cb_add_row_code(void  *data,
                     int    argc,
@@ -571,7 +708,7 @@ int cb_select_id_code(void  *data,
                       char **argv,
                       char **azColName)
 {
-
+    Q_UNUSED(azColName);
 
 
     std::cerr << "cb_select_all being called\n";
@@ -582,10 +719,9 @@ int cb_select_id_code(void  *data,
                   << std::endl;
     }
 
-    int i;
-
     Code *obj = (Code *) data;
     obj->isNew = false; // object was generated from table
+    obj->called = true; // callback reached
 
     std::cout << "------------------------------\n";
     std::cout << obj->get_name()
@@ -593,9 +729,9 @@ int cb_select_id_code(void  *data,
 
     // assign object members from table data
     obj->fileName = argv[1];
-    obj->parse_full(argv[2]);
-    obj->parse_comments(argv[3]);
-    obj->parse_lines(argv[4]);
+    //obj->parse_full(argv[2]);
+    //obj->parse_comments(argv[3]);
+    //obj->parse_lines(argv[4]);
     obj->assignId = atoi(argv[5]);
 
     return 0;
@@ -635,4 +771,37 @@ int cb_update_id_code(void  *data,
     return 0;
 }
 
+int cb_delete_id_code(void  *data,
+                      int    argc,
+                      char **argv,
+                      char **azColName)
+{
+
+
+
+    std::cerr << "cb_add_row being called\n";
+
+    if(argc < 1) {
+        std::cerr << "No data presented to callback "
+                  << "argc = " << argc
+                  << std::endl;
+    }
+
+    int i;
+
+    Code *obj = (Code *) data;
+
+    std::cout << "------------------------------\n";
+    std::cout << obj->get_name()
+              << std::endl;
+
+    for(i = 0; i < argc; i++){
+        std::cout << azColName[i]
+                     << " = "
+                     <<  (argv[i] ? argv[i] : "NULL")
+                      << std::endl;
+    }
+
+    return 0;
+}
 

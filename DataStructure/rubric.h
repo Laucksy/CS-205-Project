@@ -12,6 +12,7 @@
 #include "dbtable.h"
 #include "category.h"
 #include "ident.h"
+#include "../project/macros.h"
 
 using namespace std;
 
@@ -25,6 +26,8 @@ public:
     Rubric();
     Rubric(DBTool* db, bool d, string n);
     ~Rubric();
+
+    void set_to_delete();
 
     // data methods
     void calc_grade();
@@ -61,6 +64,8 @@ public:
 
     bool update_id(int id, string title, double grade, string name, int isDeduction);
 
+    bool delete_id(int i);
+
     //data members
     string title;
     double grade;
@@ -68,11 +73,13 @@ public:
     vector<Category*> cat;
     bool isDeduction;
     bool isNew;
+    bool toDelete;
 
 protected:
     // sql command templates
     std::string sql_select_id;
     std::string sql_update_id;
+    std::string sql_delete_id;
 };
 
 // This is a callback function that is sent to the library and used
@@ -90,6 +97,12 @@ int cb_select_id_rubric(void  *data,
 // This is a callback function that is sent to the library and used
 // to parse the sql request being sent to the database.
 int cb_update_id_rubric(void  *data,
+                        int    argc,
+                        char **argv,
+                        char **azColName);
+// This is a callback function that is sent to the library and used
+// to parse the sql request being sent to the database.
+int cb_delete_id_rubric(void  *data,
                         int    argc,
                         char **argv,
                         char **azColName);

@@ -11,15 +11,22 @@
 #include <stdlib.h>
 #include "dbtable.h"
 #include "ident.h"
+#include "../project/macros.h"
+
+class DBTool;
 
 class Feedback : public Ident, public DBTable
 {
 public:
     Feedback();
-    Feedback(DBTool* db, string te, string ta, int cid, int p);
+    Feedback(DBTool* db, std::string te, std::string ta, int cid, int p);
     ~Feedback();
 
+    void set_to_delete();
+
     // database methods
+    // stores program data in the database
+    void store_in_db();
     // returns the row count of the categories table
     int get_row_cnt();
     // An overloaded method to generate a new
@@ -37,20 +44,33 @@ public:
 
     bool update_id(int id, string text, string tag, int codeId, int position);
 
+    bool delete_id(int i);
+
+    bool select_similar(string sim);
+
     string text;
     string tag;
     void change_text(string txt);
     void update_tag(string t);
 
+    int get_position();
+
+
     //this is database stuff
     int codeId;
     int position;
     bool isNew;
+    bool toDelete;
+
+    //USED ONLY FOR DUMMY TO GET SIMILLAR COMMENTS
+    vector<string> simillar;
 
 protected:
     // sql command templates
     string sql_select_id;
     string sql_update_id;
+    string sql_delete_id;
+    string sql_select_similar;
 };
 
 // This is a callback function that is sent to the library and used
@@ -68,6 +88,18 @@ int cb_select_id_feedback(void  *data,
 // This is a callback function that is sent to the library and used
 // to parse the sql request being sent to the database.
 int cb_update_id_feedback(void  *data,
+                        int    argc,
+                        char **argv,
+                        char **azColName);
+// This is a callback function that is sent to the library and used
+// to parse the sql request being sent to the database.
+int cb_delete_id_feedback(void  *data,
+                        int    argc,
+                        char **argv,
+                        char **azColName);
+// This is a callback function that is sent to the library and used
+// to parse the sql request being sent to the database.
+int cb_select_similar_feedback(void  *data,
                         int    argc,
                         char **argv,
                         char **azColName);

@@ -14,10 +14,15 @@
 #include "student.h"
 #include "rubric.h"
 #include "ident.h"
+#include "../project/macros.h"
 
 using namespace std;
 
 class Student; // forward declaration
+class DBTool;
+class Rubric;
+class Code;
+class Feedback;
 
 // holds a grade, ref to a rubric, ref to a student
 class Assignment : public Ident, public DBTable
@@ -33,6 +38,7 @@ public:
     double get_grade();
 
     void add_code(Code* c);
+    void set_to_delete();
 
     // db parse methods
     string convert_category();
@@ -62,6 +68,8 @@ public:
     bool update_id(int id, double grade, string category, string component,
                    string quality, int status, int rubId, int stuId, int assignNum);
 
+    bool delete_id(int i);
+
     // object refs
     Rubric* rubric;
     Student* stu;
@@ -69,6 +77,7 @@ public:
     int studentId;
     int assignNum;
     bool isNew;
+    bool toDelete;
 
     // grading status
     int status;
@@ -83,6 +92,7 @@ public:
 protected:
     // sql command templates
     std::string sql_select_id;
+    std::string sql_delete_id;
     std::string sql_update_id;
 };
 
@@ -101,6 +111,13 @@ int cb_select_id_assignment(void  *data,
 // This is a callback function that is sent to the library and used
 // to parse the sql request being sent to the database.
 int cb_update_id_assignment(void  *data,
+                        int    argc,
+                        char **argv,
+                        char **azColName);
+
+// This is a callback function that is sent to the library and used
+// to parse the sql request being sent to the database.
+int cb_delete_id_assignment(void  *data,
                         int    argc,
                         char **argv,
                         char **azColName);
